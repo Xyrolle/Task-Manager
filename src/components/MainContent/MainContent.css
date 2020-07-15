@@ -1,9 +1,7 @@
 .contentContainer {
   height: 30rem;
   width: 50rem;
-  background: #865555d9;
   margin-top: 5rem;
-  color: #fff;
-  font-size: 2rem;
+  font-size: 20px;
   font-weight: 700;
 }
