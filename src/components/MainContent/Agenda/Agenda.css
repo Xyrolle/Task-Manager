@@ -1,0 +1,40 @@
+.agendaContainer {
+  margin-left: 20%;
+  border-left: 1px solid #eeeeee;
+  padding-left: 30px;
+  margin-left: 20%;
+}
+.agendaContainer :nth-child(1) {
+  font-size: 16px;
+  font-weight: normal;
+  text-decoration: none;
+  color: black;
+}
+.agendaContainer :nth-child(2) {
+  font-size: 13px;
+  font-weight: normal;
+  color: darkgrey;
+  padding-bottom: 15px;
+}
+.agendaWrap {
+  display: flex;
+  border-bottom: 1px solid #eeeeee;
+  padding-top: 40px;
+}
+.agendaWrap div {
+  margin-left: 15px;
+}
+.agendaWrap div :nth-child(2) {
+  padding-top: 12px;
+}
+.agendaDetailsContainer {
+  margin-left: 20%;
+}
+.notebook {
+  width: 32px;
+  height: 41px;
+}
+.notebookDetails {
+  width: 50px;
+  height: 63px;
+}
