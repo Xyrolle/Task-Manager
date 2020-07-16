@@ -1,6 +1,5 @@
 .mainHeader {
 	background-color: #1d1c39;
-
 	display: flex;
 	min-width: fit-content;
 	position: -webkit-sticky; /* Safari */
