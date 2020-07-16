@@ -2,7 +2,7 @@
 	background-color: #1d1c39;
 	display: flex;
 	min-width: fit-content;
-	position: -webkit-sticky; /* Safari */
+	position: -webkit-sticky;
 	position: sticky;
 	top: 0;
 }
@@ -120,8 +120,11 @@
 }
 
 .profileCircle {
-	background-color: #fff;
-	display: inline-block;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #f39c12;
+	color: #fff;
 	width: 30px;
 	height: 30px;
 	background-repeat: no-repeat;
