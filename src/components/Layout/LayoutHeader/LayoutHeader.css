@@ -1,0 +1,17 @@
+.layoutHeader {
+	display: flex;
+	align-items: center;
+	font-size: 1em;
+	height: 64px;
+	padding: 0 24px;
+	overflow: hidden;
+}
+
+.layoutHeader a {
+	font-weight: 600;
+	margin-top: 0;
+	color: #333;
+	margin-left: 0;
+	font-size: 24px;
+	padding: 0 12px 0 0;
+}
