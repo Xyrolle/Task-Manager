@@ -12,7 +12,7 @@ const Header: React.FC = () => {
       <nav className='nav'>
         <div className='mainHeadList'>
           <div className='logo'>
-            <img src={Logo} alt='logo' className='logo' />
+            <img src={Logo} alt='logo' />
           </div>
           <ul>
             <li>Home</li>
