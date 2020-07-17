@@ -17,9 +17,8 @@ function App() {
       <div>
         <Header />
         <main className='mainContainer'>
-
           <Switch>
-            <Route exact path='/' component={Layout} />
+            <Route path='/' component={Layout} />
             <Route exact path='/agenda' component={AgendaContent} />
             <Route path='/agenda/:agendaID' component={AgendaContent} />
             <Route path='/tasks/:projectID' component={Tasks} />

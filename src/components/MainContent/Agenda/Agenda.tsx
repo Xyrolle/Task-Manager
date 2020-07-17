@@ -8,7 +8,7 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
 	return (
 		<div className='agendaContainer'>
 			<div className='agendaWrap changeColor'>
-				<img src={Notebook} className={`notebook ${style}`} />
+				<img src={Notebook} className={`notebook ${style}`} alt='notebook' />
 				<div>
 					<Link to={`/agenda/${agenda.id}`}>
 						<p>{agenda.title}</p>

@@ -25,8 +25,11 @@ const Header: React.FC = () => {
 				</div>
 				<div className='mainHeadBtns'>
 					<button type='button' className='addTeamBtn'>
-						<img src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg' /> Add Your
-						Team
+						<img
+							src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
+							alt='add team'
+						/>
+						Add Your Team
 					</button>
 					<button type='button' className='upgradeBtn'>
 						Upgrade Now
