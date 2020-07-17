@@ -7,26 +7,28 @@ import MainContent from './components/MainContent/MainContent';
 
 import Agenda from './components/MainContent/Agenda/Agenda';
 import Tasks from './components/MainContent/Tasks/Tasks';
+import { AgendaContent } from './components/MainContent/Agenda/AgendaContent'
 
 import './App.css';
 
 function App() {
-	return (
-		<Router>
-			<div>
-				<Header />
-				<main className='mainContainer'>
-					<Switch>
-						<Route path='/' component={Layout} />
-						<Route exact path='/agenda/:agendaID' component={Agenda} />
-						<Route exact path='/tasks/:projectID' component={Tasks} />
-					</Switch>
-					<MainContent />
-				</main>
-				<footer style={{ height: '5rem' }} />
-			</div>
-		</Router>
-	);
+  return (
+    <Router>
+      <div>
+        <Header />
+        <main className='mainContainer'>
+          <Switch>
+            <Route path='/' component={Layout} />
+            <Route exact path='/agenda' component={AgendaContent} />
+            <Route path='/agenda/:agendaID' component={AgendaContent} />
+            <Route path='/tasks/:projectID' component={Tasks} />
+          </Switch>
+          <MainContent />
+        </main>
+        <footer style={{ height: '5rem' }} />
+      </div>
+    </Router>
+  );
 }
 
 export default App;
