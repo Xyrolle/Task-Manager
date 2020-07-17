@@ -1,199 +1,189 @@
 .mainHeader {
-	background-color: #1d1c39;
-	display: flex;
-	min-width: fit-content;
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
+  background-color: #1d1c39;
+  display: flex;
+  min-width: fit-content;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
 }
 
 .nav {
-	display: flex;
-	width: 100%;
-	padding: 0.6rem 0;
-	justify-content: space-between;
+  display: flex;
+  width: 100%;
+  padding: 0.7rem 0;
+  justify-content: space-between;
 }
 
 .mainHeadList {
-	display: flex;
-	align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .mainHeadList ul {
-	display: flex;
+  display: flex;
 }
 .mainHeadList li {
-	list-style-type: none;
-	color: #a7c8f3;
-	padding: 0 0.7rem;
-	font-size: 1rem;
+  list-style-type: none;
+  color: #a4b0bf;
+  padding: 0 0.7rem;
+  font-size: 1rem;
 }
 .mainHeadList li:hover {
-	color: #fff;
-	cursor: pointer;
+  color: #fff;
+  cursor: pointer;
 }
 
 .logo {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-end;
-	justify-content: center;
-	margin: 0 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  margin: 0 0.4rem;
 }
 
-.logo span {
-	font-family: fantasy;
-	font-size: 1.2rem;
-}
-
-.logo span:first-child {
-	margin-right: 1.35rem;
-	color: #fff;
-}
-
-.logo span:last-child {
-	color: #e85a5a;
-	margin-top: -10px;
+.logo img {
+  height: 2.1rem;
 }
 
 .mainHeadBtns {
-	display: flex;
-	align-items: center;
-	padding-right: 0.3rem;
+  display: flex;
+  align-items: center;
+  padding-right: 0.3rem;
 }
 
 .mainHeadBtns button {
-	font-size: 0.8rem;
-	height: 2rem;
-	border-radius: 4px;
-	color: #fff;
-	cursor: pointer;
-	margin: 0 0.5rem;
-	font-weight: 500;
+  font-size: 0.8rem;
+  height: 2rem;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  margin: 0 0.5rem;
+  font-weight: 500;
 }
 
 .addTeamBtn {
-	background-color: #59c894;
-	border: 1px solid #59c894;
-	padding: 6px 12px;
-	min-width: 12rem;
+  background-color: #59c894;
+  border: 1px solid #59c894;
+  padding: 0 10px;
+  min-width: 12rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .addTeamBtn img {
-	height: 22px;
-	padding-right: 4px;
-	vertical-align: middle;
+  height: 22px;
+  padding-right: 4px;
+  width: 3.8rem;
+}
+
+.addTeamBtn span {
+  padding-bottom: 3px;
 }
 
 .addTeamBtn:hover {
-	background-color: #3bb37b;
+  background-color: #3bb37b;
 }
 
 .upgradeBtn {
-	background-color: #6a84ed;
-	border: 1px solid #6a84ed;
-	min-width: 6.439rem;
+  background-color: #6a84ed;
+  border: 1px solid #6a84ed;
+  min-width: 6.439rem;
+  padding: 0 10px 3px 10px;
 }
 
 .upgradeBtn:hover {
-	background-color: #5371ea;
+  background-color: #5371ea;
 }
 
 .searchCircle,
 .profileCircle {
-	border-radius: 50%;
-	margin-left: 1.4rem;
-	text-align: center;
+  border-radius: 50%;
+  margin-left: 1.4rem;
+  text-align: center;
 }
 
 .searchCircle {
-	width: 1.7rem;
-	height: 1.7rem;
-	min-width: 1.7rem;
-	min-height: 1.7rem;
-	background: #a4b0bf;
-	line-height: 1.7rem;
-	margin-right: 0.9rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  background: #a4b0bf;
+  line-height: 1.7rem;
+  margin-right: 1.4rem;
 }
 
 .searchCircle img {
-	height: 0.8rem;
+  height: 0.8rem;
 }
 
 .profileCircle {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: #f39c12;
-	color: #fff;
-	width: 30px;
-	height: 30px;
-	background-repeat: no-repeat;
-	background-size: cover;
-	border-radius: 50%;
-	margin-right: 8px;
-	vertical-align: middle;
+  width: 1.9rem;
+  height: 1.9rem;
+  background: #f39c12;
+  color: #fff;
+  line-height: 1.75rem;
+  font-size: 1.1rem;
+  font-weight: 500;
 }
 
 .vector {
-	padding: 0 0.5rem;
-	transform: rotate(270deg);
-	width: 0.45rem;
-	height: 1rem;
+  padding: 0 0.5rem;
+  transform: rotate(270deg);
+  width: 0.45rem;
+  height: 1rem;
 }
 .profileCircle:hover,
 .vector:hover {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .folder {
-	width: 17px;
-	height: 11px;
-	min-width: 17px;
-	margin: 0.15rem 0.9rem 0 0.9rem;
-	position: relative;
-	background: #a4b0bf;
-	border-radius: 0 1.5px 1.5px 1.5px;
+  width: 17px;
+  height: 11px;
+  margin: 0.15rem 0.9rem 0 0.9rem;
+  position: relative;
+  background: #a4b0bf;
+  border-radius: 0 1.5px 1.5px 1.5px;
 }
 
 .folder:before {
-	content: '';
-	width: 50%;
-	height: 2.5px;
-	background: #a4b0bf;
-	position: absolute;
-	top: -2.5px;
-	left: 0px;
+  content: '';
+  width: 50%;
+  height: 2.5px;
+  background: #a4b0bf;
+  position: absolute;
+  top: -2.5px;
+  left: 0px;
+  border-radius: 1px 1px 0 0;
 }
 
 .mainHeadList li:hover {
-	color: #fff;
-	cursor: pointer;
+  color: #fff;
+  cursor: pointer;
 }
 
 .searchCircle:hover,
 .folder:hover,
 .folder:hover::before {
-	background: #fff;
-	cursor: pointer;
+  background: #fff;
+  cursor: pointer;
 }
 .bellContainer {
-	margin: 0.2rem 0.9rem 0 0.9rem;
-	cursor: pointer;
+  margin: 0.2rem 0.5rem 0 0.5rem;
+  cursor: pointer;
 }
 
 .plus {
-	height: 18px;
-	width: 18px;
-	background: url('../../assets/Plus.svg') no-repeat center;
-	margin: 0 0.5rem;
+  height: 18px;
+  width: 18px;
+  background: url('../../assets/Plus.svg') no-repeat center;
+  margin: 0 0.5rem;
 }
 
 .plus:hover {
-	background: url('../../assets/PlusWhite.svg') no-repeat center;
-	cursor: pointer;
+  background: url('../../assets/PlusWhite.svg') no-repeat center;
+  cursor: pointer;
 }
 
 .plus:active {
-	transform: rotate(90deg);
-	transition: transform 210ms ease-in-out, -webkit-transform 210ms ease-in-out;
+  transform: rotate(90deg);
+  transition: transform 210ms ease-in-out, -webkit-transform 210ms ease-in-out;
 }

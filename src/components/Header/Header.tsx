@@ -4,7 +4,7 @@ import './Header.css';
 import Vector from '../../assets/Vector.svg';
 import SearchIcon from '../../assets/SearchIcon.svg';
 import Bell from '../../assets/Bell.svg';
-import Plus from '../../assets/Plus.svg';
+import Logo from '../../assets/Logo.png';
 
 const Header: React.FC = () => {
 	return (
@@ -12,7 +12,8 @@ const Header: React.FC = () => {
 			<nav className='nav'>
 				<div className='mainHeadList'>
 					<div className='logo'>
-						<span>Task</span> <span>Manager</span>
+						<span>Task</span> 
+            <span>Manager</span>
 					</div>
 					<ul>
 						<li>Home</li>
@@ -27,7 +28,7 @@ const Header: React.FC = () => {
 					<button type='button' className='addTeamBtn'>
 						<img
 							src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
-							alt='add team'
+					  	alt='add team'
 						/>
 						Add Your Team
 					</button>
