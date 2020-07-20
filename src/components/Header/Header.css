@@ -59,13 +59,13 @@
   cursor: pointer;
   margin: 0 0.5rem;
   font-weight: 500;
+  width: max-content;
 }
 
 .addTeamBtn {
   background-color: #59c894;
   border: 1px solid #59c894;
   padding: 0 10px;
-  min-width: 12rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,7 +87,6 @@
 .upgradeBtn {
   background-color: #6a84ed;
   border: 1px solid #6a84ed;
-  min-width: 6.439rem;
   padding: 0 10px 3px 10px;
 }
 
@@ -104,6 +103,7 @@
 
 .searchCircle {
   width: 1.7rem;
+  min-width: 1.7rem;
   height: 1.7rem;
   background: #a4b0bf;
   line-height: 1.7rem;
@@ -116,6 +116,7 @@
 
 .profileCircle {
   width: 1.9rem;
+  min-width: 1.9rem;
   height: 1.9rem;
   background: #f39c12;
   color: #fff;
@@ -137,6 +138,7 @@
 
 .folder {
   width: 17px;
+  min-width: 17px;
   height: 11px;
   margin: 0.15rem 0.9rem 0 0.9rem;
   position: relative;
@@ -174,6 +176,7 @@
 .plus {
   height: 18px;
   width: 18px;
+  min-width: 18px;
   background: url('../../assets/Plus.svg') no-repeat center;
   margin: 0 0.5rem;
 }
