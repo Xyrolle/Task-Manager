@@ -146,7 +146,7 @@
   border-radius: 0 1.5px 1.5px 1.5px;
 }
 
-.folder:before {
+.folder::before {
   content: '';
   width: 50%;
   height: 2.5px;
@@ -172,21 +172,36 @@
   margin: 0.2rem 0.5rem 0 0.5rem;
   cursor: pointer;
 }
+.plusContainer {
+  position: relative;
+}
 
-.plus {
+.plus,
+.whitePlus {
   height: 18px;
   width: 18px;
   min-width: 18px;
-  background: url('../../assets/Plus.svg') no-repeat center;
   margin: 0 0.5rem;
 }
 
-.plus:hover {
+.plus {
+  background: url('../../assets/Plus.svg') no-repeat center;
+}
+.whitePlus {
+  background: url('../../assets/PlusWhite.svg') no-repeat center;
+}
+
+.plus:hover,
+.whitePlus:hover {
   background: url('../../assets/PlusWhite.svg') no-repeat center;
   cursor: pointer;
 }
 
 .plus:active {
   transform: rotate(90deg);
+  transition: transform 210ms ease-in-out, -webkit-transform 210ms ease-in-out;
+}
+.whitePlus:active {
+  transform: rotate(-90deg);
   transition: transform 210ms ease-in-out, -webkit-transform 210ms ease-in-out;
 }
