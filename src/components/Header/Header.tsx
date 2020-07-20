@@ -1,12 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './Header.css';
 import Vector from '../../assets/Vector.svg';
 import SearchIcon from '../../assets/SearchIcon.svg';
 import Bell from '../../assets/Bell.svg';
 import Logo from '../../assets/Logo.png';
+import { AppContext } from '../../context/AppContext';
 
 const Header: React.FC = () => {
+  const ctx = useContext(AppContext);
+
+  if (!ctx) {
+    throw new Error('You probably forgot to put <AppProvider>.');
+  }
   return (
     <header className='mainHeader'>
       <nav className='nav'>
@@ -24,7 +30,7 @@ const Header: React.FC = () => {
           </ul>
         </div>
         <div className='mainHeadBtns'>
-          <button type='button' className='addTeamBtn'>
+          <button type='button' className='addTeamBtn' onClick={ctx.openModal}>
             <img
               src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
               alt='add team'
