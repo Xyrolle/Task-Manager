@@ -37,7 +37,7 @@ const Header: React.FC = () => {
               src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
               alt='add team'
             />
-            Add Your Team
+            <span>Add Your Team</span>
           </button>
           <button type='button' className='upgradeBtn'>
             Upgrade Now
