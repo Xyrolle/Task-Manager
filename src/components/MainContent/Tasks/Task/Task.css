@@ -2,7 +2,7 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	padding: 0 30px !important;
+	padding: 0 30px;
 	-webkit-box-flex: 1;
 	-ms-flex: 1 0 auto;
 	flex: 1 0 auto;
@@ -10,7 +10,8 @@
 	-ms-flex-align: start;
 	align-items: flex-start;
 	width: 100%;
-	border-bottom: none !important;
+	border-bottom: none;
+	font-size: 18px;
 }
 
 .assigned-to {
@@ -29,10 +30,10 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 	padding: 0 8px;
-	margin: 0 8px 0 3px !important;
+	margin: 0 8px 0 3px;
 	overflow: hidden;
-	border-radius: 4px !important;
-	text-decoration: none !important;
+	border-radius: 4px;
+	text-decoration: none;
 	position: relative;
 	-webkit-box-flex: 0;
 	-ms-flex: 0 0 auto;
@@ -61,6 +62,7 @@
 	font-size: 1rem;
 	text-overflow: ellipsis;
 	white-space: nowrap;
+	color: #161616;
 }
 
 .task-title:hover {
@@ -122,6 +124,10 @@
 }
 
 .percentage {
+	font-size: 18px;
+	position: relative;
+	bottom: 2px;
+	color: #666;
 	font-weight: 300;
 }
 
@@ -142,6 +148,8 @@
 	-webkit-box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
 	-moz-box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
 	box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
+	opacity: 0;
+	transition: opacity .4s;
 }
 
 .progress-slider::after {
@@ -157,4 +165,64 @@
 
 .progress:hover .progress-slider {
 	visibility: visible;
+	opacity: 1;
+}
+
+.bell {
+	width: 18px;
+}
+
+.bell-active {
+	color: #35c48b;
+}
+
+.eye {
+	width: 17px;
+}
+
+.comments {
+	width: 18px;
+}
+
+.tag {
+	width: 17px;
+}
+
+.description-tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.description-tooltip:hover .tooltip-text {
+	visibility: visible;
+	opacity: 1;
+}
+
+.description-tooltip .tooltip-text {
+	font-size: 0.6rem;
+	visibility: hidden;
+	width: 80px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 2px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 125%;
+	left: 50%;
+	margin-left: -35px;
+	opacity: 0;
+	transition: opacity .4s;
+}
+
+.description-tooltip .tooltip-text::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: black transparent transparent transparent;
 }
