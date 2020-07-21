@@ -7,12 +7,12 @@ import { AppProvider } from './context/AppContext';
 import './App.css';
 
 function App() {
-  return (
-    <Router>
-      <AppProvider>
-        <AllPages />
-      </AppProvider>
-    </Router>
-  );
+	return (
+		<Router>
+			<AppProvider>
+				<AllPages />
+			</AppProvider>
+		</Router>
+	);
 }
 export default App;
