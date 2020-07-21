@@ -1,0 +1,160 @@
+.task-row {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	padding: 0 30px !important;
+	-webkit-box-flex: 1;
+	-ms-flex: 1 0 auto;
+	flex: 1 0 auto;
+	-webkit-box-align: start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+	width: 100%;
+	border-bottom: none !important;
+}
+
+.assigned-to {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	background-color: #eee;
+	width: 110px;
+	font-size: 12px;
+	height: 22px;
+	color: #666;
+	text-decoration: none;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	padding: 0 8px;
+	margin: 0 8px 0 3px !important;
+	overflow: hidden;
+	border-radius: 4px !important;
+	text-decoration: none !important;
+	position: relative;
+	-webkit-box-flex: 0;
+	-ms-flex: 0 0 auto;
+	flex: 0 0 auto;
+}
+
+.assigned-to:hover {
+	background: #e1e1e1;
+	color: #222;
+}
+
+.assign-pencil {
+	width: 10px;
+	position: absolute;
+	right: 6px;
+	top: 6px;
+}
+
+.check {
+	color: #bbb;
+	font-size: 24px;
+}
+
+.task-title {
+	overflow: hidden;
+	font-size: 1rem;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.task-title:hover {
+	border-bottom: 1px solid #222;
+}
+
+.subtask {
+	position: relative;
+	width: 16px;
+	top: 2px;
+	vertical-align: center;
+}
+
+.pd-left-10 {
+	padding-left: 10px;
+}
+
+.clock {
+	width: 14px;
+	position: relative;
+	top: 2.4px;
+}
+
+.calendar {
+	width: 14px;
+	position: relative;
+	top: 2px;
+}
+
+.exclamation {
+	cursor: pointer;
+}
+
+.important {
+	color: #f44336;
+}
+
+.medium {
+	color: #f57f17;
+}
+
+.low {
+	color: #8bc34a;
+}
+
+.icon {
+	opacity: 0.6;
+	cursor: pointer;
+}
+
+.icon:hover {
+	opacity: 0.8;
+}
+
+.progress {
+	font-weight: 400;
+	font-size: 1rem;
+	position: relative;
+}
+
+.percentage {
+	font-weight: 300;
+}
+
+.progress-slider {
+	visibility: hidden;
+	width: 220px;
+	height: 40px;
+	background: #fff;
+	text-align: center;
+	border-radius: 6px;
+	border: 1px solid #e9e7e7;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 150%;
+	left: 72%;
+	margin-left: -120px;
+	-webkit-box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
+	-moz-box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
+	box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
+}
+
+.progress-slider::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #e9e7e7 transparent transparent transparent;
+}
+
+.progress:hover .progress-slider {
+	visibility: visible;
+}
