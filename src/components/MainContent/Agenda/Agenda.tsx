@@ -39,6 +39,9 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                 <img src={Notebook} className={`notebook ${style}`} />
                 <div>
                     <h4>{agenda.title.charAt(0).toUpperCase()}.</h4>
+                    {console.log(agenda.tags)}
+                    {agenda.tags.map((tag: any) => <span>{tag.title}</span>)}
+
                     <Link to={`/agenda/${agenda.id}`}>
                         <p>{agenda.title}</p>
                     </Link>
@@ -46,21 +49,8 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                         Last modified by:{agenda.user} at {agenda.last_update}
                     </p>
                 </div>
-                {/* <button onClick={() => setonEditContent(true)}>Edit content</button> */}
             </div>
-            {/* {onEditContent &&
-                <div>
-                    <textarea ref={agendaContentTextArea} className="contentTextArea">{agenda.content}</textarea>
-                    <button
-                        onClick={() =>
-                            updateAgendaContent(
-                                agenda.id,
-                                agenda.title,
-                                agendaContentTextArea.current!.value
-                            )}>
-                        Save
-                        </button>
-                </div>} */}
+
         </div>
     );
 };

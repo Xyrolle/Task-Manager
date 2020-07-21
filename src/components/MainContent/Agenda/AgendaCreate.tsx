@@ -11,7 +11,8 @@ let axiosConfig = {
     }
 }
 
-const addAgenda = ({title, content}) => {
+const addAgenda = (title: string, content: string) => {
+    console.log(title)
     axios.post('http://46.101.172.171:8008/agenda/', {
         title,
         content,
@@ -31,46 +32,29 @@ const addAgenda = ({title, content}) => {
 }
 
 const AgendaCreate = () => {
-    const agendaTitleInput = useRef(null)
-    const agendaContentTextArea = useRef(null)
-    const [mutate] = useMutation(addAgenda, {
-        onMutate: (newData) => {
-            queryCache.cancelQueries('2');
-            const current = queryCache.getQueries('2')
-            console.log(current)
-            queryCache.setQueryData('2', (prev) => [
-                prev,
-                { ...newData, id: new Date().toISOString() },
-            ])
-            return current;
-        },
-        onError: (error, newData, rollback) => rollback(),
-        // onSettled: () => queryCache
-    })
+    const agendaTitleInput = useRef<HTMLInputElement>(null)
+    const agendaContentTextArea = useRef<HTMLTextAreaElement>(null)
 
     return (
         <div className='agendaCreateContainer'>
             <h2>Create New Notebook</h2>
             <input ref={agendaTitleInput} type="text" placeholder="Title" />
             Content
-            
             <textarea ref={agendaContentTextArea} className="createContentTextArea" placeholder="content"></textarea>
             <div className="textAreaButtonsWrap">
-                <button
-                    className="createAgendaButton"
-                    onClick={() =>
-                        mutate(
-                            // agendaTitleInput.current!.value,
-                            // agendaContentTextArea.current!.value
-                            {
-                                title: 'dimatitle',
-                                content: 'dimacontent'
-                            }
-                        )
-                    }
-                >
-                    add agenda
+                <Link to={`/agenda`}>
+                    <button
+                        className="createAgendaButton"
+                        onClick={() =>
+                            addAgenda(
+                                agendaTitleInput.current!.value,
+                                agendaContentTextArea.current!.value
+                            )
+                        }
+                    >
+                        add agenda
                 </button>
+                </Link>
             </div>
         </div>
     );

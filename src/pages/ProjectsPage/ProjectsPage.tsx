@@ -7,6 +7,8 @@ import MainContent from '../../components/MainContent/MainContent';
 
 import Tasks from '../../components/MainContent/Tasks/Tasks';
 import { AgendaContent } from '../../components/MainContent/Agenda/AgendaContent';
+import AgendaCreate from '../../components/MainContent/Agenda/AgendaCreate'
+import { AgendaDetails } from '../../components/MainContent/Agenda/AgendaDetails';
 
 const ProjectsPage: React.FC = () => {
   return (
@@ -16,7 +18,8 @@ const ProjectsPage: React.FC = () => {
         <Switch>
           <Route path='/' component={Layout} />
           <Route exact path='/agenda' component={AgendaContent} />
-          <Route path='/agenda/:agendaID' component={AgendaContent} />
+          <Route exact path='/agenda/create' component={AgendaCreate} />
+          <Route path='/agenda/:agendaID' component={AgendaDetails} />
           <Route path='/tasks/:projectID' component={Tasks} />
         </Switch>
         <MainContent />

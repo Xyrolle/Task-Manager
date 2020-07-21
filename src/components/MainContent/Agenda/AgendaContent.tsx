@@ -25,22 +25,20 @@ export const AgendaContent: React.FC = ({ }) => {
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
     return (
-        <div >
-            {console.log('Params', agendaID)}
+        <div>
             <div className="agendaHeader">
                 <h3>Notebooks</h3>
-                {!agendaID &&
-                    <Link to={`/agenda/create`}>
-                        <button className="agendaHeaderButton">+ Add a notebook</button>
-                    </Link>
-                }
+                <Link to={`/agenda/create`}>
+                    <button className="agendaHeaderButton">+ Add a notebook</button>
+                </Link>
+
             </div>
-            {!agendaID ? data.map((agenda: any, key: number) =>
+            {data && data.map((agenda: any, key: number) =>
                 <div>
                     <Agenda key={key} agenda={agenda} />
-                </div>) : null
+                </div>)
             }
-            {agendaID ? <AgendaDetails id={agendaID} /> : null}
+            {/* {agendaID ? <AgendaDetails id={agendaID} /> : null} */}
         </div>
     );
 };
