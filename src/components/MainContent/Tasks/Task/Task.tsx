@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
@@ -22,22 +22,41 @@ import './Task.css';
 // add task info popup
 
 const Task: React.FC<ITask> = (props: ITask) => {
-	console.log(props);
+	const [ isCompleted, setIsCompleted ] = useState(false);
 	return (
 		<div className='task-row'>
-			<Icon icon={checkCircle} className='check icon' />
+			<span onClick={() => setIsCompleted((isCompleted) => !isCompleted)}>
+				<Icon
+					icon={checkCircle}
+					className={
+						'check icon ' +
+						(
+							isCompleted ? 'task-completed-check' :
+							'')
+					}
+				/>
+			</span>
 			<span className='assigned-to'>
 				Anyone
 				<img src={assignPencil} alt='assign to' className='assign-pencil icon' />
 			</span>
-			<span className='task-title'>{props.title}</span>
+			<span
+				className={
+					'task-title ' +
+					(
+						isCompleted ? 'title-completed' :
+						'')
+				}
+			>
+				{props.title}
+			</span>
 			<img src={subtask} alt='add subtask' className='subtask icon pd-left-10' />
 			<img src={clock} alt='clock' className='clock icon pd-left-10' />
 			<img src={calendar} alt='calendar' className='calendar icon pd-left-10' />
 			<Icon icon={alertCircleCheck} className='exclamation important pd-left-10' />
 			<div className='progress pd-left-10'>
 				<span className='percentage'>0%</span>
-				<span className='progress-slider'>hello</span>
+				<span className='progress-slider'>progress</span>
 			</div>
 			<div className='description-tooltip'>
 				<Icon icon={bellIcon} className='bell bell-active icon pd-left-10' />
