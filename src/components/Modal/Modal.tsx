@@ -60,9 +60,9 @@ const Modal: React.FC = () => {
             required
             //   onChange=
           >
-            <option value='1'>Top</option>
-            <option value='2'>Medium</option>
-            <option value='3'>Low</option>
+            <option>Project 1</option>
+            <option>Project 2</option>
+            <option>Project 3</option>
           </select>
           <div className='modalBtns'>
             <button

@@ -88,6 +88,7 @@
 
 .cancelModalButton,
 .inviteModalButton {
+  width: 6rem;
   border: 1px solid #ebe3d8;
   border-radius: 4px;
   color: #fff;
