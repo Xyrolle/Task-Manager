@@ -122,8 +122,8 @@
   background: #f39c12;
   color: #fff;
   line-height: 1.75rem;
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 450;
 }
 
 .vector {
@@ -273,7 +273,7 @@
     min-width: 1.7rem;
     height: 1.7rem;
     line-height: 1.6rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 400;
   }
   .vector {
@@ -497,7 +497,7 @@
     min-width: 1.5rem;
     height: 1.5rem;
     line-height: 1.42rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
   }
   .vector {
     padding: 0 0.3rem;
@@ -623,8 +623,8 @@
     width: 1.3rem;
     min-width: 1.3rem;
     height: 1.3rem;
-    line-height: 1.25rem;
-    font-size: 0.8rem;
+    line-height: 1.2rem;
+    font-size: 0.7rem;
   }
   .vector {
     padding: 0 0.2rem;
