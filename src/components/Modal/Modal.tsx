@@ -9,6 +9,38 @@ const Modal: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+  // const addTodo = (e: any) => {
+  //   e.preventDefault();
+
+  //   if (newTodo.name === '') {
+  //     alert('No-no-no, no empty fields, plz!!');
+  //     return;
+  //   }
+  //   const newArr: any = ctx.todoListDB;
+  //   newArr.push(newTodo);
+  //   localForage.setItem<TodoList>('todoList', newArr).then(function (value) {
+  //     console.log(value);
+  //   });
+  //   ctx.setTodoListDB(newArr);
+
+  //   if (
+  //     byPrioritytodoList.length &&
+  //     byPrioritytodoList[0].priority === newTodo.priority
+  //   ) {
+  //     const newPriorityArr = ctx.todoListDB.filter(
+  //       (item) => item.priority === newTodo.priority
+  //     );
+  //     setByPrioritytodoList(newPriorityArr);
+  //   }
+  //   setNewTodo({
+  //     id: 0,
+  //     name: '',
+  //     description: '',
+  //     priority: 1,
+  //     complete: false,
+  //   });
+  //   closeModal();
+  // };
 
   return (
     <div>
@@ -24,18 +56,19 @@ const Modal: React.FC = () => {
           ></input>
           <span>Add to a project</span>
           <select
-            name='projectList'
+            name='priorityList'
             required
             //   onChange=
           >
-            <option value='1'>Project 1</option>
-            <option value='2'>Project 2</option>
-            <option value='3'>Project 3</option>
+            <option value='1'>Top</option>
+            <option value='2'>Medium</option>
+            <option value='3'>Low</option>
           </select>
           <div className='modalBtns'>
             <button
               type='button'
               className='cancelModalButton'
+              data-testid='submitBtn'
               //   onClick=
             >
               Cancel
@@ -43,6 +76,7 @@ const Modal: React.FC = () => {
             <button
               type='button'
               className='inviteModalButton'
+              data-testid='submitBtn'
               //   onClick=
             >
               Invite

@@ -1,0 +1,15 @@
+.registrationWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.registrationInput {
+  width: 320px;
+  height: 38px;
+  border: none;
+  border-bottom: 1px solid #e6ebf1;
+  font-size: 16px;
+  margin: 10px;
+}

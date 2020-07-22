@@ -22,14 +22,34 @@ const Header: React.FC = () => {
           <div className='logo'>
             <img src={Logo} alt='logo' />
           </div>
-          <ul>
+          <div className='burgerMenuWrap'>
+            <input type='checkbox' className='burgerToggler' />
+            <div className='hamburger'>
+              <div></div>
+            </div>
+            <div className='burgerMenu'>
+              <div>
+                <div>
+                  <ul>
+                    <li>Home</li>
+                    <li>Projects</li>
+                    <li>Planning</li>
+                    <li>Everything</li>
+                    <li>Calendar</li>
+                    <li>People</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <ul>
             <li>Home</li>
             <li>Projects</li>
             <li>Planning</li>
             <li>Everything</li>
             <li>Calendar</li>
             <li>People</li>
-          </ul>
+          </ul> */}
         </div>
         <div className='mainHeadBtns'>
           <button type='button' className='addTeamBtn' onClick={ctx.openModal}>

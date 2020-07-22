@@ -38,3 +38,101 @@
   width: 50px;
   height: 63px;
 }
+.agendaCreateContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+}
+.agendaCreateContainer input {
+  border: none;
+  border-bottom: 1px solid darkgray;
+}
+.descriptionTextArea {
+  border: none;
+}
+.contentTextArea {
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 5px;
+  width: 70%;
+  height: 300px;
+  padding-left: 10px;
+  color: black;
+  margin-top: 20px;
+  /* margin-left: 22%; */
+}
+.createContentTextArea {
+  border: 1px solid rgb(207, 207, 207);
+  border-radius: 5px;
+  width: 70%;
+  height: 300px;
+  padding-left: 10px;
+  color: black;
+  margin-top: 20px;
+}
+.editContentWrap {
+  margin-left: 20%;
+}
+.createAgendaButton {
+  width: 135px;
+  background-color: #59c894;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+}
+.textAreaButtonsWrap {
+  /* margin-left: 22%; */
+}
+.agendaHeader {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.agendaHeaderButton {
+  width: 137px;
+  height: 32px;
+  background-color: #59c894;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+.agendaHeaderButton:hover {
+  background-color: #469e75;
+}
+.editAgendaButton {
+  width: 115px;
+  height: 32px;
+  float: right;
+  margin-right: 180px;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  height: 32px;
+  background-color: #59c894;
+  color: white;
+  cursor: pointer;
+}
+.publishAgendaButton {
+  background-color: #59c894;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px;
+  cursor: pointer;
+}
+.publishAgendaButton:hover {
+  background-color: #469e75;
+}
+.cancelButton {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #3d8aed;
+  font-size: 13px;
+  font-weight: 500;
+}

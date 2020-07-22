@@ -1,0 +1,30 @@
+.usernameInput,
+.passwordInput {
+  width: 320px;
+  height: 38px;
+  border: none;
+  border-bottom: 1px solid #e6ebf1;
+  font-size: 16px;
+  margin: 10px;
+}
+.loginWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+.loginButton {
+  width: 320px;
+  height: 52px;
+  background-color: #4461d7;
+  font-size: 16px;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 40px;
+}
+.loginButton:hover {
+  background-color: #3356e0;
+}
