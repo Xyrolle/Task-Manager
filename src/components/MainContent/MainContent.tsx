@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom'
 import ContentHeader from './ContentHeader/ContentHeader';
-import Tasks from '../../components/MainContent/Tasks/TaskList/TaskList';
+import TaskLists from '../../components/MainContent/Tasks/TaskLists/TaskLists';
 import { AgendaContent } from '../../components/MainContent/Agenda/AgendaContent';
 import AgendaCreate from '../../components/MainContent/Agenda/AgendaCreate'
 import { AgendaDetails } from '../../components/MainContent/Agenda/AgendaDetails';
