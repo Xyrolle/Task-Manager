@@ -57,29 +57,14 @@ export const AgendaDetails: React.FC = () => {
         onMutate: (newData: any) => {
             queryCache.cancelQueries(agendaID);
             const snapshot = queryCache.getQueryData(agendaID);
-            const current = queryCache.getQueries(agendaID);
-            console.log('newData', newData)
-            queryCache.setQueryData(agendaID, (prev: any) => [
-                // console.log('prev', prev),
-                // newData,
-                {
-                    content: "By Dima",
-                    created_date: "2020-07-14T13:40:57Z",
-                    id: 12,
-                    l_first_name: "",
-                    l_last_name: "",
-                    l_username: "admin",
-                    last_update: "2020-07-14T13:40:57Z",
-                    project: 1,
-                    tags: [],
-                    title: "string",
-                    user: 1,
-                    version: 1
+            queryCache.setQueryData(agendaID, (prev: any) => {
+                return {
+                    content: newData.content,
+                    tags: prev.tags,
+                    title: prev.title,
                 }
-            ]);
-            console.log('pretend 1')
-            return snapshot;
-            // return () => queryCache.setQueryData(agendaID, snapshot);
+            });
+            return () => queryCache.setQueryData(agendaID, snapshot);
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),
         onSettled: () => queryCache.prefetchQuery(agendaID)
@@ -93,6 +78,7 @@ export const AgendaDetails: React.FC = () => {
             <button className="editAgendaButton" onClick={() => setonEditContent(true)}>Edit content</button>
             <Agenda agenda={data} style={'notebookDetails'} />
             {!onEditContent && <p>{data.content}</p>}
+            <p>{data.id}</p>
             {onEditContent &&
                 <div className="editContentWrap">
                     <textarea ref={agendaContentTextArea} className="contentTextArea">{data.content}</textarea>
