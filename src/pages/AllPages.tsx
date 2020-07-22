@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-
+import React, { useContext } from 'react'
 import ProjectsPage from './ProjectsPage/ProjectsPage';
 import Modal from '../components/Modal/Modal';
 import { AppContext } from '../context/AppContext';
@@ -18,8 +17,8 @@ const AllPages: React.FC = () => {
           <ProjectsPage />
         </>
       ) : (
-        <ProjectsPage />
-      )}
+          <ProjectsPage />
+        )}
     </div>
   );
 };
