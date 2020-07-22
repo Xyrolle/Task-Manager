@@ -2,16 +2,20 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	padding: 0 30px;
+	padding: 4px 60px;
 	-webkit-box-flex: 1;
+	box-sizing: border-box;
 	-ms-flex: 1 0 auto;
-	flex: 1 0 auto;
+	flex: 1 1 auto;
 	-webkit-box-align: start;
 	-ms-flex-align: start;
 	align-items: flex-start;
-	width: 100%;
+	justify-content: center;
+	align-items: center;
+	width: fit-content;
 	border-bottom: none;
 	font-size: 18px;
+	border-bottom: 1px solid #f2f2f2;
 }
 
 .assigned-to {
@@ -46,7 +50,7 @@
 }
 
 .assign-pencil {
-	width: 10px;
+	width: 10px !important;
 	position: absolute;
 	right: 6px;
 	top: 6px;
@@ -60,6 +64,8 @@
 .task-title {
 	overflow: hidden;
 	font-size: 1rem;
+	width: 60px;
+	height: 20px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	color: #161616;
@@ -70,9 +76,7 @@
 }
 
 .subtask {
-	position: relative;
 	width: 16px;
-	top: 2px;
 	vertical-align: center;
 }
 
@@ -81,19 +85,14 @@
 }
 
 .clock {
-	width: 14px;
-	position: relative;
-	top: 2.4px;
 }
 
 .calendar {
-	width: 14px;
-	position: relative;
-	top: 2px;
 }
 
 .exclamation {
 	cursor: pointer;
+	font-size: 21px;
 }
 
 .important {
@@ -109,6 +108,7 @@
 }
 
 .icon {
+	width: 18px;
 	opacity: 0.6;
 	cursor: pointer;
 }
@@ -124,9 +124,7 @@
 }
 
 .percentage {
-	font-size: 18px;
-	position: relative;
-	bottom: 2px;
+	font-size: 20px;
 	color: #666;
 	font-weight: 300;
 }
@@ -169,7 +167,7 @@
 }
 
 .bell {
-	width: 18px;
+	font-size: 22px;
 }
 
 .bell-active {

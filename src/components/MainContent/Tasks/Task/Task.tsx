@@ -15,9 +15,14 @@ import alertCircleCheck from '@iconify/icons-mdi/alert-circle-check';
 import checkCircle from '@iconify/icons-mdi/check-circle';
 import bellIcon from '@iconify/icons-mdi/bell';
 
+import ITask from './ITask';
+
 import './Task.css';
 
-const Task = () => {
+// add task info popup
+
+const Task: React.FC<ITask> = (props: ITask) => {
+	console.log(props);
 	return (
 		<div className='task-row'>
 			<Icon icon={checkCircle} className='check icon' />
@@ -25,9 +30,7 @@ const Task = () => {
 				Anyone
 				<img src={assignPencil} alt='assign to' className='assign-pencil icon' />
 			</span>
-			<Link to='/taskInfo' className='task-title'>
-				Task title
-			</Link>
+			<span className='task-title'>{props.title}</span>
 			<img src={subtask} alt='add subtask' className='subtask icon pd-left-10' />
 			<img src={clock} alt='clock' className='clock icon pd-left-10' />
 			<img src={calendar} alt='calendar' className='calendar icon pd-left-10' />

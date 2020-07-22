@@ -36,6 +36,7 @@
 
 .show-tasks-arrow {
 	transform: rotate(180deg);
+	cursor: pointer;
 	width: 8px;
 	display: -webkit-box;
 	display: -ms-flexbox;
