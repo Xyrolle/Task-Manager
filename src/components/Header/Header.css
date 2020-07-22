@@ -420,9 +420,8 @@
 
   .burgerMenuWrap .burgerMenu > div {
     background: #1d1c39;
-    padding-top: 3.5rem;
     width: 135vw;
-    height: 112vh;
+    height: 100%;
     display: flex;
     flex: none;
     align-items: flex-start;
@@ -571,10 +570,6 @@
   .burgerMenuWrap .burgerMenu {
     top: 2.13rem;
     width: 6.44rem;
-  }
-
-  .burgerMenuWrap .burgerMenu > div {
-    padding-top: 4rem;
   }
 
   .burgerMenuWrap .burgerMenu > div > div > ul > li {
