@@ -2,19 +2,16 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	padding: 4px 60px;
+	padding: 6px 0 4px 0;
+	margin-left: 3rem;
 	-webkit-box-flex: 1;
 	box-sizing: border-box;
 	-ms-flex: 1 0 auto;
-	flex: 1 1 auto;
+	flex: 1 0 auto;
 	-webkit-box-align: start;
 	-ms-flex-align: start;
 	align-items: flex-start;
-	justify-content: center;
 	align-items: center;
-	width: fit-content;
-	border-bottom: none;
-	font-size: 18px;
 	border-bottom: 1px solid #f2f2f2;
 }
 
@@ -61,18 +58,28 @@
 	font-size: 24px;
 }
 
+.task-completed-check {
+	color: #35c48b;
+}
+
 .task-title {
 	overflow: hidden;
 	font-size: 1rem;
 	width: 60px;
-	height: 20px;
+	height: 18px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	color: #161616;
+	cursor: pointer;
+	color: #333;
 }
 
 .task-title:hover {
 	border-bottom: 1px solid #222;
+}
+
+.title-completed {
+	text-decoration: line-through #999;
+	color: #999;
 }
 
 .subtask {
@@ -81,7 +88,7 @@
 }
 
 .pd-left-10 {
-	padding-left: 10px;
+	padding-left: 16px;
 }
 
 .clock {
@@ -223,4 +230,38 @@
 	border-width: 5px;
 	border-style: solid;
 	border-color: black transparent transparent transparent;
+}
+
+@media only screen and (max-width: 600px) {
+	.assigned-to {
+		width: 60px;
+	}
+
+	.icon {
+		width: 12px;
+		font-size: 12px;
+	}
+
+	.task-title {
+		font-size: 0.7rem;
+		width: 50px;
+		padding-top: 2px;
+		height: 0.8rem;
+	}
+
+	.exclamation {
+		font-size: 16px;
+	}
+
+	.bell {
+		font-size: 17px;
+	}
+
+	.percentage {
+		font-size: 1rem;
+	}
+
+	.pd-left-10 {
+		padding-left: 4px;
+	}
 }
