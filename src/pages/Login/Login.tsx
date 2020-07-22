@@ -1,7 +1,21 @@
 import React, { useRef } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './Login.css'
+
+const getToken = async (username: string, password: string) => {
+    axios.post('http://46.101.172.171:8008/users/token/', {
+        username,
+        password
+    })
+        .then(function (response: any) {
+            console.log('token', response.data);
+            localStorage.setItem('token', response.data.access);
+        })
+        .catch(function (error) {
+            console.log('token', error);
+        })
+}
 
 const auth = (login: string, password: string) => {
     axios.post('http://46.101.172.171:8008/users/login/', {
@@ -9,14 +23,14 @@ const auth = (login: string, password: string) => {
         password: password
     })
         .then(function (response) {
-            console.log(response);
-            // return response;
+            getToken(login, password)
         })
         .catch(function (error) {
             console.log(error);
         })
 }
 const Login: React.FC = () => {
+    const history = useHistory();
     const username = useRef<HTMLInputElement>(null)
     const password = useRef<HTMLInputElement>(null)
     return (
@@ -29,6 +43,7 @@ const Login: React.FC = () => {
                     auth(
                         username.current!.value,
                         password.current!.value)
+                    history.push('/')
                 }}
                 className="loginButton"
             >

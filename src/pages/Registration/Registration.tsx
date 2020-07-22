@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 import './Registration.css';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { registerType } from './types';
 
 const getToken = async (username: string, password: string) => {
@@ -31,10 +31,10 @@ const register: registerType = async (first_name, last_name, email, username, pa
         .catch(function (error) {
             console.log(error);
         })
-
 }
 
 const Registration: React.FC = () => {
+    const history = useHistory();
     const first_name = useRef<HTMLInputElement>(null)
     const last_name = useRef<HTMLInputElement>(null)
     const email = useRef<HTMLInputElement>(null)
@@ -49,14 +49,15 @@ const Registration: React.FC = () => {
             <input ref={password} type="password" className="registrationInput" placeholder="Password" />
             <p>Dont have an accout?<Link to={`/register`}> Sign up </Link></p>
             <button
-                onClick={() => {
-                    register(
+                onClick={async () => {
+                    await register(
                         first_name.current!.value,
                         last_name.current!.value,
                         email.current!.value,
                         username.current!.value,
                         password.current!.value,
                     )
+                    await history.push('/')
                 }}
                 className="loginButton"
             >
