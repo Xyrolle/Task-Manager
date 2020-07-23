@@ -4,16 +4,14 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { AgendaDetails } from './AgendaDetails'
+import { axiosConfig } from '../../../utils/axiosConfig'
 import './Agenda.css';
 import Agenda from './Agenda';
 
 const getAgendasByProjectId = async () => {
-    const response = await axios.get('http://46.101.172.171:8008/agenda/1/page=1', {
-        headers:
-        {
-            Authorization: `Basic YWRtaW46cXdlMTIz`
-        }
-    });
+    const response = await axios.get('http://46.101.172.171:8008/agenda/1/page=1',
+        axiosConfig
+    );
     return response.data;
 };
 
@@ -28,7 +26,7 @@ export const AgendaContent: React.FC = ({ }) => {
         <div>
             <div className="agendaHeader">
                 <h3>Notebooks</h3>
-                <Link to={`/agenda/create`}>
+                <Link to={`/ agenda / create`}>
                     <button className="agendaHeaderButton">+ Add a notebook</button>
                 </Link>
 
@@ -38,7 +36,6 @@ export const AgendaContent: React.FC = ({ }) => {
                     <Agenda key={key} agenda={agenda} />
                 </div>)
             }
-            {/* {agendaID ? <AgendaDetails id={agendaID} /> : null} */}
         </div>
     );
 };

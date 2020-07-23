@@ -2,27 +2,18 @@ import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, queryCache, useQuery } from 'react-query';
-import Notebook from '../../../assets/Notebook.png';
+import { axiosConfig } from '../../../utils/axiosConfig'
 import './Agenda.css';
 import Agenda from './Agenda';
-import { T } from 'ts-toolbelt';
 
 
 const getAgendaById = async (id: string) => {
-    const response = await axios.get(`http://46.101.172.171:8008/agenda/item/${id}`, {
-        headers:
-        {
-            Authorization: `Basic YWRtaW46cXdlMTIz`
-        }
-    });
+    const response = await axios.get(`http://46.101.172.171:8008/agenda/item/${id}`,
+        axiosConfig
+    );
     return response.data;
 };
 
-let axiosConfig = {
-    headers: {
-        'Authorization': `Basic YWRtaW46cXdlMTIz`
-    }
-}
 interface foo {
     id: number,
     title: string,
