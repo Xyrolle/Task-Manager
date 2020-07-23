@@ -34,7 +34,8 @@ const TaskList = ({ name }: any) => {
 				<h3 className='list-label'>{name}</h3>
 			</div>
 			<div className='task-container'>
-				{tasks &&
+				{isOpen &&
+					tasks &&
 					tasks.map((task: any) => (
 						<Task
 							title={task.title}

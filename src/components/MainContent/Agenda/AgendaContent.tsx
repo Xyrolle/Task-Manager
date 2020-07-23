@@ -10,7 +10,7 @@ import Agenda from './Agenda';
 
 const getAgendasByProjectId = async () => {
     const response = await axios.get('http://46.101.172.171:8008/agenda/1/page=1',
-        axiosConfig
+        await axiosConfig
     );
     return response.data;
 };

@@ -1,78 +1,77 @@
 .modalContainer {
-  display: flex;
-  z-index: 9999;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border-radius: 4px;
+	display: flex;
+	z-index: 9999;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	border-radius: 4px;
 }
 
 .bg {
-  z-index: 9998;
-  position: absolute;
-  width: 100%;
-  height: 253%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+	z-index: 9998;
+	position: absolute;
+	width: 100%;
+	height: 253%;
+	top: 0;
+	left: 0;
+	background: rgba(0, 0, 0, 0.6);
+	cursor: pointer;
 }
 
 .modalForm {
-  align-items: center;
-  width: 25rem;
-  display: flex;
-  flex-direction: column;
+	align-items: center;
+	width: 25rem;
+	display: flex;
+	flex-direction: column;
 }
 
 .modalForm input {
-  width: 18rem;
-  border: 1px solid #dad0d0;
-  border-radius: 4px;
-  background: #fff;
-  line-height: 1.6rem;
-  margin: 1rem 1.5rem 1rem 1.5rem;
-  padding: 0.5rem 1.5rem;
-  font-size: 1.1rem;
-  color: #4d3c59;
-  font-weight: 400;
+	width: 18rem;
+	border: 1px solid #dad0d0;
+	border-radius: 4px;
+	background: #fff;
+	line-height: 1.6rem;
+	margin: 1rem 1.5rem 1rem 1.5rem;
+	padding: 0.5rem 1.5rem;
+	font-size: 1.1rem;
+	color: #4d3c59;
+	font-weight: 400;
 }
 
 .modalForm select {
-  width: 18rem;
-  border: 1px solid #dad0d0;
-  border-radius: 4px;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png)
-    no-repeat 95% #fff;
-  -webkit-appearance: none;
-  line-height: 1.6rem;
-  margin: 2.67px 1.5rem 1rem 1.5rem;
-  padding: 0.5rem 1.5rem;
-  color: #4d3c59;
-  font-size: 1.1rem;
-  -ms-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-  font-weight: 400;
-  cursor: pointer;
+	width: 18rem;
+	border: 1px solid #dad0d0;
+	border-radius: 4px;
+	background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat 95% #fff;
+	-webkit-appearance: none;
+	line-height: 1.6rem;
+	margin: 2.67px 1.5rem 1rem 1.5rem;
+	padding: 0.5rem 1.5rem;
+	color: #4d3c59;
+	font-size: 1.1rem;
+	-ms-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	font-weight: 400;
+	cursor: pointer;
 }
 .modalForm select option {
-  font-weight: 400;
-  color: #4d3c59;
+	font-weight: 400;
+	color: #4d3c59;
 }
 
 .modalForm select option:first-child {
-  /* color: #786d80; */
+	/* color: #786d80; */
 }
 
 .modalForm span {
-  font-size: 1rem;
-  width: 21rem;
-  color: #00000091;
-  padding-bottom: 0.4rem;
+	font-size: 1rem;
+	width: 21rem;
+	color: #00000091;
+	padding-bottom: 0.4rem;
 }
 
 /* .modalForm span:last-child {
@@ -80,36 +79,37 @@
 } */
 
 .modalBtns {
-  width: 21rem;
-  justify-content: space-between;
-  display: flex;
-  padding: 2rem;
+	width: 21rem;
+	justify-content: space-between;
+	display: flex;
+	padding: 2rem;
 }
 
 .cancelModalButton,
 .inviteModalButton {
-  border: 1px solid #ebe3d8;
-  border-radius: 4px;
-  color: #fff;
-  padding: 0.4rem 1.2rem 0.7rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-size: 1.1rem;
+	width: 6rem;
+	border: 1px solid #ebe3d8;
+	border-radius: 4px;
+	color: #fff;
+	padding: 0.4rem 1.2rem 0.7rem;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 1.1rem;
 }
 
 .cancelModalButton {
-  background: #e85a5a;
+	background: #e85a5a;
 }
 
 .inviteModalButton {
-  background: #6a84ed;
+	background: #6a84ed;
 }
 
 .upperModalContainer {
-  width: 21rem;
-  padding-top: 2rem;
+	width: 21rem;
+	padding-top: 2rem;
 }
 
 .upperModalContainer h3 {
-  padding-bottom: 0.6rem;
+	padding-bottom: 0.6rem;
 }
