@@ -1,38 +1,111 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import './LayoutNavigation.css';
 
 const LayoutNavigation: React.FC = () => {
+	const [ activeLink, setActive ] = useState('overview');
 	return (
 		<div className='layoutNavigation'>
 			<ul>
-				<li>
-					<Link to='/overview'>Overview</Link>
+				<li
+					className={
+
+							activeLink === 'overview' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/overview' onClick={() => setActive('overview')}>
+						Overview
+					</Link>
 				</li>
-				<li>
-					<Link to='/tasks/1'>Tasks</Link>
+				<li
+					className={
+
+							activeLink === 'tasks' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/tasks/1' onClick={() => setActive('tasks')}>
+						Tasks
+					</Link>
 				</li>
-				<li>
-					<Link to='/milestones'>Milestones</Link>
+				<li
+					className={
+
+							activeLink === 'milestones' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/milestones' onClick={() => setActive('milestones')}>
+						Milestones
+					</Link>
 				</li>
-				<li>
-					<Link to='/messages'>Messages</Link>
+				<li
+					className={
+
+							activeLink === 'messages' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/messages' onClick={() => setActive('messages')}>
+						Messages
+					</Link>
 				</li>
-				<li>
-					<Link to='/files'>Files</Link>
+				<li
+					className={
+
+							activeLink === 'files' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/files' onClick={() => setActive('files')}>
+						Files
+					</Link>
 				</li>
-				<li>
-					<Link to='/time'>Time</Link>
+				<li
+					className={
+
+							activeLink === 'time' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/time' onClick={() => setActive('time')}>
+						Time
+					</Link>
 				</li>
-				<li>
-					<Link to='/agenda'>Notebooks</Link>
+				<li
+					className={
+
+							activeLink === 'notebooks' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/agenda' onClick={() => setActive('notebooks')}>
+						Notebooks
+					</Link>
 				</li>
-				<li>
-					<Link to='/people'>People</Link>
+				<li
+					className={
+
+							activeLink === 'people' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/people' onClick={() => setActive('people')}>
+						People
+					</Link>
 				</li>
-				<li>
-					<Link to='/settings'>Settings</Link>
+				<li
+					className={
+
+							activeLink === 'settings' ? 'active-link' :
+							''
+					}
+				>
+					<Link to='/settings' onClick={() => setActive('settings')}>
+						Settings
+					</Link>
 				</li>
 			</ul>
 		</div>
