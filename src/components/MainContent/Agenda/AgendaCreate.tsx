@@ -4,12 +4,7 @@ import { Link } from 'react-router-dom';
 import { AgendaInterface } from './interfaces';
 import './Agenda.css';
 import { useMutation, queryCache, useQuery } from 'react-query';
-
-let axiosConfig = {
-    headers: {
-        'Authorization': `Basic YWRtaW46cXdlMTIz`
-    }
-}
+import { axiosConfig } from '../../../utils/axiosConfig'
 
 const addAgenda = (title: string, content: string) => {
     console.log(title)

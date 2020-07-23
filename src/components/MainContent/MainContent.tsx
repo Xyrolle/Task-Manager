@@ -5,6 +5,7 @@ import TaskLists from '../../components/MainContent/Tasks/TaskLists/TaskLists';
 import { AgendaContent } from '../../components/MainContent/Agenda/AgendaContent';
 import AgendaCreate from '../../components/MainContent/Agenda/AgendaCreate';
 import { AgendaDetails } from '../../components/MainContent/Agenda/AgendaDetails';
+import Task from './Tasks/Task/Task'
 
 import './MainContent.css';
 
