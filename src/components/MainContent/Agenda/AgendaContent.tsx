@@ -17,7 +17,7 @@ const getAgendasByProjectId = async () => {
 
 export const AgendaContent: React.FC = ({ }) => {
     const { status, data, error } = useQuery('getAllAgendas', getAgendasByProjectId);
-    const { agendaID } = useParams();
+
 
     if (status === 'loading') return <div>loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
@@ -26,7 +26,7 @@ export const AgendaContent: React.FC = ({ }) => {
         <div>
             <div className="agendaHeader">
                 <h3>Notebooks</h3>
-                <Link to={`/ agenda / create`}>
+                <Link to={`/agenda/create`}>
                     <button className="agendaHeaderButton">+ Add a notebook</button>
                 </Link>
 

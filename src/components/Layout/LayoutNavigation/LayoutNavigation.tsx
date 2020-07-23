@@ -26,7 +26,7 @@ const LayoutNavigation: React.FC = () => {
 					<Link to='/time'>Time</Link>
 				</li>
 				<li>
-					<Link to='/agenda'>Notebooks</Link>
+					<Link to='agenda'>Notebooks</Link>
 				</li>
 				<li>
 					<Link to='/people'>People</Link>
