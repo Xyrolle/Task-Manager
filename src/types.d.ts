@@ -1,6 +1,9 @@
 type ContextProps = {
-  modalVisible: boolean;
-  setModalVisible: (modal: boolean) => void;
-  openModal: () => void;
-  closeModal: () => void;
+	modalVisible: boolean;
+	addTaskListModal: boolean;
+	setModalVisible: (modal: boolean) => void;
+	openModal: () => void;
+	closeModal: () => void;
+	openTaskListModal: () => void;
+	closeTaskListModal: () => void;
 };
