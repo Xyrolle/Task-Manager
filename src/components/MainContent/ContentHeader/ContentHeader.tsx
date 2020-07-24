@@ -9,12 +9,14 @@ const ContentHeader: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
+	console.log('hello');
+
 	return (
 		<div className='contentHeader'>
 			<h1 className='contentHeader-left'>Tasks</h1>
 			<div className='contentHeader-right'>
 				<button className='btn' onClick={() => ctx.openTaskListModal()}>
-					Add Task List
+					<span>+</span> Add Task List
 				</button>
 			</div>
 		</div>

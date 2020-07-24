@@ -2,7 +2,6 @@
 	text-align: left;
 	font-weight: normal;
 	font-size: 1rem;
-	line-height: 1;
 }
 
 .task-list-row {
@@ -19,7 +18,7 @@
 	z-index: 1;
 	line-height: 1.3;
 	height: 38px;
-	padding: 0 2rem;
+	padding: 5px 2rem;
 	border-radius: 3px;
 	clear: both;
 }
@@ -50,4 +49,95 @@
 
 .arrow-close {
 	transform: rotate(-90deg);
+}
+
+.add-task {
+	float: left;
+	font-size: 0.8rem;
+	margin: 0.6rem auto 0.4rem 3rem;
+}
+
+.no-tasks {
+	margin-top: 6px;
+	margin-left: 72px;
+	cursor: pointer;
+	background-color: #fff;
+	font-size: 0.9rem;
+	color: #aaa;
+	padding: 10px 0;
+}
+
+.add-task-container {
+	margin-bottom: 5px;
+	margin-left: 3rem;
+	margin-right: 2rem;
+	border-bottom: 1px dotted #888;
+}
+
+.add-task-input {
+	max-width: 996px;
+	position: relative;
+	vertical-align: top;
+	background-color: transparent;
+	width: 300px;
+	background-color: transparent;
+	border: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+	padding: 5px 0 4px 0;
+	height: 34px;
+	font-size: 15px;
+	font-weight: 400;
+	outline: none;
+}
+
+.add-task-input:focus {
+	border: none !important;
+}
+
+.add-task-plus {
+	position: relative;
+	top: 14px;
+	padding-right: 10px;
+}
+
+.divider {
+	display: inline-block;
+	margin: 0 -5px 0 10px;
+	color: #999;
+}
+
+.cancel {
+	padding: 0;
+	margin: 5px 10px;
+	color: #3d8aed;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.add-task-container ~ .btn {
+	margin-left: 3rem;
+	font-size: 0.8rem;
+}
+
+.add-task-container ~ .cancel {
+	font-size: 0.9rem;
+}
+
+.description-area {
+	display: block;
+	max-width: 78%;
+	max-height: 120px;
+	margin-left: 3rem;
+	margin-bottom: 1rem;
+	resize: vertical;
+	min-height: 3rem;
+	padding: 10px;
+	box-sizing: border-box;
+}
+
+.task-container label {
+	display: block;
+	font-size: 13px;
+	margin: 10px 0 8px 3rem;
 }

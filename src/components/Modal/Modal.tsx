@@ -51,7 +51,7 @@ const Modal: React.FC = () => {
 						<span>Start collaborating today by adding your team</span>
 					</div>
 					<input placeholder='Email' />
-					//   onChange=
+					// onChange=
 					<span>Add to a project</span>
 					<select
 						name='priorityList'
