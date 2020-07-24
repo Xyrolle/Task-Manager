@@ -127,7 +127,7 @@
 .description-area {
 	display: block;
 	max-width: 78%;
-	max-height: 120px;
+	max-height: 140px;
 	margin-left: 3rem;
 	margin-bottom: 1rem;
 	resize: vertical;
@@ -140,4 +140,10 @@
 	display: block;
 	font-size: 13px;
 	margin: 10px 0 8px 3rem;
+}
+
+.task-description {
+	background-color: #eeeeee;
+	padding: 20px;
+	margin: 0 2rem 10px 3rem;
 }

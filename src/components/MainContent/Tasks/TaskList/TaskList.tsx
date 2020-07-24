@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useRef } from 'react';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 
 import arrow from '../../../../assets/arrow.svg';
 import addTaskPlus from '../../../../assets/addTaskPlus.svg';
@@ -17,28 +17,45 @@ let axiosConfig = {
 		}
 };
 
+type AddTaskParams = {
+	title: string;
+	description: string;
+};
+
 const TaskList = ({ name, id }: any) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const [ isAddingTask, setIsAddingTask ] = useState(false);
 	const { data: tasks } = useQuery(id, fetchTasks);
 	let { projectID } = useParams();
 
-	const addTask = (title: string, description: string) => {
-		console.log(title, description);
-		axios
+	const addTask: any = async ({ title, description }: AddTaskParams) => {
+		const res = await axios
 			.post(
 				'http://46.101.172.171:8008/tasks/',
 				{
-					title: title,
-					description: description,
+					title,
+					description,
 					task_list: id
 				},
 				axiosConfig
 			)
 			.then((response) => response)
 			.catch((error) => console.error(error));
+		if (res) {
+			return res.data;
+		}
 	};
 
+	const [ mutate ]: any = useMutation(addTask, {
+		onMutate:
+			(newData: any) => {
+				queryCache.cancelQueries(id);
+				const snapshot = queryCache.getQueryData(id);
+				queryCache.setQueryData(id, (prev: any) => [ ...prev, { ...newData, id: new Date().toISOString } ]);
+			},
+		onError: (error, newData, rollback: any) => rollback(),
+		onSettled: () => queryCache.invalidateQueries(id)
+	});
 	const taskInput = useRef<HTMLInputElement>(null);
 	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
@@ -91,13 +108,19 @@ const TaskList = ({ name, id }: any) => {
 								className='add-task-input'
 							/>
 						</div>
-						<label>
-							Provide a detailed description <small>(Optional)</small>
-						</label>
-						<textarea rows={10} cols={60} ref={taskDescription} className='description-area' />
+						<div className='task-description'>
+							<label>
+								Provide a detailed description <small>(Optional)</small>
+							</label>
+							<textarea rows={10} cols={60} ref={taskDescription} className='description-area' />
+						</div>
 						<button
 							className='btn'
-							onClick={() => addTask(taskInput.current!.value, taskDescription.current!.value)}
+							onClick={() =>
+								mutate({
+									title: taskInput.current!.value,
+									description: taskDescription.current!.value
+								})}
 						>
 							Save changes
 						</button>
@@ -113,7 +136,6 @@ const TaskList = ({ name, id }: any) => {
 };
 
 const fetchTasks = async (id: any) => {
-	console.log(id, 'is');
 	try {
 		const res = await axios.get(`http://46.101.172.171:8008/tasks/task_list/${id}/1`, {
 			headers:
