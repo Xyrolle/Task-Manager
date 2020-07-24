@@ -54,6 +54,10 @@
 	flex-direction: column;
 }
 
+input[type=text]:focus {
+	border: 1px solid #555;
+}
+
 .form-group {
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -79,11 +83,9 @@
 	border-radius: 3px;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	-webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-	-webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-	transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
-	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-	transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+	-webkit-transition: 0.5s;
+	transition: 0.5s;
+	outline: none;
 }
 
 .modal-footer {
@@ -97,7 +99,7 @@
 	margin-bottom: 8px;
 }
 
-.modal-body label small {
+small {
 	font-size: 92%;
 	color: #999;
 }
@@ -114,35 +116,8 @@
 	height: 10rem;
 }
 
-.addList-btn {
-	color: #fff;
-	background-color: #59c894;
-	border: 1px solid #59c894;
-	display: inline-block;
-	margin-bottom: 0;
-	font-weight: normal;
-	text-align: center;
-	vertical-align: middle;
-	-ms-touch-action: manipulation;
-	touch-action: manipulation;
-	cursor: pointer;
-	background-image: none;
-	border: 1px solid transparent;
-	white-space: nowrap;
-	padding: .38462em .92308em;
-	font-size: 1em;
-	line-height: 1.42857;
-	border-radius: 4px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-font-smoothing: auto;
+.addList {
 	float: right;
-}
-
-.addList-btn:hover {
-	background-color: #3bb47a;
 }
 
 .closeBtn {
