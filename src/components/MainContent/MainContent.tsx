@@ -14,10 +14,12 @@ const MainContent: React.FC = () => {
     <div>
       <ContentHeader />
       <div className='contentContainer'>
-        <Route exact path='/agenda' component={AgendaContent} />
+        <Route path='/project/' component={TaskLists} />
+        <Route exact path='/projects/:projectId/agenda' component={AgendaContent} />
         <Route exact path='/agenda/create' component={AgendaCreate} />
         <Route path='/agenda/:agendaID' component={AgendaDetails} />
         <Route path='/tasks/:projectID' component={TaskLists} />
+
       </div>
     </div>
   );
