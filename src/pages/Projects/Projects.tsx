@@ -3,7 +3,26 @@ import axios from 'axios';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig';
+import Star from './Star'
 import './Projects.css';
+
+
+const addLikeToProject = async (id: number) => {
+    const response = await axios.post(`http://46.101.172.171:8008/project/liked_projects_add/`,
+        {
+            project: id
+        },
+        axiosConfig
+    );
+    console.log(response);
+}
+
+const deleteProject = async (id: number) => {
+    const response = await axios.delete(`http://46.101.172.171:8008/project/project_delete/${id}`,
+        axiosConfig
+    );
+    return response.data;
+}
 
 const createProject = (name: string, description: string, company: string) => {
     axios.post('http://46.101.172.171:8008/project/project_create/', {
@@ -27,6 +46,7 @@ const getProjects = async () => {
     );
     return response.data;
 }
+
 
 const Projects: React.FC = () => {
     const { status, data, error } = useQuery('getProjects', getProjects);
@@ -59,7 +79,9 @@ const Projects: React.FC = () => {
                         <Link to={`/projects/${project.id}/`}> <p>{project.name}</p></Link>
                         <p>{project.description}</p>
                         <p>{project.company}</p>
-                        {/* {console.log(project)} */}
+                        <button onClick={() => deleteProject(project.id)}>Delete</button>
+                        <button onClick={() => addLikeToProject(project.id)} >Like</button>
+                        <Star userId={5} projectId={project.id} />
                     </div>
                 })}
             </div>
