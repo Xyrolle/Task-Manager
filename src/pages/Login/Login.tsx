@@ -9,7 +9,6 @@ const getToken = async (username: string, password: string) => {
         password
     })
         .then(function (response: any) {
-            console.log('token', response.data);
             localStorage.setItem('token', response.data.access);
         })
         .catch(function (error) {

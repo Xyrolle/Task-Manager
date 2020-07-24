@@ -4,22 +4,20 @@ import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { AgendaDetails } from './AgendaDetails'
+import { axiosConfig } from '../../../utils/axiosConfig'
 import './Agenda.css';
 import Agenda from './Agenda';
 
 const getAgendasByProjectId = async () => {
-    const response = await axios.get('http://46.101.172.171:8008/agenda/1/page=1', {
-        headers:
-        {
-            Authorization: `Basic YWRtaW46cXdlMTIz`
-        }
-    });
+    const response = await axios.get('http://46.101.172.171:8008/agenda/1/page=1',
+        await axiosConfig
+    );
     return response.data;
 };
 
 export const AgendaContent: React.FC = ({ }) => {
     const { status, data, error } = useQuery('getAllAgendas', getAgendasByProjectId);
-    const { agendaID } = useParams();
+
 
     if (status === 'loading') return <div>loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
@@ -38,7 +36,6 @@ export const AgendaContent: React.FC = ({ }) => {
                     <Agenda key={key} agenda={agenda} />
                 </div>)
             }
-            {/* {agendaID ? <AgendaDetails id={agendaID} /> : null} */}
         </div>
     );
 };

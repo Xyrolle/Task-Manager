@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-
+import { Link } from 'react-router-dom'
 import './Header.css';
 import Vector from '../../assets/Vector.svg';
 import SearchIcon from '../../assets/SearchIcon.svg';
@@ -8,8 +8,9 @@ import Logo from '../../assets/Logo.png';
 import PlusDropdown from './PlusDropdown/PlusDropdown';
 import { AppContext } from '../../context/AppContext';
 
+
 const Header: React.FC = () => {
-	const [ plusDropdownIsOpen, setPlusDropdownIsOpen ] = useState<boolean>(false);
+	const [plusDropdownIsOpen, setPlusDropdownIsOpen] = useState<boolean>(false);
 	const ctx = useContext(AppContext);
 
 	if (!ctx) {
@@ -32,7 +33,7 @@ const Header: React.FC = () => {
 								<div>
 									<ul>
 										<li>Home</li>
-										<li>Projects</li>
+										<Link to={'/projects'}><li>Projects</li></Link>
 										<li>Planning</li>
 										<li>Everything</li>
 										<li>Calendar</li>
@@ -69,7 +70,7 @@ const Header: React.FC = () => {
 						<div
 							className={
 
-									!plusDropdownIsOpen ? 'plus' :
+								!plusDropdownIsOpen ? 'plus' :
 									'whitePlus'
 							}
 							onClick={() => setPlusDropdownIsOpen(!plusDropdownIsOpen)}

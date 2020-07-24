@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import './LayoutNavigation.css';
 
 const LayoutNavigation: React.FC = () => {
-	const [ activeLink, setActive ] = useState('overview');
+	const [activeLink, setActive] = useState('overview');
 	return (
 		<div className='layoutNavigation'>
 			<ul>
 				<li
 					className={
 
-							activeLink === 'overview' ? 'active-link' :
+						activeLink === 'overview' ? 'active-link' :
 							''
 					}
 				>
@@ -22,7 +22,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'tasks' ? 'active-link' :
+						activeLink === 'tasks' ? 'active-link' :
 							''
 					}
 				>
@@ -33,7 +33,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'milestones' ? 'active-link' :
+						activeLink === 'milestones' ? 'active-link' :
 							''
 					}
 				>
@@ -44,7 +44,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'messages' ? 'active-link' :
+						activeLink === 'messages' ? 'active-link' :
 							''
 					}
 				>
@@ -55,7 +55,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'files' ? 'active-link' :
+						activeLink === 'files' ? 'active-link' :
 							''
 					}
 				>
@@ -66,7 +66,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'time' ? 'active-link' :
+						activeLink === 'time' ? 'active-link' :
 							''
 					}
 				>
@@ -77,18 +77,18 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'notebooks' ? 'active-link' :
+						activeLink === 'notebooks' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/agenda' onClick={() => setActive('notebooks')}>
+					<Link to='agenda' onClick={() => setActive('notebooks')}>
 						Notebooks
 					</Link>
 				</li>
 				<li
 					className={
 
-							activeLink === 'people' ? 'active-link' :
+						activeLink === 'people' ? 'active-link' :
 							''
 					}
 				>
@@ -99,7 +99,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'settings' ? 'active-link' :
+						activeLink === 'settings' ? 'active-link' :
 							''
 					}
 				>
