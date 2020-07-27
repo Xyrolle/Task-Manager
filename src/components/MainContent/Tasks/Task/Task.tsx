@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
@@ -10,7 +11,6 @@ import comments from '../../../../assets/comments.svg';
 import tag from '../../../../assets/tag.png';
 
 import { Icon } from '@iconify/react';
-
 import alertCircleCheck from '@iconify/icons-mdi/alert-circle-check';
 import checkCircle from '@iconify/icons-mdi/check-circle';
 import bellIcon from '@iconify/icons-mdi/bell';
@@ -21,11 +21,35 @@ import './Task.css';
 
 // add task info popup
 
-const Task: React.FC<ITask> = (props: ITask) => {
+let axiosConfig = {
+	headers:
+		{
+			Authorization: `Basic YWRtaW46cXdlMTIz`
+		}
+};
+
+const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) => {
 	const [ isCompleted, setIsCompleted ] = useState(false);
+	const [ showDescription, setShowDescription ] = useState(false);
+
+	const showHideDescription = () => {
+		let setTo =
+			showDescription ? false :
+			true;
+		setShowDescription(setTo);
+	};
+
+	const completeTask = () => {
+		setIsCompleted((isCompleted) => !isCompleted);
+		axios
+			.post(`http://46.101.172.171:8008/tasks/close_task/${id}`, { task_id: 59 }, axiosConfig)
+			.then((response) => response)
+			.catch((error) => console.error(error));
+	};
+
 	return (
 		<div className='task-row'>
-			<span onClick={() => setIsCompleted((isCompleted) => !isCompleted)}>
+			<span onClick={completeTask}>
 				<Icon
 					icon={checkCircle}
 					className={
@@ -44,12 +68,22 @@ const Task: React.FC<ITask> = (props: ITask) => {
 				className={
 					'task-title ' +
 					(
-						isCompleted ? 'title-completed' :
-						'')
+						isCompleted ? 'title-completed ' :
+						'') +
+					(
+						description ? '' :
+						'no-description')
 				}
 			>
-				{props.title}
+				{title}
 			</span>
+			{
+				description ? <span className='open-close-description' onClick={showHideDescription}>
+					{
+						showDescription ? 'less...' :
+						'more...'}
+				</span> :
+				''}
 			<img src={subtask} alt='add subtask' className='subtask icon pd-left-10' />
 			<img src={clock} alt='clock' className='clock icon pd-left-10' />
 			<img src={calendar} alt='calendar' className='calendar icon pd-left-10' />
@@ -71,6 +105,12 @@ const Task: React.FC<ITask> = (props: ITask) => {
 				<span className='tooltip-text'>Add Tag</span>
 			</div>
 			<img src={eye} alt='eye icon' className='eye icon pd-left-10' />
+			{description &&
+			showDescription && (
+				<div className='task-description-content'>
+					<p>{description}</p>
+				</div>
+			)}
 		</div>
 	);
 };

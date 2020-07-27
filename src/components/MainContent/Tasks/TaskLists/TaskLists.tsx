@@ -9,7 +9,7 @@ const TaskLists = () => {
 
 	if (!lists) return <h5>loading</h5>;
 
-	return <div>{lists.map((taskList: any) => <TaskList name={taskList.name} />)}</div>;
+	return <div>{lists.map((taskList: any) => <TaskList name={taskList.name} id={taskList.id} />)}</div>;
 };
 
 export default TaskLists;
@@ -22,6 +22,7 @@ const fetchTaskLists = async () => {
 					Authorization: `Basic YWRtaW46cXdlMTIz`
 				}
 		});
+
 		return res.data;
 	} catch (err) {
 		console.error('error while fetching task lists', err);
