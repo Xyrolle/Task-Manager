@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-
+import { Link } from 'react-router-dom'
 import './Header.css';
 import Vector from '../../assets/Vector.svg';
 import SearchIcon from '../../assets/SearchIcon.svg';
@@ -8,9 +8,10 @@ import Logo from '../../assets/Logo.png';
 import PlusDropdown from './PlusDropdown/PlusDropdown';
 import { AppContext } from '../../context/AppContext';
 
+
 const Header: React.FC = () => {
-  const [plusDropdownIsOpen, setPlusDropdownIsOpen] = useState<boolean>(false);
-  const ctx = useContext(AppContext);
+	const [plusDropdownIsOpen, setPlusDropdownIsOpen] = useState<boolean>(false);
+	const ctx = useContext(AppContext);
 
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');

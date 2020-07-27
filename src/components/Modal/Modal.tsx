@@ -4,19 +4,10 @@ import './Modal.css';
 import { AppContext } from '../../context/AppContext';
 
 const Modal: React.FC = () => {
-  const ctx = useContext(AppContext);
+	const ctx = useContext(AppContext);
 
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
-    // return (
-    //   <div>
-    //     <form
-    //       className='modalForm'
-    //       id='modalForm'
-    //       aria-label='some-form-name'
-    //     ></form>
-    //   </div>
-    // );
   }
 
   return (

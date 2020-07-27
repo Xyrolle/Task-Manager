@@ -4,17 +4,18 @@
   padding-left: 30px;
   margin-left: 20%;
 }
-.agendaContainer :nth-child(1) {
+.agendaTitleWrap {
   font-size: 16px;
   font-weight: normal;
   text-decoration: none;
   color: black;
 }
-.agendaContainer :nth-child(2) {
+.agendaInfo {
   font-size: 13px;
   font-weight: normal;
   color: darkgrey;
   padding-bottom: 15px;
+  padding-top: 12px;
 }
 .agendaWrap {
   display: flex;
@@ -23,9 +24,6 @@
 }
 .agendaWrap div {
   margin-left: 15px;
-}
-.agendaWrap div :nth-child(2) {
-  padding-top: 12px;
 }
 .agendaDetailsContainer {
   margin-left: 20%;
@@ -135,4 +133,24 @@
   color: #3d8aed;
   font-size: 13px;
   font-weight: 500;
+}
+
+.tagIcon {
+  width: 17px;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.agendaTitleWrap {
+  display: flex;
+}
+.tagsWrap {
+  color: white;
+}
+.agendaTag {
+  /* padding: 5px;
+  border-radius: 20px; */
+  background-color: rgba(78, 78, 255, 0.877);
+  vertical-align: middle;
+  width: 100%;
 }
