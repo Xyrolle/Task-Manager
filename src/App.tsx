@@ -11,11 +11,10 @@ const App: React.FC = () => {
   const [isAuth, setisAuth] = useState(false)
 
   return (
-
     <AppProvider>
-      <Router>
+      <Router >
         {!localStorage.getItem('token') ?
-          <div>
+          <div  >
             <Redirect to="/login/" />
             <Switch>
               <Route path='/login' component={Login} />

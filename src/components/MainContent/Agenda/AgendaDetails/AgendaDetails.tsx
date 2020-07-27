@@ -1,44 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
-import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { useMutation, queryCache, useQuery } from 'react-query';
-import { axiosConfig } from '../../../utils/axiosConfig'
-import './Agenda.css';
-import Agenda from './Agenda';
+import './../Agenda.css';
+import Agenda from '../AgendaComponent/Agenda';
+import { getAgendaById } from '../queries'
+import { updateAgendaContent } from '../queries'
 
-
-const getAgendaById = async (id: string) => {
-    const response = await axios.get(`http://46.101.172.171:8008/agenda/item/${id}`,
-        axiosConfig
-    );
-    return response.data;
-};
-
-interface foo {
-    id: number,
-    title: string,
-    content: string
-}
-const updateAgendaContent = ({ id, title, content }: foo): Promise<void> => {
-    return axios.patch(`http://46.101.172.171:8008/agenda/item/${id}`, {
-        title,
-        content,
-        project: '1',//project id
-        user: '1',//current user id
-        last_user: '1', // last updated userid
-    },
-        axiosConfig
-    )
-        .then(function (response: any) {
-            console.log(response.data);
-            const data = response.data
-            // return data;
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
-export const AgendaDetails: React.FC = () => {
+const AgendaDetails: React.FC = () => {
     const { agendaID } = useParams();
     const { status, data, error } = useQuery(agendaID, getAgendaById);
     const [onEditContent, setonEditContent] = useState(false);
@@ -77,11 +45,6 @@ export const AgendaDetails: React.FC = () => {
                         <button
                             className="publishAgendaButton"
                             onClick={async () => {
-                                // await updateAgendaContent(
-                                //     data.id,
-                                //     data.title,
-                                //     agendaContentTextArea.current!.value
-                                // )
                                 mutate({ id: data.id, title: data.title, content: agendaContentTextArea.current!.value })
                                 await setonEditContent(false)
                             }}
@@ -101,3 +64,5 @@ export const AgendaDetails: React.FC = () => {
         </div>
     );
 };
+
+export default AgendaDetails;

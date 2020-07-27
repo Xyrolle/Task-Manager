@@ -1,13 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
-import { AgendaInterface } from './interfaces';
-import Notebook from '../../../assets/Notebook.png';
-import tag from '../../../assets/tag.png'
-import PlusDropdown from '../../Header/PlusDropdown/PlusDropdown';
-import './Agenda.css';
-import './TagDropdown/Tag.css'
-import TagDropdown from './TagDropdown/TagDropdown';
+import { AgendaInterface } from '../interfaces';
+import Notebook from '../../../../assets/Notebook.png';
+import TagDropdown from '../TagDropdown/TagDropdown'
+import './../Agenda.css';
+import '../TagDropdown/Tag.css'
 
 const deleteTag = () => {
 
@@ -18,14 +16,14 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
     const agendaContentTextArea = useRef<HTMLTextAreaElement>(null)
 
     return (
-        <div className='agendaContainer'>
+        <div className='agendaContainer' data-testid='agenda-testid'>
             <div className='agendaWrap changeColor'>
                 <img src={Notebook} className={`notebook ${style}`} />
                 <div>
                     <h4>{agenda.title.charAt(0).toUpperCase()}.</h4>
                     <div className="agendaTitleWrap" >
                         <Link to={`/agenda/${agenda.id}`}>
-                            <p>{agenda.title}</p>
+                            <p >v{agenda.title}</p>
                         </Link>
                         <div className="tagsWrap" >
                             {agenda.tags.map((tag: any) =>
@@ -36,6 +34,7 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                         </div>
                     </div>
                     <p className="agendaInfo">
+                        {/* <TagDropdown /> */}
                         Last modified by:{agenda.user} at {agenda.last_update}
                     </p>
                 </div>

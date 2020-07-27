@@ -11,17 +11,17 @@ const AllPages: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 	return (
-		<div>
+		<div >
 			{
 				ctx.addTaskListModal ? <Fragment>
 					<AddTaskListModal />
 					<ProjectsPage />
 				</Fragment> :
-				ctx.modalVisible ? <Fragment>
-					<Modal />
-					<ProjectsPage />
-				</Fragment> :
-				<ProjectsPage />}
+					ctx.modalVisible ? <Fragment>
+						<Modal />
+						<ProjectsPage />
+					</Fragment> :
+						<ProjectsPage />}
 		</div>
 	);
 };
