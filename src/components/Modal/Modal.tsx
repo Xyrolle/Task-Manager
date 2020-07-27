@@ -8,54 +8,35 @@ const Modal: React.FC = () => {
 
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
+    // return (
+    //   <div>
+    //     <form
+    //       className='modalForm'
+    //       id='modalForm'
+    //       aria-label='some-form-name'
+    //     ></form>
+    //   </div>
+    // );
   }
-  // const addTodo = (e: any) => {
-  //   e.preventDefault();
-
-  //   if (newTodo.name === '') {
-  //     alert('No-no-no, no empty fields, plz!!');
-  //     return;
-  //   }
-  //   const newArr: any = ctx.todoListDB;
-  //   newArr.push(newTodo);
-  //   localForage.setItem<TodoList>('todoList', newArr).then(function (value) {
-  //     console.log(value);
-  //   });
-  //   ctx.setTodoListDB(newArr);
-
-  //   if (
-  //     byPrioritytodoList.length &&
-  //     byPrioritytodoList[0].priority === newTodo.priority
-  //   ) {
-  //     const newPriorityArr = ctx.todoListDB.filter(
-  //       (item) => item.priority === newTodo.priority
-  //     );
-  //     setByPrioritytodoList(newPriorityArr);
-  //   }
-  //   setNewTodo({
-  //     id: 0,
-  //     name: '',
-  //     description: '',
-  //     priority: 1,
-  //     complete: false,
-  //   });
-  //   closeModal();
-  // };
 
   return (
     <div>
       <div className='modalContainer'>
-        <form className='modalForm' id='modalForm'>
-          <div className='upperModalContainer'>
-            <h3>Add your team</h3>
-            <span>Start collaborating today by adding your team</span>
-          </div>
+        <form className='modalForm' id='modalForm' aria-label='some-form-name'>
+          <h3>Add your team</h3>
+          <label htmlFor='email'>
+            Start collaborating today by adding your team
+          </label>
           <input
+            id='email'
+            type='email'
             placeholder='Email'
             //   onChange=
           ></input>
-          <span>Add to a project</span>
+
+          <label htmlFor='priorityList'>Add to a project</label>
           <select
+            id='priorityList'
             name='priorityList'
             required
             //   onChange=
@@ -68,7 +49,6 @@ const Modal: React.FC = () => {
             <button
               type='button'
               className='cancelModalButton'
-              data-testid='submitBtn'
               //   onClick=
             >
               Cancel
@@ -76,7 +56,6 @@ const Modal: React.FC = () => {
             <button
               type='button'
               className='inviteModalButton'
-              data-testid='submitBtn'
               //   onClick=
             >
               Invite
@@ -85,7 +64,12 @@ const Modal: React.FC = () => {
         </form>
       </div>
 
-      <div className='bg' onClick={ctx.closeModal} />
+      <div
+        className='bg'
+        onClick={ctx.closeModal}
+        // role='background'
+        data-testid='background'
+      />
     </div>
   );
 };

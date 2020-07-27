@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
   return (
-    <header className='mainHeader'>
+    <header className='mainHeader' data-testid='mainHeader'>
       <nav className='nav'>
         <div className='mainHeadList'>
           <div className='logo'>
@@ -42,14 +42,6 @@ const Header: React.FC = () => {
               </div>
             </div>
           </div>
-          {/* <ul>
-            <li>Home</li>
-            <li>Projects</li>
-            <li>Planning</li>
-            <li>Everything</li>
-            <li>Calendar</li>
-            <li>People</li>
-          </ul> */}
         </div>
         <div className='mainHeadBtns'>
           <button type='button' className='addTeamBtn' onClick={ctx.openModal}>
