@@ -11,3 +11,9 @@ export interface AgendaInterface {
     last_user: number;
     tags: string[];
 }
+
+export interface IupdateAgendaContent {
+    id: number,
+    title: string,
+    content: string
+}

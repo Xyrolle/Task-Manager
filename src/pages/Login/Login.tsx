@@ -8,8 +8,8 @@ const getToken = async (username: string, password: string) => {
         username,
         password
     })
-        .then(function (response: any) {
-            localStorage.setItem('token', response.data.access);
+        .then(async function (response: any) {
+            await localStorage.setItem('token', response.data.access);
         })
         .catch(function (error) {
             console.log('token', error);

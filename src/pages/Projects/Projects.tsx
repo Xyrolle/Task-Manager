@@ -1,20 +1,20 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
-import { useQuery } from 'react-query';
+import { useMutation, queryCache, useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { axiosConfig } from '../../utils/axiosConfig';
 import Star from './Star'
 import './Projects.css';
+import AddProjectModal from './AddProjectModal/AddProjectModal'
 
 
-const addLikeToProject = async (id: number) => {
-    const response = await axios.post(`http://46.101.172.171:8008/project/liked_projects_add/`,
+const addLikeToProject = async (project: number) => {
+    await axios.post(`http://46.101.172.171:8008/project/liked_projects_add/`,
         {
-            project: id
+            project,
         },
         axiosConfig
     );
-    console.log(response);
 }
 
 const deleteProject = async (id: number) => {
@@ -24,22 +24,6 @@ const deleteProject = async (id: number) => {
     return response.data;
 }
 
-const createProject = (name: string, description: string, company: string) => {
-    axios.post('http://46.101.172.171:8008/project/project_create/', {
-        name,
-        description,
-        company
-    },
-        axiosConfig
-    )
-        .then(function (response) {
-            console.log('Create project', response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}
-
 const getProjects = async () => {
     const response = await axios.get('http://46.101.172.171:8008/project/project_view_by_user/5/1/',
         axiosConfig
@@ -47,41 +31,53 @@ const getProjects = async () => {
     return response.data;
 }
 
-
 const Projects: React.FC = () => {
     const { status, data, error } = useQuery('getProjects', getProjects);
-    const nameInput = useRef<HTMLInputElement>(null)
-    const descriptionInput = useRef<HTMLInputElement>(null)
-    const companyInput = useRef<HTMLInputElement>(null)
-    console.log('projects', data)
+    const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false)
+    const handleShowModal = () => setIsAddProjectModalOpen(false);
+
+    const [mutate] = useMutation(addLikeToProject, {
+
+        onMutate: (newData: any) => {
+            queryCache.cancelQueries('getLikes');
+            const snapshot = queryCache.getQueryData('getLikes');
+            queryCache.setQueryData('getLikes', (prev: any) => {
+                return [...prev, { project: newData }]
+            });
+            return () => queryCache.setQueryData('getLikes', snapshot);
+        },
+        onError: (error: any, newData: any, rollback: any) => rollback(),
+        // onSettled: () => queryCache.prefetchQuery(createProject)
+    })
 
     if (status === 'loading') return <div>loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
     return (
-        <div>
-            <p> Name: <input ref={nameInput} type="text" placeholder="Name" /></p>
-            <p>Description: <input ref={descriptionInput} type="text" placeholder="Description" /></p>
-            <p>Company: <input ref={companyInput} type="text" placeholder="Company" /></p>
+        <div className="test">
             <button
-                onClick={() => {
-                    createProject(
-                        nameInput.current!.value,
-                        descriptionInput.current!.value,
-                        companyInput.current!.value
-                    )
-                }}>
-                Add Project
+                onClick={() =>
+                    setIsAddProjectModalOpen(!isAddProjectModalOpen)}
+                className="addProjectButton"
+            >
+                + Add project
             </button>
+            {isAddProjectModalOpen && <AddProjectModal handleShowModal={handleShowModal} />}
             <div className="projectsContainer">
                 {data && data.map(({ project }: any, key: number) => {
                     return <div className="project">
-                        <Link to={`/projects/${project.id}/`}> <p>{project.name}</p></Link>
+                        <div className="projectHeader">
+                            <div className="projectNameWrap">
+                                <Star userId={5} projectId={project.id} />
+                                <Link to={`/projects/${project.id}/`}>
+                                    <p className="projectName">{project.name}</p>
+                                </Link>
+                            </div>
+                            <p className="projectCompany">{project.company}</p>
+                        </div>
                         <p>{project.description}</p>
-                        <p>{project.company}</p>
                         <button onClick={() => deleteProject(project.id)}>Delete</button>
-                        <button onClick={() => addLikeToProject(project.id)} >Like</button>
-                        <Star userId={5} projectId={project.id} />
+                        <button onClick={() => mutate(project.id)} >Like</button>
                     </div>
                 })}
             </div>
