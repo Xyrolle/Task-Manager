@@ -11,10 +11,14 @@
 	flex: 1 0 auto;
 	-webkit-box-align: start;
 	-ms-flex-align: start;
-	align-items: flex-start;
+	justify-items: flex-start;
 	align-items: center;
 	flex-wrap: wrap;
 	border-bottom: 1px solid #f2f2f2;
+}
+
+.task-row:hover .icon {
+	opacity: 0.6;
 }
 
 .assigned-to {
@@ -26,8 +30,8 @@
 	align-items: center;
 	background-color: #eee;
 	width: 110px;
-	font-size: 12px;
-	height: 22px;
+	font-size: 0.9rem;
+	height: 1.8rem;
 	color: #666;
 	text-decoration: none;
 	white-space: nowrap;
@@ -49,16 +53,16 @@
 }
 
 .assign-pencil {
-	width: 10px !important;
+	width: 14px !important;
 	position: absolute;
-	right: 6px;
-	top: 6px;
+	right: 5px;
 }
 
 .task-row .check {
 	color: #bbb;
 	font-size: 2rem;
 	width: 2rem;
+	opacity: 0.6;
 }
 
 .task-row .task-completed-check {
@@ -67,8 +71,7 @@
 
 .task-title {
 	overflow: hidden;
-	font-size: 1rem;
-	width: 60px;
+	font-size: 1.3rem;
 	height: 18px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -86,8 +89,7 @@
 }
 
 .subtask {
-	width: 16px;
-	vertical-align: center;
+	width: 18px;
 }
 
 .pd-left-10 {
@@ -95,14 +97,15 @@
 }
 
 .clock {
+	font-size: 20px;
 }
 
 .calendar {
+	width: 18px;
 }
 
 .exclamation {
-	cursor: pointer;
-	font-size: 21px;
+	font-size: 22px;
 }
 
 .important {
@@ -118,13 +121,13 @@
 }
 
 .icon {
-	width: 18px;
-	opacity: 0.6;
+	opacity: 0;
+	transition: .3s;
 	cursor: pointer;
 }
 
 .icon:hover {
-	opacity: 0.8;
+	opacity: 0.8 !important;
 }
 
 .progress {
@@ -134,7 +137,7 @@
 }
 
 .percentage {
-	font-size: 20px;
+	font-size: 1.4rem;
 	color: #666;
 	font-weight: 300;
 }
@@ -185,15 +188,15 @@
 }
 
 .eye {
-	width: 17px;
+	width: 21px;
 }
 
 .comments {
-	width: 18px;
+	width: 22px;
 }
 
 .tag {
-	width: 17px;
+	width: 22px;
 }
 
 .description-tooltip {
@@ -257,7 +260,7 @@
 	}
 
 	.bell {
-		font-size: 17px;
+		font-size: 12px;
 	}
 
 	.percentage {
@@ -270,8 +273,10 @@
 }
 
 .open-close-description {
+	width: 3rem;
 	cursor: pointer;
 	color: #63a9f9;
+	margin-left: 1rem;
 	text-decoration: underline;
 	padding: 1px 4px;
 }
@@ -298,6 +303,60 @@
 	color: #555555;
 }
 
-.no-description {
-	padding-right: 3.65rem;
+.task-info-tooltip {
+	width: 20px;
+	padding-right: 2.4rem;
+	position: relative;
+	display: inline-block;
+}
+
+.task-info-tooltip:hover .task-ifno-text {
+	visibility: visible;
+	opacity: 1;
+}
+
+.task-info-tooltip .task-ifno-text {
+	visibility: hidden;
+	width: 160px;
+	height: 80px;
+	background-color: #fff;
+	color: #737373;
+	text-align: center;
+	border-radius: 2px;
+	padding: 5px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 150%;
+	left: 50%;
+	margin-left: -160%;
+	opacity: 0;
+	transition: opacity .4s;
+	border: 1px solid #eee;
+	-webkit-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
+	-moz-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
+	box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
+}
+
+.task-info-tooltip .task-ifno-text::after {
+	content: "";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 10px;
+	border-style: solid;
+	border-color: #eee transparent transparent transparent;
+}
+
+.task-tooltip-title {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-left: 4%;
+	display: block;
+	line-height: 30px;
+	border-bottom: 1px solid #eee;
+}
+
+.task-tooltip-date {
+	font-size: 0.8rem;
 }

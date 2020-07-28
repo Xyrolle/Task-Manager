@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useQuery, useMutation, queryCache } from 'react-query';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
 import subtask from '../../../../assets/subtask.svg';
@@ -9,6 +10,8 @@ import calendar from '../../../../assets/calendar.svg';
 import eye from '../../../../assets/eye.svg';
 import comments from '../../../../assets/comments.svg';
 import tag from '../../../../assets/tag.png';
+
+import clockTimeFourOutline from '@iconify/icons-mdi/clock-time-four-outline';
 
 import { Icon } from '@iconify/react';
 import alertCircleCheck from '@iconify/icons-mdi/alert-circle-check';
@@ -28,7 +31,7 @@ let axiosConfig = {
 		}
 };
 
-const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) => {
+const Task: React.FC<ITask> = ({ description, title, creationDate, id, list_id }: ITask) => {
 	const [ isCompleted, setIsCompleted ] = useState(false);
 	const [ showDescription, setShowDescription ] = useState(false);
 
@@ -39,12 +42,30 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) 
 		setShowDescription(setTo);
 	};
 
+	const deleteTask: any = ({ task_id }: any) => {
+		axios
+			.delete(`http://46.101.172.171:8008/tasks/item/${task_id}`, axiosConfig)
+			.then((res) => console.log(res))
+			.catch((err) => console.error(err));
+	};
+
+	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
+		onMutate:
+			(newData: any) => {
+				console.log(list_id, id);
+				queryCache.cancelQueries(list_id);
+				queryCache.setQueryData(list_id, (prev: any) => {
+					return prev.filter((task: ITask) => {
+						console.log(task.id);
+						return id !== task.id;
+					});
+				});
+			}
+	});
+
 	const completeTask = () => {
 		setIsCompleted((isCompleted) => !isCompleted);
-		axios
-			.post(`http://46.101.172.171:8008/tasks/close_task/${id}`, { task_id: 59 }, axiosConfig)
-			.then((response) => response)
-			.catch((error) => console.error(error));
+		deleteTaskMutate({ task_id: id, list_id });
 	};
 
 	return (
@@ -64,19 +85,24 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) 
 				Anyone
 				<img src={assignPencil} alt='assign to' className='assign-pencil icon' />
 			</span>
-			<span
-				className={
-					'task-title ' +
-					(
-						isCompleted ? 'title-completed ' :
-						'') +
-					(
-						description ? '' :
-						'no-description')
-				}
-			>
-				{title}
-			</span>
+			<div className='task-info-tooltip'>
+				<span
+					className={
+						'task-title ' +
+						(
+							isCompleted ? 'title-completed' :
+							'')
+					}
+				>
+					{
+						title.length > 6 ? title.slice(0, 4) + '...' :
+						title}
+				</span>
+				<div className='task-ifno-text'>
+					<span className='task-tooltip-title'>{title}</span>
+					<span className='task-tooltip-date'>Created At: {creationDate}</span>
+				</div>
+			</div>
 			{
 				description ? <span className='open-close-description' onClick={showHideDescription}>
 					{
@@ -85,11 +111,11 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) 
 				</span> :
 				''}
 			<img src={subtask} alt='add subtask' className='subtask icon pd-left-10' />
-			<img src={clock} alt='clock' className='clock icon pd-left-10' />
+			<Icon icon={clockTimeFourOutline} className='clock icon pd-left-10' />
 			<img src={calendar} alt='calendar' className='calendar icon pd-left-10' />
-			<Icon icon={alertCircleCheck} className='exclamation important pd-left-10' />
+			<Icon icon={alertCircleCheck} className='exclamation important icon pd-left-10' />
 			<div className='progress pd-left-10'>
-				<span className='percentage'>0%</span>
+				<span className='percentage icon'>0%</span>
 				<span className='progress-slider'>progress</span>
 			</div>
 			<div className='description-tooltip'>
