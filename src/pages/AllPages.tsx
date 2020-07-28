@@ -1,4 +1,5 @@
 import React, { useContext, Fragment } from 'react';
+
 import ProjectsPage from './ProjectsPage/ProjectsPage';
 import Modal from '../components/Modal/Modal';
 import AddTaskListModal from '../components/MainContent/Tasks/AddTaskListModal/AddTaskListModal';
@@ -11,17 +12,17 @@ const AllPages: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 	return (
-		<div>
+		<div >
 			{
 				ctx.addTaskListModal ? <Fragment>
 					<AddTaskListModal />
 					<ProjectsPage />
 				</Fragment> :
-				ctx.modalVisible ? <Fragment>
-					<Modal />
-					<ProjectsPage />
-				</Fragment> :
-				<ProjectsPage />}
+					ctx.modalVisible ? <Fragment>
+						<Modal />
+						<ProjectsPage />
+					</Fragment> :
+						<ProjectsPage />}
 		</div>
 	);
 };
