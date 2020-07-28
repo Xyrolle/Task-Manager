@@ -1,11 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { ReactQueryDevtools } from 'react-query-devtools';
 import './App.css';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch
-} from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import AllPages from './pages/AllPages';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
