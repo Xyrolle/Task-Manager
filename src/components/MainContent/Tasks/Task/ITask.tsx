@@ -3,4 +3,5 @@ export default interface ITask {
 	description: string;
 	creationDate: string;
 	id: string;
+	list_id: string;
 };

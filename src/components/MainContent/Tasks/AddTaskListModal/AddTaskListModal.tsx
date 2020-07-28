@@ -1,8 +1,14 @@
 import React, { useContext, useRef } from 'react';
 import axios from 'axios';
+import { useMutation, queryCache } from 'react-query';
 import { AppContext } from '../../../../context/AppContext';
 
 import './AddTaskListModal.css';
+
+type taskListParams = {
+	name: string;
+	description: string;
+};
 
 let axiosConfig = {
 	headers:
@@ -20,24 +26,20 @@ const AddTaskListModal: React.FC = () => {
 	const taskListTitle = useRef<HTMLInputElement>(null);
 	const taskListDescription = useRef<HTMLTextAreaElement>(null);
 
-	const addTaskList = (title: string, content: string) => {
-		console.log(title, 'is');
+	const addTaskList: any = (name: string, description: string) => {
+		console.log(description, 'is');
 		axios
 			.post(
 				'http://46.101.172.171:8008/project/tasklist_create/',
 				{
-					name: 'strsafasfasfing',
+					name,
+					description,
 					project: 10
 				},
 				axiosConfig
 			)
-			.then(function(response) {
-				console.log(response);
-				return response;
-			})
-			.catch(function(error) {
-				console.error(error);
-			});
+			.then((res) => console.log(res))
+			.catch((error) => console.error(error));
 	};
 
 	return (
@@ -63,7 +65,15 @@ const AddTaskListModal: React.FC = () => {
 						<button type='button' className='closeBtn' onClick={ctx.closeTaskListModal}>
 							Close
 						</button>
-						<button type='button' className='addList btn' onClick={() => addTaskList('hello', 'world')}>
+						<button
+							type='button'
+							className='addList btn'
+							onClick={() => {
+								addTaskList(taskListTitle.current!.value, taskListDescription.current!.value);
+								taskListTitle.current!.value = '';
+								taskListDescription.current!.value = '';
+							}}
+						>
 							Add Task List
 						</button>
 					</div>
