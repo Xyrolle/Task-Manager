@@ -1,8 +1,54 @@
 .project {
-  width: 200px;
+  width: 250px;
   height: 300px;
-  border: 1px solid black;
+  border: 1px solid #e1e1e1;
+  margin: 15px;
 }
 .projectsContainer {
   display: flex;
+  /* flex-wrap: wrap; */
+}
+.addProjectButton {
+  padding: 7px;
+  background-color: #59c894;
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}
+.addProjectButton:hover {
+  background-color: #469e75;
+}
+.projectHeader {
+  height: 70px;
+  background-color: #fafafa;
+  padding-left: 10px;
+}
+.projectName {
+  color: #555;
+  margin-left: 10px;
+}
+.projectName:hover {
+  text-decoration: underline;
+}
+.projectCompany {
+  color: #999999;
+}
+.starIcon {
+  width: 20px;
+  height: auto;
+  cursor: pointer;
+}
+.projectNameWrap {
+  display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+  .project {
+    width: 25rem;
+    height: 12rem;
+    font-size: 0.9rem;
+  }
 }
