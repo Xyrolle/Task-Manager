@@ -70,7 +70,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='/time' onClick={() => setActive('time')}>
+					<Link to='time' onClick={() => setActive('time')}>
 						Time
 					</Link>
 				</li>

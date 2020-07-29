@@ -25,9 +25,10 @@ const deleteProject = async (id: number) => {
 }
 
 const getProjects = async () => {
-    const response = await axios.get('http://46.101.172.171:8008/project/project_view_by_user/5/1/',
+    const response = await axios.get('http://46.101.172.171:8008/project/project_view_by_user/1/1/',
         axiosConfig
     );
+    console.log(response.data)
     return response.data;
 }
 
@@ -50,6 +51,22 @@ const Projects: React.FC = () => {
         // onSettled: () => queryCache.prefetchQuery(createProject)
     })
 
+    const [mutateDeleteProject] = useMutation(deleteProject, {
+
+        onMutate: (newData: any) => {
+            queryCache.cancelQueries('getProjects');
+            const snapshot = queryCache.getQueryData('getProjects');
+
+            queryCache.setQueryData('getProjects', (prev: any) => {
+
+                return prev.filter(({ project }: any) => project.id !== newData)
+            });
+            return () => queryCache.setQueryData('getProjects', snapshot);
+        },
+        onError: (error: any, newData: any, rollback: any) => rollback(),
+        // onSettled: () => queryCache.prefetchQuery(createProject)
+    })
+
     if (status === 'loading') return <div>loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
@@ -65,7 +82,7 @@ const Projects: React.FC = () => {
             {isAddProjectModalOpen && <AddProjectModal handleShowModal={handleShowModal} />}
             <div className="projectsContainer">
                 {data && data.map(({ project }: any, key: number) => {
-                    return <div className="project">
+                    return <div className="project" key={key}>
                         <div className="projectHeader">
                             <div className="projectNameWrap">
                                 <Star userId={5} projectId={project.id} />
@@ -76,7 +93,7 @@ const Projects: React.FC = () => {
                             <p className="projectCompany">{project.company}</p>
                         </div>
                         <p>{project.description}</p>
-                        <button onClick={() => deleteProject(project.id)}>Delete</button>
+                        <button onClick={() => mutateDeleteProject(project.id)}>Delete</button>
                         <button onClick={() => mutate(project.id)} >Like</button>
                     </div>
                 })}

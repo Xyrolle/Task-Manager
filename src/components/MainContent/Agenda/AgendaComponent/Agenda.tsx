@@ -26,8 +26,8 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                             <p >v{agenda.title}</p>
                         </Link>
                         <div className="tagsWrap" >
-                            {agenda.tags.map((tag: any) =>
-                                <div className="agendaTag">
+                            {agenda.tags.map((tag: any, key: number) =>
+                                <div className="agendaTag" key={key}>
                                     {tag.title}
                                     <button>X</button>
                                 </div>)}
