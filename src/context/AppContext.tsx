@@ -1,4 +1,5 @@
 import React, { useState, createContext } from 'react';
+import { getUserInfo } from './queries'
 
 type Props = {
 	children: React.ReactNode;
@@ -7,8 +8,9 @@ type Props = {
 export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppProvider = ({ children }: Props) => {
-	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
-	const [ addTaskListModal, setTaskListModal ] = useState<boolean>(false);
+	const [userDetails, setUserDetails] = useState()
+	const [modalVisible, setModalVisible] = useState<boolean>(false);
+	const [addTaskListModal, setTaskListModal] = useState<boolean>(false);
 
 	const openModal = (): void => {
 		setModalVisible(true);
@@ -26,6 +28,10 @@ export const AppProvider = ({ children }: Props) => {
 		setTaskListModal(false);
 	};
 
+	const setUserInfo = async () => {
+		await setUserDetails(await getUserInfo())
+	}
+
 	return (
 		<AppContext.Provider
 			value={{
@@ -35,7 +41,9 @@ export const AppProvider = ({ children }: Props) => {
 				closeModal,
 				openTaskListModal,
 				closeTaskListModal,
-				addTaskListModal
+				addTaskListModal,
+				setUserInfo,
+				userDetails
 			}}
 		>
 			{children}

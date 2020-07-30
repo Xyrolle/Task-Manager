@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import { getAgendasByProjectId } from './queries'
 import './Agenda.css';
 import Agenda from './AgendaComponent/Agenda';
+import { AppContext } from '../../../context/AppContext';
 
 const AgendaContent: React.FC = ({ }) => {
     const { status, data, error } = useQuery('getAllAgendas', getAgendasByProjectId);
+    const ctx = useContext(AppContext);
+
+    if (!ctx) {
+        throw new Error('You probably forgot to put <AppProvider>.');
+    }
 
     if (status === 'loading') return <div data-testid="loading">loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;

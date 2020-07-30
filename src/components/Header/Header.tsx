@@ -19,7 +19,6 @@ const Header: React.FC = () => {
   const [bellDropdownIsOpen, setBellDropdownIsOpen] = useState<boolean>(false);
   const [searchInputIsOpen, setSearchInputIsOpen] = useState<boolean>(false);
   const ctx = useContext(AppContext);
-
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
@@ -76,23 +75,23 @@ const Header: React.FC = () => {
               </span>
             </Fragment>
           ) : (
-            <div className='searchInputContainer'>
-              <img src={SearchIcon} alt='search' className='searchInInput' />
-              <input
-                id='search'
-                className='searchInput'
-                type='search'
-                autoComplete='off'
-                placeholder='Search'
-              />
-              <img
-                src={CancelSearch}
-                alt='cancel search'
-                className='cancelSearchInInput'
-                onClick={() => setSearchInputIsOpen(false)}
-              />
-            </div>
-          )}
+              <div className='searchInputContainer'>
+                <img src={SearchIcon} alt='search' className='searchInInput' />
+                <input
+                  id='search'
+                  className='searchInput'
+                  type='search'
+                  autoComplete='off'
+                  placeholder='Search'
+                />
+                <img
+                  src={CancelSearch}
+                  alt='cancel search'
+                  className='cancelSearchInInput'
+                  onClick={() => setSearchInputIsOpen(false)}
+                />
+              </div>
+            )}
           <div className='plusContainer'>
             <div
               className={!plusDropdownIsOpen ? 'plus' : 'whitePlus'}

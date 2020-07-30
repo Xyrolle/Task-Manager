@@ -9,10 +9,10 @@ import axios from 'axios'
 import './Time.css'
 
 const Time: React.FC = () => {
+    console.log('work')
     const [isAddTimeModalOpen, setIsAddTimeModalOpen] = useState(false)
     const [pageId, setPageId] = useState(1)
     const [hasMore, setHasMore] = useState(true);
-
     const getTimeGroups = async () => {
         try {
             const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/84/${pageId}`,
@@ -33,8 +33,7 @@ const Time: React.FC = () => {
         isFetching,
         isFetchingMore,
         fetchMore,
-    }: any = useInfiniteQuery('getTimeGroups'
-        ,
+    }: any = useInfiniteQuery('getTimeGroups',
         getTimeGroups,
         {
             getFetchMore: () => { setPageId((pageId) => pageId + 1) }
