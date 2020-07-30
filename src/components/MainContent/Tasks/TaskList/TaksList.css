@@ -26,7 +26,7 @@
 .list-label {
 	display: inline-block;
 	font-size: 1.2rem;
-	font-weight: 600;
+	font-weight: 500;
 	margin-bottom: 0;
 }
 
@@ -83,10 +83,9 @@
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	padding: 5px 0 4px 0;
+	padding-top: 6px;
 	height: 34px;
 	font-size: 15px;
-	font-weight: 400;
 	outline: none;
 }
 
@@ -96,9 +95,9 @@
 
 .add-task-plus {
 	position: relative;
-	top: 16px;
-	left: 3px;
-	width: 1.05rem;
+	top: 17px;
+	left: 4px;
+	width: 0.95rem;
 	opacity: 0.6;
 	padding-right: 10px;
 	cursor: pointer;

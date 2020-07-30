@@ -22,7 +22,7 @@ const TaskLists = () => {
 	const fetchTaskLists = async () => {
 		try {
 			const res = await axios.get(
-				`http://46.101.172.171:8008/project/task_list_view_by_project/10/${page_id}/`,
+				`http://46.101.172.171:8008/project/task_list_view_by_project/87/${page_id}/`,
 				axiosConfig
 			);
 			return res.data;
@@ -32,32 +32,34 @@ const TaskLists = () => {
 		}
 	};
 
+	// can fetch more, optimization, bug with page_id
 	const { data: lists, isFetching, isFetchingMore, fetchMore } = useInfiniteQuery('task-lists', fetchTaskLists, {
-		getFetchMore: () => setPageID((page_id) => page_id + 1)
+		getFetchMore: () => setPageID((old) => old + 1)
 	});
+
+	console.log('lists', lists);
 
 	const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	if (!lists) return <h5>loading</h5>;
 
-	console.log(lists);
-
 	return (
 		<div>
-			{lists.map((lists_page: any) => {
-				return (
-					lists_page &&
-					lists_page.map((taskList: any) => (
-						<TaskList
-							name={taskList.name}
-							id={taskList.id}
-							task_count={taskList.task_count}
-							description={taskList.description}
-							key={taskList.id}
-						/>
-					))
-				);
-			})}
+			{lists &&
+				lists.map((lists_page: any) => {
+					return (
+						lists_page &&
+						lists_page.map((taskList: any) => (
+							<TaskList
+								name={taskList.name}
+								id={taskList.id}
+								task_count={taskList.task_count}
+								description={taskList.description}
+								key={taskList.id}
+							/>
+						))
+					);
+				})}
 			<div className='btn-container'>
 				<button
 					ref={loadMoreButtonRef}
@@ -68,7 +70,7 @@ const TaskLists = () => {
 					className={
 						'btn load-more-lists ' +
 						(
-							!hasMore ? 'disabledBtn' :
+							!hasMore || isFetchingMore ? 'disabledBtn' :
 							'')
 					}
 				>
