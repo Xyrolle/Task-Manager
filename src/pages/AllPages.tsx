@@ -6,25 +6,28 @@ import AddTaskListModal from '../components/MainContent/Tasks/AddTaskListModal/A
 import { AppContext } from '../context/AppContext';
 
 const AllPages: React.FC = () => {
-	const ctx = useContext(AppContext);
+  const ctx = useContext(AppContext);
 
-	if (!ctx) {
-		throw new Error('You probably forgot to put <AppProvider>.');
-	}
-	return (
-		<div >
-			{
-				ctx.addTaskListModal ? <Fragment>
-					<AddTaskListModal />
-					<ProjectsPage />
-				</Fragment> :
-					ctx.modalVisible ? <Fragment>
-						<Modal />
-						<ProjectsPage />
-					</Fragment> :
-						<ProjectsPage />}
-		</div>
-	);
+  if (!ctx) {
+    throw new Error('You probably forgot to put <AppProvider>.');
+  }
+  return (
+    <div>
+      {ctx.addTaskListModal ? (
+        <Fragment>
+          <AddTaskListModal />
+          <ProjectsPage />
+        </Fragment>
+      ) : ctx.modalVisible ? (
+        <Fragment>
+          <Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} />
+          <ProjectsPage />
+        </Fragment>
+      ) : (
+        <ProjectsPage />
+      )}
+    </div>
+  );
 };
 
 export default AllPages;

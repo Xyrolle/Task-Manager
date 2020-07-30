@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
 import { AgendaInterface } from '../interfaces';
 import Notebook from '../../../../assets/Notebook.png';
-import TagDropdown from '../TagDropdown/TagDropdown'
 import './../Agenda.css';
 import '../TagDropdown/Tag.css'
 
@@ -26,8 +24,8 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                             <p >v{agenda.title}</p>
                         </Link>
                         <div className="tagsWrap" >
-                            {agenda.tags.map((tag: any) =>
-                                <div className="agendaTag">
+                            {agenda.tags.map((tag: any, key: number) =>
+                                <div className="agendaTag" key={key}>
                                     {tag.title}
                                     <button>X</button>
                                 </div>)}
