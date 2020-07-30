@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { useQuery, useMutation, queryCache } from 'react-query';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
@@ -46,6 +47,15 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 			.delete(`http://46.101.172.171:8008/tasks/item/${task_id}`, axiosConfig)
 			.then((res) => console.log(res))
 			.catch((err) => console.error(err));
+	};
+
+	const deleteTag: any = async (tag_id: number, task_id: number) => {
+		const res = await axios.delete(
+			`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${tag_id}`,
+			axiosConfig
+		);
+		if (list_id) queryCache.invalidateQueries(list_id);
+		else queryCache.invalidateQueries(`details-for-task-${id}`);
 	};
 
 	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
@@ -124,8 +134,11 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 			{tags &&
 				tags.length > 0 &&
 				tags.map((tag: ITag) => (
-					<span className='tag-oval'>
-						{tag.title} <span className='close-tag-btn'>&times;</span>
+					<span className='tag-oval' key={uuidv4()}>
+						{tag.title}
+						<span className='close-tag-btn' onClick={() => deleteTag(tag.id, id)}>
+							&times;
+						</span>
 					</span>
 				))}
 			<img src={subtask} alt='add subtask' className='subtask icon pd-left-10' />

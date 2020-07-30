@@ -389,9 +389,10 @@
 
 .close-tag-btn {
 	cursor: pointer;
+	padding-left: 3px;
 }
 
 .tag-oval .close-tag-btn:hover {
-	color: red;
+	color: #df2b49;
 	transition: .1s;
 }

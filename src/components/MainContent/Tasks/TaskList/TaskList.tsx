@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useRef, useMemo } from 'react';
 import { useQuery, useMutation, queryCache } from 'react-query';
+import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
@@ -64,8 +65,9 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ deleteTaskListMutate ]: any = useMutation(deleteTaskList, {
 		onMutate:
 			(newData: any) => {
-				queryCache.cancelQueries(newData);
+				queryCache.cancelQueries(newData.id);
 				queryCache.setQueryData('task-lists', (prev: any) => {
+					console.log(prev, 'data is', newData.id);
 					const filteredRes = prev.map((taskLists: any) => {
 						return taskLists.filter((taskList: any) => {
 							return taskList.id !== newData.id;
@@ -73,9 +75,10 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 					});
 					return filteredRes;
 				});
-			},
-		onSettled: () => queryCache.invalidateQueries('task-lists')
+			}
 	});
+
+	console.log('tasklist');
 
 	const [ mutate ]: any = useMutation(addTask, {
 		onMutate:
@@ -90,7 +93,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 
 	return (
 		<Fragment>
-			{console.log(tasks, 'are')}
 			<div className='task-list-row'>
 				<img
 					src={arrow}
@@ -138,7 +140,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 								tags={task.tags}
 								id={task.id}
 								list_id={id}
-								key={task.id}
+								key={uuidv4()}
 							/>
 						))}
 					{isOpen &&
