@@ -18,7 +18,7 @@
 }
 
 .task-row:hover .icon {
-	opacity: 0.6;
+	opacity: 0.7;
 }
 
 .assigned-to {
@@ -72,6 +72,7 @@
 .task-title {
 	overflow: hidden;
 	font-size: 1.3rem;
+	font-weight: 300;
 	height: 18px;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -80,7 +81,7 @@
 }
 
 .task-title:hover {
-	text-decoration: underline #222;
+	border-bottom: 1px solid #222;
 }
 
 .title-completed {
@@ -93,18 +94,24 @@
 }
 
 .pd-left-10 {
-	padding-left: 16px;
+	padding-left: 12px;
 }
 
 .clock {
-	font-size: 20px;
+	position: relative;
+	top: -1px;
+	font-size: 21px;
 }
 
 .calendar {
+	position: relative;
+	top: -1px;
 	width: 18px;
 }
 
 .exclamation {
+	position: relative;
+	top: -1px;
 	font-size: 22px;
 }
 
@@ -127,7 +134,7 @@
 }
 
 .icon:hover {
-	opacity: 0.8 !important;
+	opacity: 0.9 !important;
 }
 
 .progress {
@@ -137,9 +144,11 @@
 }
 
 .percentage {
-	font-size: 1.4rem;
+	font-size: 1.25rem;
 	color: #666;
 	font-weight: 300;
+	position: relative;
+	top: -1px;
 }
 
 .progress-slider {
@@ -180,7 +189,7 @@
 }
 
 .bell {
-	font-size: 22px;
+	font-size: 20px;
 }
 
 .bell-active {
@@ -188,15 +197,19 @@
 }
 
 .eye {
-	width: 21px;
+	width: 19px;
 }
 
 .comments {
-	width: 22px;
+	width: 19px;
+	position: relative;
+	top: 2px;
 }
 
 .tag {
-	width: 22px;
+	width: 17px;
+	position: relative;
+	top: 1px;
 }
 
 .description-tooltip {
@@ -273,7 +286,8 @@
 }
 
 .open-close-description {
-	width: 3rem;
+	width: 64px;
+	font-size: 18px;
 	cursor: pointer;
 	color: #63a9f9;
 	margin-left: 1rem;
@@ -301,6 +315,8 @@
 
 .task-description-content p {
 	color: #555555;
+	font-size: 1rem;
+	font-weight: 400;
 }
 
 .task-info-tooltip {
@@ -359,4 +375,23 @@
 
 .task-tooltip-date {
 	font-size: 0.8rem;
+}
+
+.tag-oval {
+	background-color: #2e8de3;
+	width: fit-content;
+	margin: 0 4px 0 10px;
+	padding: 3px 10px;
+	border-radius: 12px;
+	color: #eee;
+	font-size: 0.95rem;
+}
+
+.close-tag-btn {
+	cursor: pointer;
+}
+
+.tag-oval .close-tag-btn:hover {
+	color: red;
+	transition: .1s;
 }

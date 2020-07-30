@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useRef, useMemo } from 'react';
 import { useQuery, useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -28,8 +28,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	const taskInput = useRef<HTMLInputElement>(null);
 	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
-	description = 'description';
-
 	let axiosConfig = {
 		headers:
 			{
@@ -51,17 +49,16 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 				axiosConfig
 			)
 			.then((res) => res)
-			.catch((err) => console.log('Error: can not add a task'));
+			.catch(() => console.log('Error: can not add a task'));
 		if (res) {
 			return res.data;
 		}
 	};
 
 	const deleteTaskList: any = ({ id }: any) => {
-		console.log(id);
 		axios
 			.delete(`http://46.101.172.171:8008/project/tasklist_delete/${id}`, axiosConfig)
-			.catch((err) => console.log('Error: can not delete a task list'));
+			.catch(() => console.log('Error: can not delete a task list'));
 	};
 
 	const [ deleteTaskListMutate ]: any = useMutation(deleteTaskList, {
@@ -76,7 +73,8 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 					});
 					return filteredRes;
 				});
-			}
+			},
+		onSettled: () => queryCache.invalidateQueries('task-lists')
 	});
 
 	const [ mutate ]: any = useMutation(addTask, {
@@ -92,6 +90,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 
 	return (
 		<Fragment>
+			{console.log(tasks, 'are')}
 			<div className='task-list-row'>
 				<img
 					src={arrow}
@@ -136,6 +135,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 								title={task.title}
 								description={task.description}
 								creationDate={task.creation_date}
+								tags={task.tags}
 								id={task.id}
 								list_id={id}
 								key={task.id}
