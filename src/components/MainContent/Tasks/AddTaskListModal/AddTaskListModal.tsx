@@ -27,14 +27,13 @@ const AddTaskListModal: React.FC = () => {
 	const taskListDescription = useRef<HTMLTextAreaElement>(null);
 
 	const addTaskList: any = (name: string, description: string) => {
-		console.log(description, 'is');
 		axios
 			.post(
 				'http://46.101.172.171:8008/project/tasklist_create/',
 				{
 					name,
 					description,
-					project: 10
+					project: 87
 				},
 				axiosConfig
 			)
