@@ -6,12 +6,11 @@ import { createMemoryHistory } from 'history'
 import {toBeInTheDocument, toHaveClass} from '@testing-library/jest-dom'
 import AgendaContent from './AgendaContent';
 import Agenda from './AgendaComponent/Agenda';
-
 import AgendaCreate from './AgendaCreate/AgendaCreate'
 import '@testing-library/jest-dom/extend-expect'
 
 jest.mock('axios')
-const  data ={
+const  data =  {
   "id": 22,
   "title": "string",
   "content": "string",
@@ -41,28 +40,34 @@ function renderWithRouter(
   }
 }
 
-test('If agenda nav works', async () => {
-
+test('If Agenda Content Loading works', async () => {
   renderWithRouter(<AgendaContent/>);
+
+  axios.get.mockResolvedValue(() => Promise.resolve(data))
+
+  expect(screen.getByTestId("loading")).toHaveTextContent('loading')
+});
+
+test('If Agenda Content mounted', async () => {
+  renderWithRouter(<AgendaContent/>);
+
   axios.get.mockResolvedValue(() => Promise.resolve(data))
   
-  expect(screen.getByTestId("loading")).toHaveTextContent('loading')
   await waitFor(() => {
     expect(screen.getByRole('heading')).toHaveTextContent('Notebooks')
   });
 });
 
-// test('If agendas render', async()=>{
-//     render(<AgendaContent />);
+// test('If Agenda Content Displayed all agendas', async()=>{
+//   renderWithRouter(<AgendaContent/>);
 
 //   axios.get.mockResolvedValue(() => Promise.resolve(data))
 //   await waitFor(() => {
-//   // expect(screen.getByTestId('agenda-testid')).toBeInTheDocument()
+//   expect(screen.getByTestId('agenda-testid')).toBeInTheDocument()
 //   })
 // })
-// const AgendaCreate = () => <div>You are on the about page</div>
 
-test('Agenda compoent', async()=>{
+test('If agenda create works', async()=>{
   const {container} = renderWithRouter(<AgendaContent/>); 
   axios.get.mockResolvedValue(() => Promise.resolve(data))
 
@@ -70,5 +75,4 @@ await waitFor(() => {
   fireEvent.click(screen.getByText(/Add a notebook/i))
   expect(container.innerHTML).toMatch('Create New Notebook')
 })
-
 })
