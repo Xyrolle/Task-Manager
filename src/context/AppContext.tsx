@@ -1,44 +1,54 @@
 import React, { useState, createContext } from 'react';
 
 type Props = {
-	children: React.ReactNode;
+  children: React.ReactNode;
 };
 
 export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppProvider = ({ children }: Props) => {
-	const [ modalVisible, setModalVisible ] = useState<boolean>(false);
-	const [ addTaskListModal, setTaskListModal ] = useState<boolean>(false);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState<boolean>(false);
+  const [addTaskListModal, setTaskListModal] = useState<boolean>(false);
 
-	const openModal = (): void => {
-		setModalVisible(true);
-	};
+  const openModal = (): void => {
+    setModalVisible(true);
+    setIsUpgradeModalOpen(false);
+  };
 
-	const openTaskListModal = (): void => {
-		setTaskListModal(true);
-	};
+  const openUpgradeModal = (): void => {
+    setModalVisible(true);
+    setIsUpgradeModalOpen(true);
+  };
 
-	const closeModal = (): void => {
-		setModalVisible(false);
-	};
+  const openTaskListModal = (): void => {
+    setTaskListModal(true);
+  };
 
-	const closeTaskListModal = (): void => {
-		setTaskListModal(false);
-	};
+  const closeModal = (): void => {
+    setModalVisible(false);
+  };
 
-	return (
-		<AppContext.Provider
-			value={{
-				modalVisible,
-				setModalVisible,
-				openModal,
-				closeModal,
-				openTaskListModal,
-				closeTaskListModal,
-				addTaskListModal
-			}}
-		>
-			{children}
-		</AppContext.Provider>
-	);
+  const closeTaskListModal = (): void => {
+    setTaskListModal(false);
+  };
+
+  return (
+    <AppContext.Provider
+      value={{
+        modalVisible,
+        setModalVisible,
+        openModal,
+        closeModal,
+        openTaskListModal,
+        closeTaskListModal,
+        addTaskListModal,
+        isUpgradeModalOpen,
+        setIsUpgradeModalOpen,
+        openUpgradeModal,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 };
