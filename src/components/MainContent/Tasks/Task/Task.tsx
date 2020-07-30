@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useQuery, useMutation, queryCache } from 'react-query';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
 import subtask from '../../../../assets/subtask.svg';
@@ -14,8 +15,9 @@ import { Icon } from '@iconify/react';
 import alertCircleCheck from '@iconify/icons-mdi/alert-circle-check';
 import checkCircle from '@iconify/icons-mdi/check-circle';
 import bellIcon from '@iconify/icons-mdi/bell';
+import clockTimeFourOutline from '@iconify/icons-mdi/clock-time-four-outline';
 
-import ITask from './ITask';
+import { ITask, ITag } from './ITask';
 
 import './Task.css';
 
@@ -28,7 +30,7 @@ let axiosConfig = {
 		}
 };
 
-const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) => {
+const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, list_id }: ITask) => {
 	const [ isCompleted, setIsCompleted ] = useState(false);
 	const [ showDescription, setShowDescription ] = useState(false);
 
@@ -39,12 +41,34 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) 
 		setShowDescription(setTo);
 	};
 
+	const deleteTask: any = ({ task_id }: any) => {
+		axios
+			.delete(`http://46.101.172.171:8008/tasks/item/${task_id}`, axiosConfig)
+			.then((res) => console.log(res))
+			.catch((err) => console.error(err));
+	};
+
+	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
+		onMutate:
+			(newData: any) => {
+				if (list_id) {
+					queryCache.cancelQueries(list_id);
+					queryCache.setQueryData(list_id, (prev: any) => {
+						if (prev) {
+							return prev.filter((task: ITask) => {
+								return id !== task.id;
+							});
+						}
+					});
+				} else {
+					queryCache.setQueryData(id, null);
+				}
+			}
+	});
+
 	const completeTask = () => {
 		setIsCompleted((isCompleted) => !isCompleted);
-		axios
-			.post(`http://46.101.172.171:8008/tasks/close_task/${id}`, { task_id: 59 }, axiosConfig)
-			.then((response) => response)
-			.catch((error) => console.error(error));
+		deleteTaskMutate({ task_id: id, list_id });
 	};
 
 	return (
@@ -64,19 +88,32 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) 
 				Anyone
 				<img src={assignPencil} alt='assign to' className='assign-pencil icon' />
 			</span>
-			<span
-				className={
-					'task-title ' +
-					(
-						isCompleted ? 'title-completed ' :
-						'') +
-					(
-						description ? '' :
-						'no-description')
-				}
-			>
-				{title}
-			</span>
+			<div className='task-info-tooltip'>
+				<Link
+					to={`task_info/${id}`}
+					onClick={(evt) =>
+
+							list_id === '0' ? evt.preventDefault() :
+							null}
+				>
+					<span
+						className={
+							'task-title ' +
+							(
+								isCompleted ? 'title-completed' :
+								'')
+						}
+					>
+						{
+							title.length > 6 ? title.slice(0, 4) + '...' :
+							title}
+					</span>
+				</Link>
+				<div className='task-ifno-text'>
+					<span className='task-tooltip-title'>{title}</span>
+					<span className='task-tooltip-date'>Created At: {creationDate}</span>
+				</div>
+			</div>
 			{
 				description ? <span className='open-close-description' onClick={showHideDescription}>
 					{
@@ -84,22 +121,31 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, id }: ITask) 
 						'more...'}
 				</span> :
 				''}
+			{tags &&
+				tags.length > 0 &&
+				tags.map((tag: ITag) => (
+					<span className='tag-oval'>
+						{tag.title} <span className='close-tag-btn'>&times;</span>
+					</span>
+				))}
 			<img src={subtask} alt='add subtask' className='subtask icon pd-left-10' />
-			<img src={clock} alt='clock' className='clock icon pd-left-10' />
+			<Icon icon={clockTimeFourOutline} className='clock icon pd-left-10' />
 			<img src={calendar} alt='calendar' className='calendar icon pd-left-10' />
-			<Icon icon={alertCircleCheck} className='exclamation important pd-left-10' />
+			<Icon icon={alertCircleCheck} className='exclamation important icon pd-left-10' />
 			<div className='progress pd-left-10'>
-				<span className='percentage'>0%</span>
+				<span className='percentage icon'>0%</span>
 				<span className='progress-slider'>progress</span>
 			</div>
 			<div className='description-tooltip'>
 				<Icon icon={bellIcon} className='bell bell-active icon pd-left-10' />
 				<span className='tooltip-text'>Current Reminders</span>
 			</div>
-			<div className='description-tooltip'>
-				<img src={comments} alt='add comment' className='comments icon pd-left-10' />
-				<span className='tooltip-text'>Add Comment</span>
-			</div>
+			{list_id && (
+				<div className='description-tooltip'>
+					<img src={comments} alt='add comment' className='comments icon pd-left-10' />
+					<span className='tooltip-text'>Add Comment</span>
+				</div>
+			)}
 			<div className='description-tooltip'>
 				<img src={tag} alt='add tag' className='tag icon pd-left-10' />
 				<span className='tooltip-text'>Add Tag</span>

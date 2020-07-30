@@ -1,34 +1,43 @@
-import React, { Fragment, useState, useRef } from 'react';
+import React, { Fragment, useState, useRef, useMemo } from 'react';
 import { useQuery, useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
 import arrow from '../../../../assets/arrow.svg';
 import addTaskPlus from '../../../../assets/addTaskPlus.svg';
 
+import { Icon, InlineIcon } from '@iconify/react';
+import ellipsisDotsH from '@iconify/icons-vaadin/ellipsis-dots-h';
+
 import Task from '../Task/Task';
 
 import './TaksList.css';
-
-let axiosConfig = {
-	headers:
-		{
-			Authorization: `Basic YWRtaW46cXdlMTIz`
-		}
-};
 
 type AddTaskParams = {
 	title: string;
 	description: string;
 };
 
-const TaskList = ({ name, id }: any) => {
+const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const [ isAddingTask, setIsAddingTask ] = useState(false);
-	const { data: tasks } = useQuery(id, fetchTasks);
+	const { error, data: tasks = {} } = useQuery(id, fetchTasks, {
+		enabled: isOpen
+	});
 	let { projectID } = useParams();
+	const taskInput = useRef<HTMLInputElement>(null);
+	const taskDescription = useRef<HTMLTextAreaElement>(null);
+
+	let axiosConfig = {
+		headers:
+			{
+				Authorization: `Basic YWRtaW46cXdlMTIz`
+			}
+	};
 
 	const addTask: any = async ({ title, description }: AddTaskParams) => {
+		taskInput.current!.value = '';
+		taskDescription.current!.value = '';
 		const res = await axios
 			.post(
 				'http://46.101.172.171:8008/tasks/',
@@ -39,28 +48,49 @@ const TaskList = ({ name, id }: any) => {
 				},
 				axiosConfig
 			)
-			.then((response) => response)
-			.catch((error) => console.error(error));
+			.then((res) => res)
+			.catch(() => console.log('Error: can not add a task'));
 		if (res) {
 			return res.data;
 		}
 	};
 
+	const deleteTaskList: any = ({ id }: any) => {
+		axios
+			.delete(`http://46.101.172.171:8008/project/tasklist_delete/${id}`, axiosConfig)
+			.catch(() => console.log('Error: can not delete a task list'));
+	};
+
+	const [ deleteTaskListMutate ]: any = useMutation(deleteTaskList, {
+		onMutate:
+			(newData: any) => {
+				queryCache.cancelQueries(newData);
+				queryCache.setQueryData('task-lists', (prev: any) => {
+					const filteredRes = prev.map((taskLists: any) => {
+						return taskLists.filter((taskList: any) => {
+							return taskList.id !== newData.id;
+						});
+					});
+					return filteredRes;
+				});
+			},
+		onSettled: () => queryCache.invalidateQueries('task-lists')
+	});
+
 	const [ mutate ]: any = useMutation(addTask, {
 		onMutate:
 			(newData: any) => {
 				queryCache.cancelQueries(id);
-				const snapshot = queryCache.getQueryData(id);
-				queryCache.setQueryData(id, (prev: any) => [ ...prev, { ...newData, id: new Date().toISOString } ]);
+				if (newData.title.length > 1) {
+					queryCache.setQueryData(id, (prev: any) => [ ...prev, { ...newData, id: new Date().toISOString } ]);
+				}
 			},
-		onError: (error, newData, rollback: any) => rollback(),
 		onSettled: () => queryCache.invalidateQueries(id)
 	});
-	const taskInput = useRef<HTMLInputElement>(null);
-	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
 	return (
 		<Fragment>
+			{console.log(tasks, 'are')}
 			<div className='task-list-row'>
 				<img
 					src={arrow}
@@ -77,60 +107,82 @@ const TaskList = ({ name, id }: any) => {
 					}}
 				/>
 				<h3 className='list-label'>{name}</h3>
+				<div className='taskList-tooltip'>
+					<Icon icon={ellipsisDotsH} className='dots' />
+					<div className='taskList-content'>
+						<ul>
+							<li className='delete-task-list' onClick={() => deleteTaskListMutate({ id })}>
+								Delete Task List
+							</li>
+						</ul>
+					</div>
+				</div>
+				<span className='task-count'>{task_count}</span>
 			</div>
-			<div className='task-container'>
-				{isOpen && !tasks.length && <div className='no-tasks'>No tasks in this list yet.</div>}
-				{isOpen &&
-					tasks.length > 0 &&
-					tasks.map((task: any) => (
-						<Task
-							title={task.title}
-							description={task.description}
-							creationDate={task.creation_date}
-							id={task.id}
-						/>
-					))}
-				{isOpen &&
-				!isAddingTask && (
-					<button className='btn add-task' onClick={() => setIsAddingTask(true)}>
-						<span>+</span> Add Task
-					</button>
-				)}
-				{isOpen &&
-				isAddingTask && (
-					<Fragment>
-						<div className='add-task-container'>
-							<img src={addTaskPlus} alt='add task plus' className='add-task-plus icon' />
-							<input
-								type='text'
-								placeholder='What needs to be done?'
-								ref={taskInput}
-								className='add-task-input'
+			{tasks && (
+				<div className='task-container'>
+					{description &&
+					isOpen && (
+						<div className='list-description'>
+							<p>{description}</p>
+						</div>
+					)}
+					{isOpen && !tasks.length && <div className='no-tasks'>No tasks in this list yet.</div>}
+					{isOpen &&
+						tasks.length > 0 &&
+						tasks.map((task: any) => (
+							<Task
+								title={task.title}
+								description={task.description}
+								creationDate={task.creation_date}
+								tags={task.tags}
+								id={task.id}
+								list_id={id}
+								key={task.id}
 							/>
-						</div>
-						<div className='task-description'>
-							<label>
-								Provide a detailed description <small>(Optional)</small>
-							</label>
-							<textarea rows={10} cols={60} ref={taskDescription} className='description-area' />
-						</div>
-						<button
-							className='btn'
-							onClick={() =>
-								mutate({
-									title: taskInput.current!.value,
-									description: taskDescription.current!.value
-								})}
-						>
-							Save changes
+						))}
+					{isOpen &&
+					!isAddingTask && (
+						<button className='btn add-task' onClick={() => setIsAddingTask(true)}>
+							<span>+</span> Add Task
 						</button>
-						<span className='divider'>or</span>
-						<span className='cancel' onClick={() => setIsAddingTask(false)}>
-							Cancel
-						</span>
-					</Fragment>
-				)}
-			</div>
+					)}
+					{isOpen &&
+					isAddingTask && (
+						<Fragment>
+							<div className='add-task-container'>
+								<img src={addTaskPlus} alt='add task plus' className='add-task-plus' />
+								<input
+									type='text'
+									placeholder='What needs to be done?'
+									ref={taskInput}
+									className='add-task-input'
+								/>
+							</div>
+							<div className='task-description'>
+								<label>
+									Provide a detailed description <small>(Optional)</small>
+								</label>
+								<textarea rows={10} cols={60} ref={taskDescription} className='description-area' />
+							</div>
+							<button
+								className='btn'
+								onClick={() =>
+									mutate({
+										title: taskInput.current!.value,
+										description: taskDescription.current!.value
+									})}
+							>
+								Save changes
+							</button>
+							<span className='divider'>or</span>
+							<span className='cancel' onClick={() => setIsAddingTask(false)}>
+								Cancel
+							</span>
+						</Fragment>
+					)}
+				</div>
+			)}
 		</Fragment>
 	);
 };

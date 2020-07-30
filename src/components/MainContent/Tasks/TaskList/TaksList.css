@@ -26,9 +26,8 @@
 .list-label {
 	display: inline-block;
 	font-size: 1.2rem;
-	font-weight: 600;
+	font-weight: 500;
 	margin-bottom: 0;
-	margin-right: 10px;
 }
 
 .show-tasks-arrow {
@@ -84,10 +83,9 @@
 	border: none;
 	-webkit-box-shadow: none;
 	box-shadow: none;
-	padding: 5px 0 4px 0;
+	padding-top: 6px;
 	height: 34px;
 	font-size: 15px;
-	font-weight: 400;
 	outline: none;
 }
 
@@ -97,8 +95,16 @@
 
 .add-task-plus {
 	position: relative;
-	top: 14px;
+	top: 17px;
+	left: 4px;
+	width: 0.95rem;
+	opacity: 0.6;
 	padding-right: 10px;
+	cursor: pointer;
+}
+
+.add-task-plus:hover {
+	opacity: 0.8;
 }
 
 .divider {
@@ -146,4 +152,85 @@
 	background-color: #eeeeee;
 	padding: 20px;
 	margin: 0 2rem 10px 3rem;
+}
+
+.taskList-tooltip {
+	width: 20px;
+	padding: 0 0.6rem;
+	position: relative;
+	display: inline-block;
+}
+
+.taskList-tooltip:hover .taskList-content {
+	visibility: visible;
+	opacity: 1;
+}
+
+.dots {
+	padding: 0;
+	opacity: 0.6;
+	display: flex;
+	cursor: pointer;
+}
+
+.dots:hover {
+	opacity: 0.8;
+	transition: .1s;
+	transform: scale(1.1) !important;
+}
+
+.taskList-tooltip .taskList-content {
+	visibility: hidden;
+	width: 100px;
+	height: 120px;
+	background-color: #fff;
+	color: #737373;
+	text-align: center;
+	border-radius: 8px;
+	position: absolute;
+	z-index: 1;
+	bottom: -100%;
+	left: 100%;
+	opacity: 0;
+	transition: opacity .4s;
+	border: 1px solid #eee;
+	-webkit-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
+	-moz-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
+	box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
+}
+
+.taskList-tooltip ul li {
+	list-style: none;
+	font-size: 0.7rem;
+	cursor: pointer;
+	padding: 4px 2px;
+}
+
+.taskList-tooltip ul li:hover {
+	background-color: #73737373;
+}
+
+.task-count {
+	opacity: 0;
+	background-color: rgba(0, 51, 80, 0.66);
+	color: #eee;
+	font-size: 0.8rem;
+	padding: 2px 12px;
+	border-radius: 14px;
+}
+
+.task-list-row:hover .task-count {
+	opacity: 0.8;
+	transition: .1s;
+}
+
+.list-description {
+	display: inline-block;
+	font-size: 0.9rem;
+	line-height: 1.7;
+	word-break: break-word;
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	color: #888888;
+	margin-left: 2rem;
 }
