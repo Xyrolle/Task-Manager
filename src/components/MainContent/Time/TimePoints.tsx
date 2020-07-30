@@ -1,29 +1,38 @@
 import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { getTimePoints } from './queries'
+import moment from 'moment';
 
 const TimePoints: React.FC<{ id: number }> = ({ id }) => {
-    const { status, data, error } = useQuery(id.toString(), getTimePoints);
+    const { status, data, error } = useQuery(['time points', id.toString()], getTimePoints);
 
     if (status === 'loading') return <div data-testid="loading">loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
     return (
-        <div >
+        <>
             {data && data.map((timePoint: any, key: any) => {
                 return (
-                    <div>
-                        <div>Description:{timePoint.description}</div>
-                        <div>{timePoint.time_start}</div>
-                        <div>{timePoint.time_end}</div>
-                        <div>Task list id:{timePoint.task_list}</div>
-                    /////////////
+                    <div className="tableContentWrap">
+                        <div className="tableContent">
+                            <div className="timeDescription">
+                                <p>{timePoint.description}</p>
+                            </div>
+                            <div className="timeTaskList">
+                                <p>{timePoint.task_list}</p>
+                            </div>
+                            <div className="timeEndDate">
+                                <p>{timePoint.time_start}</p>
+                            </div>
+                            <div className="timeStartDate">
+                                {/* {timePoint.time_endmoment().format('MMMM Do YYYY, h:mm:ss a')}</p> */}
+                                <p>{moment.parseZone(timePoint.time_endmoment).format('MMMM Do YYYY, h:mm a')}</p>
+                            </div>
+                        </div>
                     </div>
                 )
             })}
-
-            ds
-        </div>
+        </>
     );
 };
 

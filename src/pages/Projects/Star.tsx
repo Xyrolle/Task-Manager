@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../utils/axiosConfig';
-import star from '../../assets/star.svg';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
 
 const getLikes = async () => {
@@ -24,13 +23,13 @@ const addLikeToProject = async (project: number) => {
 const Star: React.FC<{ userId: number; projectId: number }> = ({ userId, projectId }) => {
 	const { status, data, error } = useQuery('getLikes', getLikes);
 
-	const [ mutate ] = useMutation(addLikeToProject, {
+	const [mutate] = useMutation(addLikeToProject, {
 		onMutate:
 			(newData: any) => {
 				queryCache.cancelQueries('getLikes');
 				const snapshot = queryCache.getQueryData('getLikes');
 				queryCache.setQueryData('getLikes', (prev: any) => {
-					return [ ...prev, { project: newData } ];
+					return [...prev, { project: newData }];
 				});
 				return () => queryCache.setQueryData('getLikes', snapshot);
 			},
@@ -40,12 +39,12 @@ const Star: React.FC<{ userId: number; projectId: number }> = ({ userId, project
 
 	return (
 		<div onClick={() => mutate(projectId)}>
-			{
-				data &&
+			{data &&
 				data.some((element: any) => {
 					return element.project == projectId;
 				}) ? <Icon icon={starFilled} color='gold' className='starIcon' /> :
-				<Icon icon={starFilled} color='#ccc' className='starIcon' />}
+				<Icon icon={starFilled} color='#ccc' className='starIcon' />
+			}
 		</div>
 	);
 };
