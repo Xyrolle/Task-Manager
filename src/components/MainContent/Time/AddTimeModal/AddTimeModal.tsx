@@ -9,10 +9,9 @@ import TextField from '@material-ui/core/TextField';
 
 const createTimeGroup = async (projectId: number) => {
 
-    const response = await axios.post('http://46.101.172.171:8008/times/new_time_group/10', {},
+    const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, {},
         await axiosConfig
     );
-    console.log(response.data)
 
     // queryCache.setQueryData('getProjects', (prev: any) => {
     //     return [...prev,
@@ -46,18 +45,20 @@ const createTimePoints = async ({ groupId, description, startTimeValue, endTimeV
     },
         await axiosConfig
     );
-    console.log('time points', response.data)
-    // queryCache.setQueryData('getProjects', (prev: any) => {
-    //     return [...prev,
-    //     {
-    //         project: {
-    //             id: response.data.id,
-    //             company,
-    //             description,
-    //             name
-    //         }
-    //     }]
-    // });
+    queryCache.setQueryData('getTimeGroups', (prev: any) => {
+        return [...prev, { id: groupId, project: 84, date: " some date", times_points: [response.data.id] }]
+    });
+    queryCache.setQueryData(groupId.toString(), (prev: any) => {
+        return [{
+            id: response.data.id,
+            description: response.data.description,
+            time_start: response.data.time_start,
+            time_end: response.data.time_end,
+            user: response.data.user,
+            task_list: response.data.task_list,
+        }]
+    });
+    console.log(response.data, groupId)
     return response.data;
 }
 
@@ -71,10 +72,7 @@ const AddTimeModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
         onMutate: (newData: any) => {
             queryCache.cancelQueries('getTimeGroups');
             const snapshot = queryCache.getQueryData('getTimeGroups');
-            queryCache.setQueryData('getTimeGroups', (prev: any) => {
-                console.log('caching', prev, newData)
-                return [...prev, { id: 25, project: 10, date: " some date", times_points: [14] }]
-            });
+
             return () => queryCache.setQueryData('getTimeGroups', snapshot);
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),
@@ -129,14 +127,14 @@ const AddTimeModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
 						</button>
                         <button
                             onClick={async () => {
-                                const groupId = await createTimeGroup(10);
+                                const groupId = await createTimeGroup(84);
                                 await mutate({
                                     groupId,
                                     description: descriptionInput.current!.value,
                                     startTimeValue,
                                     endTimeValue,
-                                    user: 1,
-                                    taskList: 71,
+                                    user: 5,
+                                    taskList: 108,
                                 })
                                 await handleShowModal()
                             }}

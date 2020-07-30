@@ -1,9 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
 import { AgendaInterface } from '../interfaces';
 import Notebook from '../../../../assets/Notebook.png';
-import TagDropdown from '../TagDropdown/TagDropdown'
 import './../Agenda.css';
 import '../TagDropdown/Tag.css'
 

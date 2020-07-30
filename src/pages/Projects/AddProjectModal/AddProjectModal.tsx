@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../utils/axiosConfig'
