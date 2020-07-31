@@ -5,8 +5,8 @@
   border-radius: 4px;
   z-index: 1500;
   position: absolute;
-  top: 2.1rem;
-  right: -0.7rem;
+  top: 2rem;
+  right: -0.21rem;
 }
 
 .plusDropdownContainer::before {
@@ -38,6 +38,7 @@
 
 .plusDropdownButton {
   height: 5rem;
+  /* line-height: 5rem; */
   font-size: 0.9rem;
   display: flex;
   flex-direction: column;
@@ -53,116 +54,4 @@
 .plusDropdownButton:hover {
   background: #eee5e57d;
   cursor: pointer;
-}
-
-@media screen and (max-width: 992px) {
-  .plusDropdownContainer {
-    width: 15rem;
-    top: 1.8rem;
-    right: -0.8rem;
-  }
-  .plusDropdownButton {
-    height: 4rem;
-    font-size: 0.8rem;
-  }
-  .plusDropdownButton h4 {
-    width: 1.8rem;
-  }
-}
-@media screen and (max-width: 768px) {
-  .plusDropdownContainer {
-    width: 12rem;
-    top: 1.5rem;
-  }
-  .plusDropdownContainer::before {
-    width: 12px;
-    height: 12px;
-    top: -0.4rem;
-  }
-
-  .plusDropdownHeader {
-    padding: 0.5rem;
-    font-size: 0.7rem;
-  }
-  .plusDropdownButton {
-    height: 3rem;
-    font-size: 0.6rem;
-  }
-  .plusDropdownButton h4 {
-    width: 1.6rem;
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .plusDropdownContainer {
-    width: 10rem;
-    top: 1.3rem;
-    right: -0.86rem;
-  }
-  .plusDropdownContainer::before {
-    width: 10px;
-    height: 10px;
-    top: -0.3rem;
-  }
-
-  .plusDropdownHeader {
-    padding: 0.45rem;
-    font-size: 0.6rem;
-  }
-  .plusDropdownButton {
-    height: 2.3rem;
-    font-size: 0.55rem;
-  }
-  .plusDropdownButton h4 {
-    width: 1.2rem;
-  }
-}
-@media screen and (max-width: 480px) {
-  .plusDropdownContainer {
-    width: 8rem;
-    top: 1.2rem;
-    right: -0.81rem;
-  }
-  .plusDropdownContainer::before {
-    width: 9px;
-    height: 9px;
-    top: -0.3rem;
-  }
-
-  .plusDropdownHeader {
-    padding: 0.3rem;
-    font-size: 0.55rem;
-  }
-  .plusDropdownButton {
-    height: 1.8rem;
-    font-size: 0.45rem;
-  }
-  .plusDropdownButton h4 {
-    width: 0.95rem;
-  }
-}
-
-@media screen and (max-width: 320px) {
-  .plusDropdownContainer {
-    width: 7rem;
-    top: 1.17rem;
-    right: -0.78rem;
-  }
-  .plusDropdownContainer::before {
-    width: 8px;
-    height: 8px;
-    top: -0.25rem;
-  }
-
-  .plusDropdownHeader {
-    padding: 0.2rem;
-    font-size: 0.5rem;
-  }
-  .plusDropdownButton {
-    height: 1.5rem;
-    font-size: 0.4rem;
-  }
-  .plusDropdownButton h4 {
-    width: 0.7rem;
-  }
 }

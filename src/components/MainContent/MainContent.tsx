@@ -18,8 +18,9 @@ const MainContent: React.FC = () => {
 			<div className='contentContainer'>
 				<Route exact path='/tasks/task_info/:task_id' component={TaskDetails} />
 				<Route exact path='/projects/:projectId/agenda' component={AgendaContent} />
-				<Route exact path='/agenda/create' component={AgendaCreate} />
-				<Route path='/agenda/:agendaID' component={AgendaDetails} />
+				<Route exact path='/projects/:projectId/agenda/create' component={AgendaCreate} />
+				<Route exact path='/projects/:projectId/time' component={Time} />
+				<Route path='/projects/:projectId/agenda/:agendaID' component={AgendaDetails} />
 				<Route exact path='/tasks/:projectID' component={TaskLists} />
 			</div>
 		</div>

@@ -28,3 +28,6 @@
 .loginButton:hover {
   background-color: #3356e0;
 }
+.errorMessage{
+  color: rgb(248, 94, 94);
+}

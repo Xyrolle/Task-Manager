@@ -12,17 +12,13 @@ import BellDropdown from './BellDropdown/BellDropdown';
 import { AppContext } from '../../context/AppContext';
 
 const Header: React.FC = () => {
-  const [openDropdown, setOpenDropdown] = useState<string>('');
+  const [plusDropdownIsOpen, setPlusDropdownIsOpen] = useState<boolean>(false);
+  const [folderDropdownIsOpen, setFolderDropdownIsOpen] = useState<boolean>(
+    false
+  );
+  const [bellDropdownIsOpen, setBellDropdownIsOpen] = useState<boolean>(false);
   const [searchInputIsOpen, setSearchInputIsOpen] = useState<boolean>(false);
-
-  const handleDropdown = (dropdownName: string) => {
-    openDropdown === dropdownName
-      ? setOpenDropdown('')
-      : setOpenDropdown(dropdownName);
-  };
-
   const ctx = useContext(AppContext);
-
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
@@ -68,11 +64,7 @@ const Header: React.FC = () => {
                 />
                 <span>Add Your Team</span>
               </button>
-              <button
-                type='button'
-                className='upgradeBtn'
-                onClick={ctx.openUpgradeModal}
-              >
+              <button type='button' className='upgradeBtn'>
                 Upgrade Now
               </button>
               <span
@@ -83,42 +75,54 @@ const Header: React.FC = () => {
               </span>
             </Fragment>
           ) : (
-            <div className='searchInputContainer'>
-              <img src={SearchIcon} alt='search' className='searchInInput' />
-              <input
-                id='search'
-                className='searchInput'
-                type='search'
-                autoComplete='off'
-                placeholder='Search'
-              />
-              <img
-                src={CancelSearch}
-                alt='cancel search'
-                className='cancelSearchInInput'
-                onClick={() => setSearchInputIsOpen(false)}
-              />
-            </div>
-          )}
+              <div className='searchInputContainer'>
+                <img src={SearchIcon} alt='search' className='searchInInput' />
+                <input
+                  id='search'
+                  className='searchInput'
+                  type='search'
+                  autoComplete='off'
+                  placeholder='Search'
+                />
+                <img
+                  src={CancelSearch}
+                  alt='cancel search'
+                  className='cancelSearchInInput'
+                  onClick={() => setSearchInputIsOpen(false)}
+                />
+              </div>
+            )}
           <div className='plusContainer'>
             <div
-              className={openDropdown !== 'plusDropdown' ? 'plus' : 'whitePlus'}
-              onClick={() => handleDropdown('plusDropdown')}
+              className={!plusDropdownIsOpen ? 'plus' : 'whitePlus'}
+              onClick={() => [
+                setPlusDropdownIsOpen(!plusDropdownIsOpen),
+                setFolderDropdownIsOpen(false),
+                setBellDropdownIsOpen(false),
+              ]}
             />
-            {openDropdown === 'plusDropdown' && <PlusDropdown />}
+            {plusDropdownIsOpen && <PlusDropdown />}
           </div>
           <div
             className='folder'
-            onClick={() => handleDropdown('folderDropdown')}
+            onClick={() => [
+              setFolderDropdownIsOpen(!folderDropdownIsOpen),
+              setPlusDropdownIsOpen(false),
+              setBellDropdownIsOpen(false),
+            ]}
           />
-          {openDropdown === 'folderDropdown' && <FolderDropdown />}
+          {folderDropdownIsOpen && <FolderDropdown />}
           <span
             className='bellContainer'
-            onClick={() => handleDropdown('bellDropdown')}
+            onClick={() => [
+              setBellDropdownIsOpen(!bellDropdownIsOpen),
+              setPlusDropdownIsOpen(false),
+              setFolderDropdownIsOpen(false),
+            ]}
           >
             <img src={Bell} alt='bell' className='bell' />
           </span>
-          {openDropdown === 'bellDropdown' && <BellDropdown />}
+          {bellDropdownIsOpen && <BellDropdown />}
           <span className='profileCircle'>EO</span>
           <img src={Vector} alt='vector' className='vector' />
         </div>

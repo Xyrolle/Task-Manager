@@ -22,11 +22,10 @@ const TimePoints: React.FC<{ id: number }> = ({ id }) => {
                                 <p>{timePoint.task_list}</p>
                             </div>
                             <div className="timeEndDate">
-                                <p>{timePoint.time_start}</p>
+                                <p>{moment.parseZone(timePoint.time_endmoment).format('MMMM Do YYYY, h:mm a')}</p>
                             </div>
                             <div className="timeStartDate">
-                                {/* {timePoint.time_endmoment().format('MMMM Do YYYY, h:mm:ss a')}</p> */}
-                                <p>{moment.parseZone(timePoint.time_endmoment).format('MMMM Do YYYY, h:mm a')}</p>
+                                <p>{moment.parseZone(timePoint.time_start).format('MMMM Do YYYY, h:mm a')}</p>
                             </div>
                         </div>
                     </div>

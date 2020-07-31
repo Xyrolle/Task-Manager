@@ -20,7 +20,7 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                 <div>
                     <h4>{agenda.title.charAt(0).toUpperCase()}.</h4>
                     <div className="agendaTitleWrap" >
-                        <Link to={`/agenda/${agenda.id}`}>
+                        <Link to={`agenda/${agenda.id}`}>
                             <p >v{agenda.title}</p>
                         </Link>
                         <div className="tagsWrap" >

@@ -2,19 +2,19 @@ import axios from 'axios';
 import { axiosConfig } from '../../../utils/axiosConfig';
 import { IupdateAgendaContent } from './interfaces'
 
-export const getAgendasByProjectId = async () => {
-    const response = await axios.get('http://46.101.172.171:8008/agenda/1/page=1',
+export const getAgendasByProjectId = async (key: string, projectId: string) => {
+    const response = await axios.get(`http://46.101.172.171:8008/agenda/${projectId}/page=1`,
         await axiosConfig
     );
     return response.data;
 };
 
-export const addAgenda = (title: string, content: string) => {
+export const addAgenda = (title: string, content: string, project: string, user: string) => {
     axios.post('http://46.101.172.171:8008/agenda/', {
         title,
         content,
-        project: '1',//project id
-        user: '1',//current user id
+        project,
+        user,
         last_user: '1', // last updated userid
     },
         axiosConfig
