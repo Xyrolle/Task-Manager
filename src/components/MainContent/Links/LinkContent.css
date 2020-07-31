@@ -1,0 +1,13 @@
+.addLinkButton {
+    padding: 7px;
+    background-color: #59c894;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: white;
+    cursor: pointer;
+  }
+  .addLinkButton:hover {
+    background-color: #469e75;
+  }
