@@ -1,28 +1,24 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
-// import { getTimeGroups } from './queries';
 import TimePoints from './TimePoints';
 import AddTimeModal from './AddTimeModal/AddTimeModal';
 import { useInfiniteQuery } from 'react-query'
 import { axiosConfig } from '../../../utils/axiosConfig';
 import axios from 'axios'
 import './Time.css'
+import { useParams } from 'react-router';
 
 const Time: React.FC = () => {
-    console.log('work')
     const [isAddTimeModalOpen, setIsAddTimeModalOpen] = useState(false)
     const [pageId, setPageId] = useState(1)
     const [hasMore, setHasMore] = useState(true);
+    const { projectId } = useParams();
+
     const getTimeGroups = async () => {
-        try {
-            const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/84/${pageId}`,
-                await axiosConfig
-            );
-            return response.data;
-        } catch (err) {
-            console.log('Error: no more task lists to load');
-            await setHasMore(false);
-        }
+        const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/${projectId}/${pageId}`,
+            await axiosConfig
+        );
+        return response.data;
     }
 
     const handleShowModal = () => setIsAddTimeModalOpen(false);
@@ -33,10 +29,10 @@ const Time: React.FC = () => {
         isFetching,
         isFetchingMore,
         fetchMore,
-    }: any = useInfiniteQuery('getTimeGroups',
+    }: any = useInfiniteQuery('getsome',
         getTimeGroups,
         {
-            getFetchMore: () => { setPageId((pageId) => pageId + 1) }
+            getFetchMore: () => pageId
         })
 
     const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
@@ -57,6 +53,7 @@ const Time: React.FC = () => {
                 <span>Error: {error.message}</span>
             ) : (
                         <>
+                            {console.log('data from times', data)}
                             {data && data.map((page: any, key: any) => (
                                 page.map((timeGroup: any, key: any) => (
                                     <div>

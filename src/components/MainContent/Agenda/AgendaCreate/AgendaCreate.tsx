@@ -1,12 +1,18 @@
-import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useContext } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import './../Agenda.css';
 import { addAgenda } from '../queries'
+import { AppContext } from '../../../../context/AppContext';
 
 const AgendaCreate = () => {
 	const agendaTitleInput = useRef<HTMLInputElement>(null);
 	const agendaContentTextArea = useRef<HTMLTextAreaElement>(null);
+	const { projectId } = useParams();
+	const ctx = useContext(AppContext);
 
+	if (!ctx) {
+		throw new Error('You probably forgot to put <AppProvider>.');
+	}
 	return (
 		<div className='agendaCreateContainer'>
 			<h2>Create New Notebook</h2>
@@ -17,7 +23,12 @@ const AgendaCreate = () => {
 				<Link to={`/agenda`}>
 					<button
 						className='createAgendaButton'
-						onClick={() => addAgenda(agendaTitleInput.current!.value, agendaContentTextArea.current!.value)}
+						onClick={() => addAgenda(
+							agendaTitleInput.current!.value,
+							agendaContentTextArea.current!.value,
+							projectId,
+							ctx.userDetails.id
+						)}
 					>
 						add agenda
 					</button>

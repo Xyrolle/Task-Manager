@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useQuery } from 'react-query';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery, } from 'react-query';
 import { getAgendasByProjectId } from './queries'
 import './Agenda.css';
 import Agenda from './AgendaComponent/Agenda';
-import { AppContext } from '../../../context/AppContext';
+
 
 const AgendaContent: React.FC = ({ }) => {
-    const { status, data, error } = useQuery('getAllAgendas', getAgendasByProjectId);
-    const ctx = useContext(AppContext);
+    const { projectId } = useParams();
+    const { status, data, error } = useQuery(['getAllAgendas', projectId], getAgendasByProjectId);
 
-    if (!ctx) {
-        throw new Error('You probably forgot to put <AppProvider>.');
-    }
 
     if (status === 'loading') return <div data-testid="loading">loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
@@ -21,7 +18,7 @@ const AgendaContent: React.FC = ({ }) => {
         <div>
             <div className="agendaHeader">
                 <h3 role="heading">Notebooks</h3>
-                <Link to={`/agenda/create`} data-testid="createAgenda">
+                <Link to={`agenda/create`} data-testid="createAgenda">
                     <button className="agendaHeaderButton">
                         Add a notebook
                     </button>

@@ -17,18 +17,20 @@ const AllPages: React.FC = () => {
 	}, [])
 
 	return (
-		<div >
-
-			{
-				ctx.addTaskListModal ? <Fragment>
+		<div>
+			{ctx.addTaskListModal ? (
+				<Fragment>
 					<AddTaskListModal />
 					<ProjectsPage />
-				</Fragment> :
-					ctx.modalVisible ? <Fragment>
-						<Modal />
+				</Fragment>
+			) : ctx.modalVisible ? (
+				<Fragment>
+					{/* <Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} /> */}
+					<ProjectsPage />
+				</Fragment>
+			) : (
 						<ProjectsPage />
-					</Fragment> :
-						<ProjectsPage />}
+					)}
 		</div>
 	);
 };

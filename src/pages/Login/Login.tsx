@@ -1,54 +1,75 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
+import { axiosConfig } from '../../utils/axiosConfig'
 import './Login.css'
 
+
+
 const getToken = async (username: string, password: string) => {
-    axios.post('http://46.101.172.171:8008/users/token/', {
-        username,
-        password
-    })
-        .then(async function (response: any) {
-            await localStorage.setItem('token', response.data.access);
+
+    try {
+        const response = await axios.post('http://46.101.172.171:8008/users/token/', {
+            username,
+            password
         })
-        .catch(function (error) {
-            console.log('token', error);
-        })
+        if (response.status === 200) {
+            localStorage.setItem('token', response.data.access)
+        }
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-const auth = (login: string, password: string) => {
-    axios.post('http://46.101.172.171:8008/users/login/', {
-        username: login,
-        password: password
-    })
-        .then(function (response) {
-            getToken(login, password)
+const auth = async (login: string, password: string, setErrorMessage: (message: string) => void) => {
+    try {
+        const response = await axios.post('http://46.101.172.171:8008/users/login/', {
+            username: login,
+            password: password
         })
-        .catch(function (error) {
-            console.log(error);
-        })
+        response.status === 200 && await getToken(login, password)
+        return 200;
+    } catch (error) {
+        error.response.status === 400 && setErrorMessage('Insert username and password')
+        error.response.status === 401 && setErrorMessage('Wrong username or password')
+    }
+
+
 }
 const Login: React.FC = () => {
-    const history = useHistory();
+    const [errorMessage, setErrorMessage] = useState('')
     const username = useRef<HTMLInputElement>(null)
     const password = useRef<HTMLInputElement>(null)
+    const history = useHistory();
     return (
+        // <form onSubmit={
+        //     async () => {
+        //         await auth(
+        //             username.current!.value,
+        //             password.current!.value)
+        //         await history.push('/')
+        //     }}>
         <div className="loginWrap">
             <input ref={username} type="text" className="usernameInput" placeholder="Username" />
             <input ref={password} type="password" className="passwordInput" placeholder="Password" />
             <p>Dont have an accout?<Link to={`/register`}> Sign up </Link></p>
+            {errorMessage && <div className="errorMessage"> {errorMessage}</div>}
             <button
-                onClick={() => {
-                    auth(
+                onClick={async () => {
+                    const status = await auth(
                         username.current!.value,
-                        password.current!.value)
-                    history.push('/')
+                        password.current!.value,
+                        setErrorMessage)
+                    status === 200 && history.push('/')
+
                 }}
                 className="loginButton"
             >
                 Log in
             </button>
-        </div>
+
+        </div >
+        // </form>
     )
 }
 export default Login;

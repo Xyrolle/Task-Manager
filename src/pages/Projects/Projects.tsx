@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { axiosConfig } from '../../utils/axiosConfig';
 import Star from './Star'
 import './Projects.css';
 import AddProjectModal from './AddProjectModal/AddProjectModal'
+import { AppContext } from '../../context/AppContext'
 
 const deleteProject = async (id: number) => {
     const response = await axios.delete(`http://46.101.172.171:8008/project/project_delete/${id}`,
@@ -14,17 +15,21 @@ const deleteProject = async (id: number) => {
     return response.data;
 }
 
-const getProjects = async () => {
-    const response = await axios.get('http://46.101.172.171:8008/project/project_view_by_user/5/1/',
+const getProjects = async (key: string, userId: string) => {
+    const response = await axios.get(`http://46.101.172.171:8008/project/project_view_by_user/${userId}/1/`,
         axiosConfig
     );
     return response.data;
 }
 
 const Projects: React.FC = () => {
-    const { status, data, error } = useQuery('getProjects', getProjects);
+    const ctx = useContext(AppContext);
     const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false)
     const handleShowModal = () => setIsAddProjectModalOpen(false);
+    if (!ctx) {
+        throw new Error('You probably forgot to put <AppProvider>.');
+    }
+    const { status, data, error } = useQuery(['getProjects', ctx.userDetails && ctx.userDetails.id], getProjects);
 
     const [mutateDeleteProject] = useMutation(deleteProject, {
 
@@ -32,8 +37,7 @@ const Projects: React.FC = () => {
             queryCache.cancelQueries('getProjects');
             const snapshot = queryCache.getQueryData('getProjects');
 
-            queryCache.setQueryData('getProjects', (prev: any) => {
-
+            queryCache.setQueryData(['getProjects', ctx.userDetails && ctx.userDetails.id], (prev: any) => {
                 return prev.filter(({ project }: any) => project.id !== newData)
             });
             return () => queryCache.setQueryData('getProjects', snapshot);

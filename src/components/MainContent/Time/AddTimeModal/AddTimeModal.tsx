@@ -5,6 +5,7 @@ import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../../utils/axiosConfig'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { useParams } from 'react-router';
 
 
 const createTimeGroup = async (projectId: number) => {
@@ -12,22 +13,11 @@ const createTimeGroup = async (projectId: number) => {
     const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, {},
         await axiosConfig
     );
-
-    // queryCache.setQueryData('getProjects', (prev: any) => {
-    //     return [...prev,
-    //     {
-    //         project: {
-    //             id: response.data.id,
-    //             company,
-    //             description,
-    //             name
-    //         }
-    //     }]
-    // });
     return response.data.id;
 }
 
 interface foo {
+    projectId: string;
     groupId: number;
     description: string;
     startTimeValue: string;
@@ -35,7 +25,7 @@ interface foo {
     user: number;
     taskList: number
 }
-const createTimePoints = async ({ groupId, description, startTimeValue, endTimeValue, user, taskList }: foo): Promise<void> => {
+const createTimePoints = async ({ projectId, groupId, description, startTimeValue, endTimeValue, user, taskList }: foo): Promise<void> => {
     const response = await axios.post(`http://46.101.172.171:8008/times/time_point/add/${groupId}`, {
         description,
         time_start: startTimeValue,
@@ -46,7 +36,8 @@ const createTimePoints = async ({ groupId, description, startTimeValue, endTimeV
         await axiosConfig
     );
     queryCache.setQueryData('getTimeGroups', (prev: any) => {
-        return [...prev, { id: groupId, project: 84, date: " some date", times_points: [response.data.id] }]
+        console.log('prev', prev)
+        return [[{ id: groupId, project: projectId, date: new Date(), times_points: [response.data.id] }], ...prev,]
     });
     queryCache.setQueryData(groupId.toString(), (prev: any) => {
         return [{
@@ -58,7 +49,6 @@ const createTimePoints = async ({ groupId, description, startTimeValue, endTimeV
             task_list: response.data.task_list,
         }]
     });
-    console.log(response.data, groupId)
     return response.data;
 }
 
@@ -66,6 +56,7 @@ const AddTimeModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
     const [startTimeValue, setStartTimeValue] = useState(moment().toISOString());
     const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
     const descriptionInput = useRef<HTMLTextAreaElement>(null);
+    const { projectId } = useParams();
 
     const [mutate] = useMutation(createTimePoints, {
 
@@ -127,8 +118,9 @@ const AddTimeModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
 						</button>
                         <button
                             onClick={async () => {
-                                const groupId = await createTimeGroup(84);
+                                const groupId = await createTimeGroup(projectId);
                                 await mutate({
+                                    projectId,
                                     groupId,
                                     description: descriptionInput.current!.value,
                                     startTimeValue,
