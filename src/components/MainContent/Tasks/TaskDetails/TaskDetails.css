@@ -3,3 +3,23 @@
 
 .add-commets-field {
 }
+
+.add-comment-section {
+	height: 30vh;
+	display: flex;
+	flex-direction: column;
+	place-items: center;
+}
+
+.add-comment-section h3 {
+	padding: 1rem;
+}
+
+.details-input {
+	width: 50%;
+	height: 100%;
+	resize: none;
+	border-radius: 3px;
+	color: #000000;
+	background-color: #f9f9f9;
+}

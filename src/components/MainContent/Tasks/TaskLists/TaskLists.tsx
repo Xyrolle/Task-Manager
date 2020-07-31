@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 
 import { useQuery, useMutation, queryCache } from 'react-query';
@@ -20,11 +20,13 @@ const TaskLists = () => {
 	};
 
 	const fetchTaskLists = async () => {
+		console.log(page_id, 'is');
 		try {
 			const res = await axios.get(
 				`http://46.101.172.171:8008/project/task_list_view_by_project/87/${page_id}/`,
 				axiosConfig
 			);
+			setPageID((old) => old + 1);
 			return res.data;
 		} catch (err) {
 			console.log('Error: no more task lists to load');
@@ -34,7 +36,10 @@ const TaskLists = () => {
 
 	// can fetch more, optimization, bug with page_id
 	const { data: lists, isFetching, isFetchingMore, fetchMore } = useInfiniteQuery('task-lists', fetchTaskLists, {
-		getFetchMore: () => setPageID((old) => old + 1)
+		getFetchMore:
+			() => {
+				return page_id;
+			}
 	});
 
 	console.log('lists', lists);
