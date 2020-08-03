@@ -53,7 +53,6 @@ const Time: React.FC = () => {
                 <span>Error: {error.message}</span>
             ) : (
                         <>
-                            {console.log('data from times', data)}
                             {data && data.map((page: any, key: any) => (
                                 page.data.map((timeGroup: any, key: any) => (
                                     <div>

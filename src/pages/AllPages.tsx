@@ -14,6 +14,7 @@ const AllPages: React.FC = () => {
 	useEffect(() => {
 		ctx.setUserInfo()
 	}, [])
+
 	return (
 		<div>
 			{ctx.addTaskListModal ? (
@@ -26,9 +27,9 @@ const AllPages: React.FC = () => {
 					<Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} />
 					<ProjectsPage />
 				</Fragment>
-			) : (
-						<ProjectsPage />
-					)}
+			) : ctx.userDetails ? (
+				<ProjectsPage />
+			) : null}
 		</div>
 	);
 };
