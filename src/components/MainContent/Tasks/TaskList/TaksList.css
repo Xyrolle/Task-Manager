@@ -234,3 +234,8 @@
 	color: #888888;
 	margin-left: 2rem;
 }
+
+.edit-input {
+	height: 1.4rem;
+	padding: 2px 4px;
+}
