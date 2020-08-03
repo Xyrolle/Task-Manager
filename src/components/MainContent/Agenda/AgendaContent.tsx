@@ -24,7 +24,7 @@ const AgendaContent: React.FC = ({ }) => {
                     </button>
                 </Link>
             </div>
-            {data && data.map((agenda: any, key: number) =>
+            {data && data.data.map((agenda: any, key: number) =>
                 <div key={key}>
                     <Agenda agenda={agenda} />
                 </div>)

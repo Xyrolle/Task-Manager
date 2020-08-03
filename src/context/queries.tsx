@@ -7,8 +7,7 @@ export const getUserInfo = async () => {
         const response = await axios.get(`http://46.101.172.171:8008/users/by_token/`,
             await axiosConfig
         );
-
-        console.log(response.data)
+        console.log('user info', response.data)
         return response.data;
     } catch (err) {
         console.log('Error', err);
