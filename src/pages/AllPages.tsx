@@ -27,9 +27,9 @@ const AllPages: React.FC = () => {
 					<Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} />
 					<ProjectsPage />
 				</Fragment>
-			) : ctx.userDetails ? (
+			) : ctx.userDetails && (
 				<ProjectsPage />
-			) : null}
+			)}
 		</div>
 	);
 };
