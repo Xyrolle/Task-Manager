@@ -30,7 +30,7 @@ const Projects: React.FC = () => {
     if (!ctx) {
         throw new Error('You probably forgot to put <AppProvider>.');
     }
-    const { status, data, error } = useQuery(['getProjects', ctx.userDetails && ctx.userDetails.id], getProjects);
+    const { status, data, error } = useQuery(['getProjects', ctx.userDetails.id], getProjects);
 
     const [mutateDeleteProject] = useMutation(deleteProject, {
 
