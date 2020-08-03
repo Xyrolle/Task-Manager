@@ -7,7 +7,7 @@ import { AppContext } from '../../../../context/AppContext';
 const AgendaCreate = () => {
 	const agendaTitleInput = useRef<HTMLInputElement>(null);
 	const agendaContentTextArea = useRef<HTMLTextAreaElement>(null);
-	const { projectId } = useParams();
+	const { projectId, agendaID } = useParams();
 	const ctx = useContext(AppContext);
 
 	if (!ctx) {
@@ -20,7 +20,7 @@ const AgendaCreate = () => {
 			Content
 			<textarea ref={agendaContentTextArea} className='createContentTextArea' placeholder='content' />
 			<div className='textAreaButtonsWrap'>
-				<Link to={`/agenda`}>
+				<Link to={`/projects/${projectId}/agenda`}>
 					<button
 						className='createAgendaButton'
 						onClick={() => addAgenda(

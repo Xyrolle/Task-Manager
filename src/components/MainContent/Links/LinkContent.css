@@ -11,3 +11,6 @@
   .addLinkButton:hover {
     background-color: #469e75;
   }
+  .linkComponentContainer{
+    margin-left: rem;
+  }

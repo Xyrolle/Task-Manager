@@ -23,7 +23,7 @@ const MainContent: React.FC = () => {
 				<Route exact path='/projects/:projectId/agenda/create' component={AgendaCreate} />
 				<Route exact path='/projects/:projectId/time' component={Time} />
 				<Route exact path='/projects/:projectId/links' component={LinkContent} />
-				<Route exact path='/projects/:projectId/links/linkId' component={LinkDetails} />
+				<Route exact path='/projects/:projectId/links/:linkId' component={LinkDetails} />
 				<Route path='/projects/:projectId/agenda/:agendaID' component={AgendaDetails} />
 				<Route exact path='/tasks/:projectID' component={TaskLists} />
 			</div>

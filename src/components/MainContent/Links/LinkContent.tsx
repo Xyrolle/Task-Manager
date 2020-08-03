@@ -4,6 +4,7 @@ import { useQuery } from 'react-query';
 import { getLinks } from './queries'
 import AddTLinkModal from './AddLinkModal/AddLinkModal'
 import './LinkContent.css';
+import LinkComponent from './LinkComponent/LinkComponent'
 
 const LinkContent: React.FC = () => {
     const { projectId } = useParams();
@@ -21,14 +22,15 @@ const LinkContent: React.FC = () => {
                 + Add Link
             </button>
             {isAddLinkOpen && <AddTLinkModal handleShowModal={handleShowModal} />}
-
-            {data && data.map((link: any, key: number) => (
-                <div key={key}>
-                    <Link to={`${link.id}`}>
-                        {link.content}
-                    </Link>
-                </div>
-            ))}
+            {console.log(data)}
+            <div className="linkComponentContainer">
+                {data && data.data.map((link: any, key: number) => (
+                    <div key={key}>
+                        {console.log(link)}
+                        <LinkComponent data={link} />
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
