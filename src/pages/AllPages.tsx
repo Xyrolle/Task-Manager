@@ -1,4 +1,4 @@
-import React, { useContext, Fragment, useEffect } from 'react';
+import React, { useContext, Fragment } from 'react';
 
 import ProjectsPage from './ProjectsPage/ProjectsPage';
 import Modal from '../components/Modal/Modal';
@@ -11,11 +11,6 @@ const AllPages: React.FC = () => {
 	if (!ctx) {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
-
-	useEffect(() => {
-		ctx.setUserInfo()
-	}, [])
-
 	return (
 		<div>
 			{ctx.addTaskListModal ? (
@@ -25,7 +20,7 @@ const AllPages: React.FC = () => {
 				</Fragment>
 			) : ctx.modalVisible ? (
 				<Fragment>
-					{/* <Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} /> */}
+					<Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} />
 					<ProjectsPage />
 				</Fragment>
 			) : (

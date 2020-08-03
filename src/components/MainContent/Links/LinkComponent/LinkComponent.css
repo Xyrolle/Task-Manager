@@ -1,0 +1,67 @@
+
+.linkDetailsLink{
+    font-size: 14px;
+    font-weight: 300;
+    color: #3D8AED;
+}
+.linkDetailsContainer{
+    margin-left: 20px;
+}
+.linkContentWrap{
+    display: flex;
+}
+.linkTitleWrap{
+    display: flex;
+}
+.linkTitleWrap a{
+    align-self: center;
+}
+.linkTitleWrap a:hover{
+    color: rgb(139, 182, 238);
+}
+.linkTitle{
+    margin-right: 15px;
+    font-weight: 600;
+}
+.tag{
+    font-size: 13px;
+    font-weight: 300;
+    padding: 2px 8px 4px 8px;
+    background-color: rgb(47, 141, 228);
+    border-radius: 10px;
+    color: #fff;
+}
+.tagWrap{
+    margin-top: 5px;
+}
+.linkContent{
+    font-size: 14px;
+    font-weight: 320;
+}
+.linkContent{
+    margin-top: 12px;
+}
+.buttonsWrap{
+    margin-top: 15px;
+}
+.tagIconWrap{
+    opacity: 40%;
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+}
+.tagIconWrap:hover{
+    opacity: 70%;
+}
+.tagIcon{
+    font-size: 12px;
+    margin-right: 5px;
+}
+.linkInfoWrap{
+    margin-top: 10px;
+}
+.linkInfo{
+    font-size: 13px;
+    color:#999;
+    font-weight: 350;
+}

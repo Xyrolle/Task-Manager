@@ -43,3 +43,347 @@
   height: 4rem;
   margin: 2rem;
 }
+@media screen and (max-width: 1024px) {
+  .bellDropdownContainer {
+    right: 4.24rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .bellDropdownContainer {
+    width: 16rem;
+    height: 14rem;
+    top: 2.9rem;
+    right: 3.5rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 14px;
+    height: 14px;
+    top: -0.45rem;
+  }
+
+  .bellDropdownContainer h4 {
+    font-size: 1rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.8rem;
+  }
+
+  .bellDropdownContent img {
+    height: 4rem;
+    margin: 2rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .bellDropdownContainer {
+    width: 14rem;
+    height: 12rem;
+    top: 2.45rem;
+    right: 2.3rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 12px;
+    height: 12px;
+    top: -0.4rem;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.8rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.7rem;
+  }
+
+  .bellDropdownContent img {
+    height: 3.5rem;
+    margin: 1.7rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .bellDropdownContainer {
+    width: 12rem;
+    height: 10rem;
+    top: 2.1rem;
+    right: 1.67rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 10px;
+    height: 10px;
+    top: -0.38rem;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.45rem;
+    font-size: 0.6rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.7rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.6rem;
+  }
+
+  .bellDropdownContent img {
+    height: 3rem;
+    margin: 1.2rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .bellDropdownContainer {
+    width: 10rem;
+    height: 8rem;
+    top: 1.9rem;
+    right: 1.75rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 9px;
+    height: 9px;
+    top: -0.32rem;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.3rem;
+    font-size: 0.55rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.65rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.55rem;
+  }
+
+  .bellDropdownContent img {
+    height: 2.5rem;
+    margin: 0.8rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .bellDropdownContainer {
+    width: 8rem;
+    height: 6rem;
+    right: 1.57rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 8px;
+    height: 8px;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.2rem;
+    font-size: 0.5rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.55rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.45rem;
+  }
+
+  .bellDropdownContent img {
+    height: 2rem;
+    margin: 0.5rem;
+  }
+}.bellDropdownContainer {
+  background: #fff;
+  width: 18rem;
+  height: 15rem;
+  border: 1px solid #dad0d0;
+  border-radius: 4px;
+  z-index: 1500;
+  position: absolute;
+  top: 3.3rem;
+  right: 4.94rem;
+}
+
+.bellDropdownContainer::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  top: -0.5rem;
+  right: 0.74rem;
+  border: 1px solid #dad0d0;
+  transform: rotate(45deg);
+  border-bottom-width: 0;
+  border-right-width: 0;
+}
+
+.bellDropdownHeader {
+  border-bottom: 1px solid #dad0d0;
+  padding: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bellDropdownContent {
+  text-align: center;
+}
+
+.bellDropdownContent img {
+  background: gray;
+  height: 4rem;
+  margin: 2rem;
+}
+@media screen and (max-width: 1024px) {
+  .bellDropdownContainer {
+    right: 4.24rem;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .bellDropdownContainer {
+    width: 16rem;
+    height: 14rem;
+    top: 2.9rem;
+    right: 3.5rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 14px;
+    height: 14px;
+    top: -0.45rem;
+  }
+
+  .bellDropdownContainer h4 {
+    font-size: 1rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.8rem;
+  }
+
+  .bellDropdownContent img {
+    height: 4rem;
+    margin: 2rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .bellDropdownContainer {
+    width: 14rem;
+    height: 12rem;
+    top: 2.45rem;
+    right: 2.3rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 12px;
+    height: 12px;
+    top: -0.4rem;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.8rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.7rem;
+  }
+
+  .bellDropdownContent img {
+    height: 3.5rem;
+    margin: 1.7rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .bellDropdownContainer {
+    width: 12rem;
+    height: 10rem;
+    top: 2.1rem;
+    right: 1.67rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 10px;
+    height: 10px;
+    top: -0.38rem;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.45rem;
+    font-size: 0.6rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.7rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.6rem;
+  }
+
+  .bellDropdownContent img {
+    height: 3rem;
+    margin: 1.2rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .bellDropdownContainer {
+    width: 10rem;
+    height: 8rem;
+    top: 1.9rem;
+    right: 1.75rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 9px;
+    height: 9px;
+    top: -0.32rem;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.3rem;
+    font-size: 0.55rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.65rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.55rem;
+  }
+
+  .bellDropdownContent img {
+    height: 2.5rem;
+    margin: 0.8rem;
+  }
+}
+@media screen and (max-width: 320px) {
+  .bellDropdownContainer {
+    width: 8rem;
+    height: 6rem;
+    right: 1.57rem;
+  }
+
+  .bellDropdownContainer::before {
+    width: 8px;
+    height: 8px;
+  }
+
+  .bellDropdownHeader {
+    padding: 0.2rem;
+    font-size: 0.5rem;
+  }
+  .bellDropdownContainer h4 {
+    font-size: 0.55rem;
+  }
+  .bellDropdownContent p {
+    font-size: 0.45rem;
+  }
+
+  .bellDropdownContent img {
+    height: 2rem;
+    margin: 0.5rem;
+  }
+}

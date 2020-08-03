@@ -92,8 +92,8 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='/people' onClick={() => setActive('people')}>
-						People
+					<Link to='links' onClick={() => setActive('links')}>
+						Links
 					</Link>
 				</li>
 				<li

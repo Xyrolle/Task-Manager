@@ -6,6 +6,12 @@
   position: sticky;
   top: 0;
   z-index: 20;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .nav {
@@ -150,7 +156,7 @@
 .folder::before {
   content: '';
   width: 50%;
-  height: 2.5px;
+  height: 50%;
   background: #a4b0bf;
   position: absolute;
   top: -2.5px;
@@ -215,6 +221,11 @@
   transition: transform 210ms ease-in-out, -webkit-transform 210ms ease-in-out;
 }
 
+.searchInputContainer {
+  position: relative;
+  display: flex;
+}
+
 .searchInput {
   width: 15rem;
   height: 2rem;
@@ -226,10 +237,6 @@
   transition: 0.2s all;
   outline: none;
   margin-right: 1.4rem;
-}
-
-.searchInputContainer {
-  position: relative;
 }
 
 .searchCircle img,
@@ -253,9 +260,64 @@
   -webkit-appearance: none;
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 993px) {
   .burgerToggler {
     display: none;
+  }
+}
+
+@media screen and (max-width: 1280px) and (min-width: 993px) {
+  .mainHeadBtns button {
+    height: 2.3rem;
+    margin: -0.15rem 0.5rem;
+  }
+
+  .addTeamBtn {
+    display: flex;
+    flex-direction: column;
+  }
+  .addTeamBtn img {
+    height: 15px;
+    padding-right: 0;
+  }
+  .addTeamBtn span {
+    padding-bottom: 0;
+  }
+
+  .mainHeadList li {
+    font-size: 0.9rem;
+    padding: 0 0.5rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .mainHeadList li {
+    padding: 0 0.4rem;
+  }
+  .mainHeadBtns button {
+    margin: 0 0.4rem;
+  }
+  .searchCircle,
+  .profileCircle {
+    margin-left: 0.8rem;
+  }
+  .searchCircle {
+    margin-right: 0.8rem;
+  }
+  .folder {
+    margin: 0.1rem 0.6rem 0 0.6rem;
+  }
+  .bellContainer {
+    margin: 0.13rem 0.4rem 0 0.4rem;
+  }
+  .plusContainer {
+    margin: 0 0.4rem;
+  }
+  .searchInput {
+    margin-right: 0.6rem;
+  }
+  .cancelSearchInInput {
+    right: 1.4rem;
   }
 }
 
@@ -264,104 +326,17 @@
     padding: 0.6rem 0;
   }
   .mainHeadList li {
-    font-size: 0.9rem;
-    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    padding: 0 0.45rem;
   }
   .logo img {
     height: 1.85rem;
   }
-  .mainHeadBtns {
-    padding-right: 0.2rem;
-  }
-  .mainHeadBtns button {
-    font-size: 0.7rem;
-    height: 1.8rem;
-    margin: 0 0.4rem;
-    font-weight: 400;
-  }
-  .addTeamBtn {
-    padding: 0 7px;
-  }
-  .addTeamBtn img {
-    height: 16px;
-    padding-right: 3px;
-    width: 3rem;
-  }
-  .addTeamBtn span {
-    padding-bottom: 2.5px;
-  }
-  .upgradeBtn {
-    padding: 0 7px 2.5px 7px;
-  }
-  .searchCircle,
-  .profileCircle {
-    margin-left: 0.8rem;
-  }
-  .searchCircle {
-    width: 1.5rem;
-    min-width: 1.5rem;
-    height: 1.5rem;
-    line-height: 1.35rem;
-    margin-right: 0.8rem;
-  }
-  .searchCircle img {
-    height: 0.7rem;
-  }
-  .profileCircle {
-    width: 1.7rem;
-    min-width: 1.7rem;
-    height: 1.7rem;
-    line-height: 1.6rem;
-    font-size: 0.9rem;
-    font-weight: 400;
-  }
-  .vector {
-    padding: 0 0.4rem;
-    width: 0.4rem;
-    height: 0.9rem;
-  }
-  .folder {
-    width: 14px;
-    min-width: 14px;
-    height: 9px;
-    margin: 0.1rem 0.6rem 0 0.6rem;
-  }
-  .folder::before {
-    height: 2.3px;
-    top: -2.3px;
-  }
-  .bellContainer {
-    margin: 0.13rem 0.4rem 0 0.4rem;
-  }
-  .bellContainer img {
-    height: 1rem;
-  }
-  .plusContainer {
-    height: 15px;
-    width: 15px;
-    min-width: 15px;
-    margin: 0 0.4rem;
-  }
-}
 
-@media screen and (max-width: 768px) {
-  .nav {
-    padding: 0.5rem 0;
-  }
-  .logo img {
-    height: 1.6rem;
-  }
-
-  .burgerMenuWrap {
-    position: fixed;
-    top: 0;
-    left: 2rem;
-    z-index: 1;
-  }
   .burgerMenuWrap .burgerToggler {
     position: absolute;
     top: 0;
-    left: 3.5rem;
+    left: 5.5rem;
     z-index: 2;
     cursor: pointer;
     width: 34.8px;
@@ -371,7 +346,7 @@
   .burgerMenuWrap .hamburger {
     position: absolute;
     top: 0;
-    left: 3.5rem;
+    left: 5.5rem;
     z-index: 1;
     width: 22px;
     height: 22px;
@@ -486,13 +461,99 @@
   .burgerMenuWrap .burgerMenu > div > div > ul > li {
     list-style: none;
     color: #a4b0bf;
-    font-size: 0.8rem;
-    padding: 0.5rem;
+    font-size: 0.7rem;
+    padding: 0.4rem;
   }
 
   .burgerMenuWrap .burgerMenu > div > div > ul > li:hover {
     color: #fff;
     cursor: pointer;
+  }
+  .mainHeadBtns {
+    padding-right: 0.2rem;
+  }
+  .mainHeadBtns button {
+    font-size: 0.7rem;
+    height: 1.8rem;
+    font-weight: 400;
+  }
+  .addTeamBtn {
+    padding: 0 7px;
+  }
+  .addTeamBtn img {
+    height: 16px;
+    padding-right: 3px;
+    width: 3rem;
+  }
+  .addTeamBtn span {
+    padding-bottom: 2.5px;
+  }
+  .upgradeBtn {
+    padding: 0 7px 2.5px 7px;
+  }
+  .searchCircle {
+    width: 1.5rem;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.35rem;
+  }
+  .searchCircle img,
+  .searchInputContainer img {
+    height: 0.7rem;
+  }
+  .profileCircle {
+    width: 1.7rem;
+    min-width: 1.7rem;
+    height: 1.7rem;
+    line-height: 1.6rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+  .vector {
+    padding: 0 0.4rem;
+    width: 0.4rem;
+    height: 0.9rem;
+  }
+  .folder {
+    width: 14px;
+    min-width: 14px;
+    height: 9px;
+  }
+  .folder::before {
+    top: -2.3px;
+  }
+  .bellContainer img {
+    height: 1rem;
+  }
+  .plusContainer {
+    height: 15px;
+    width: 15px;
+    min-width: 15px;
+  }
+  .searchInput {
+    width: 12rem;
+    height: 1.8rem;
+    font-size: 0.7rem;
+    padding: 0 1.5rem 0.1rem 1.5rem;
+  }
+  .searchInputContainer img {
+    top: 31.5%;
+  }
+  .searchInInput {
+    left: 0.48rem;
+  }
+  .cancelSearchInInput {
+    right: 1.2rem;
+    width: 0.5rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .nav {
+    padding: 0.5rem 0;
+  }
+  .logo img {
+    height: 1.6rem;
   }
   .mainHeadBtns {
     padding-right: 0.1rem;
@@ -527,7 +588,8 @@
     line-height: 1.08rem;
     margin-right: 0.3rem;
   }
-  .searchCircle img {
+  .searchCircle img,
+  .searchInputContainer img {
     height: 0.6rem;
   }
   .profileCircle {
@@ -550,7 +612,6 @@
   }
 
   .folder::before {
-    height: 1.7px;
     top: -1.7px;
   }
   .bellContainer {
@@ -560,12 +621,28 @@
     height: 0.8rem;
     margin-bottom: 0.1rem;
   }
-
   .plusContainer {
     height: 12px;
     width: 12px;
     min-width: 12px;
     margin: 0 0.3rem;
+  }
+  .searchInput {
+    width: 10rem;
+    height: 1.6rem;
+    font-size: 0.6rem;
+    padding: 0 1.2rem 0.1rem 1.2rem;
+    margin-right: 0.3rem;
+  }
+  .searchInputContainer img {
+    top: 30%;
+  }
+  .searchInInput {
+    left: 0.39rem;
+  }
+  .cancelSearchInInput {
+    right: 0.8rem;
+    width: 0.4rem;
   }
 }
 
@@ -583,10 +660,12 @@
   .burgerMenuWrap .burgerToggler {
     width: 27.8px;
     height: 34.2px;
+    left: 4.6rem;
   }
   .burgerMenuWrap .hamburger {
     width: 15px;
     height: 15px;
+    left: 4.6rem;
   }
 
   /* Hamburger Line */
@@ -612,8 +691,8 @@
   }
 
   .burgerMenuWrap .burgerMenu > div > div > ul > li {
-    font-size: 0.7rem;
-    padding: 0.45rem;
+    font-size: 0.6rem;
+    padding: 0.4rem;
   }
 
   .mainHeadBtns {
@@ -650,7 +729,8 @@
     line-height: 0.8rem;
     margin-right: 0.2rem;
   }
-  .searchCircle img {
+  .searchCircle img,
+  .searchInputContainer img {
     height: 0.5rem;
   }
   .profileCircle {
@@ -673,7 +753,6 @@
   }
 
   .folder::before {
-    height: 1.5px;
     top: -1.5px;
   }
   .bellContainer {
@@ -689,5 +768,103 @@
     width: 10px;
     min-width: 10px;
     margin: 0 0.2rem;
+  }
+  .searchInput {
+    width: 8rem;
+    height: 1.4rem;
+    font-size: 0.5rem;
+    padding: 0 0.9rem 0 0.8rem;
+    margin-right: 0.2rem;
+  }
+  .searchInputContainer img {
+    top: 36%;
+  }
+  .searchInInput {
+    left: 0.2rem;
+  }
+  .cancelSearchInInput {
+    right: 0.5rem;
+    width: 0.38rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav {
+    padding: 0.35rem 0;
+  }
+  .logo img {
+    height: 1.2rem;
+  }
+  .logo {
+    margin: 0 0.5rem;
+  }
+  .burgerMenuWrap .hamburger {
+    width: 12px;
+    height: 12px;
+    left: 3.5rem;
+  }
+  .burgerMenuWrap .burgerToggler {
+    width: 24.8px;
+    height: 31.2px;
+    left: 3.5rem;
+  }
+  .mainHeadBtns button {
+    width: 3rem;
+  }
+  .addTeamBtn img {
+    display: none;
+  }
+  .searchInput {
+    width: 8rem;
+    height: 1.2rem;
+  }
+  .searchCircle img,
+  .searchInputContainer img {
+    height: 0.45rem;
+  }
+  .burgerMenuWrap .burgerMenu {
+    top: 2rem;
+    width: 5.44rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .mainHeadBtns {
+    margin-left: 1.5rem;
+  }
+  .mainHeadBtns button {
+    font-size: 0.36rem;
+    height: 1.3rem;
+    width: 1.97rem;
+    margin: 0 0.1rem;
+  }
+  .addTeamBtn,
+  .upgradeBtn {
+    padding: 0 2px;
+  }
+  .searchCircle,
+  .profileCircle {
+    margin-left: 0.1rem;
+  }
+  .searchCircle {
+    margin-right: 0.1rem;
+    line-height: 0.7rem;
+  }
+  .folder {
+    margin: 0.07rem 0.1rem 0 0.1rem;
+  }
+  .bellContainer {
+    margin: 0.05rem 0.1rem 0 0.1rem;
+  }
+  .plusContainer {
+    margin: 0 0.1rem;
+  }
+  .searchInput {
+    width: 6rem;
+    height: 1.1rem;
+  }
+  .searchCircle img,
+  .searchInputContainer img {
+    height: 0.4rem;
   }
 }

@@ -12,13 +12,17 @@ import BellDropdown from './BellDropdown/BellDropdown';
 import { AppContext } from '../../context/AppContext';
 
 const Header: React.FC = () => {
-  const [plusDropdownIsOpen, setPlusDropdownIsOpen] = useState<boolean>(false);
-  const [folderDropdownIsOpen, setFolderDropdownIsOpen] = useState<boolean>(
-    false
-  );
-  const [bellDropdownIsOpen, setBellDropdownIsOpen] = useState<boolean>(false);
+  const [openDropdown, setOpenDropdown] = useState<string>('');
   const [searchInputIsOpen, setSearchInputIsOpen] = useState<boolean>(false);
+
+  const handleDropdown = (dropdownName: string) => {
+    openDropdown === dropdownName
+      ? setOpenDropdown('')
+      : setOpenDropdown(dropdownName);
+  };
+
   const ctx = useContext(AppContext);
+
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
@@ -64,7 +68,11 @@ const Header: React.FC = () => {
                 />
                 <span>Add Your Team</span>
               </button>
-              <button type='button' className='upgradeBtn'>
+              <button
+                type='button'
+                className='upgradeBtn'
+                onClick={ctx.openUpgradeModal}
+              >
                 Upgrade Now
               </button>
               <span
@@ -94,35 +102,23 @@ const Header: React.FC = () => {
             )}
           <div className='plusContainer'>
             <div
-              className={!plusDropdownIsOpen ? 'plus' : 'whitePlus'}
-              onClick={() => [
-                setPlusDropdownIsOpen(!plusDropdownIsOpen),
-                setFolderDropdownIsOpen(false),
-                setBellDropdownIsOpen(false),
-              ]}
+              className={openDropdown !== 'plusDropdown' ? 'plus' : 'whitePlus'}
+              onClick={() => handleDropdown('plusDropdown')}
             />
-            {plusDropdownIsOpen && <PlusDropdown />}
+            {openDropdown === 'plusDropdown' && <PlusDropdown />}
           </div>
           <div
             className='folder'
-            onClick={() => [
-              setFolderDropdownIsOpen(!folderDropdownIsOpen),
-              setPlusDropdownIsOpen(false),
-              setBellDropdownIsOpen(false),
-            ]}
+            onClick={() => handleDropdown('folderDropdown')}
           />
-          {folderDropdownIsOpen && <FolderDropdown />}
+          {openDropdown === 'folderDropdown' && <FolderDropdown />}
           <span
             className='bellContainer'
-            onClick={() => [
-              setBellDropdownIsOpen(!bellDropdownIsOpen),
-              setPlusDropdownIsOpen(false),
-              setFolderDropdownIsOpen(false),
-            ]}
+            onClick={() => handleDropdown('bellDropdown')}
           >
             <img src={Bell} alt='bell' className='bell' />
           </span>
-          {bellDropdownIsOpen && <BellDropdown />}
+          {openDropdown === 'bellDropdown' && <BellDropdown />}
           <span className='profileCircle'>EO</span>
           <img src={Vector} alt='vector' className='vector' />
         </div>

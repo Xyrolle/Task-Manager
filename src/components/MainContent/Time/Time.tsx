@@ -29,7 +29,7 @@ const Time: React.FC = () => {
         isFetching,
         isFetchingMore,
         fetchMore,
-    }: any = useInfiniteQuery('getsome',
+    }: any = useInfiniteQuery('getTimeGroups',
         getTimeGroups,
         {
             getFetchMore: () => pageId
