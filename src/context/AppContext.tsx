@@ -9,11 +9,17 @@ export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppProvider = ({ children }: Props) => {
 	const [userDetails, setUserDetails] = useState()
+	const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState<boolean>(false);
 	const [modalVisible, setModalVisible] = useState<boolean>(false);
 	const [addTaskListModal, setTaskListModal] = useState<boolean>(false);
 
 	const openModal = (): void => {
 		setModalVisible(true);
+		setIsUpgradeModalOpen(false);
+	};
+	const openUpgradeModal = (): void => {
+		setModalVisible(true);
+		setIsUpgradeModalOpen(true);
 	};
 
 	const openTaskListModal = (): void => {
@@ -27,7 +33,6 @@ export const AppProvider = ({ children }: Props) => {
 	const closeTaskListModal = (): void => {
 		setTaskListModal(false);
 	};
-
 	const setUserInfo = async () => {
 		await setUserDetails(await getUserInfo())
 	}
@@ -43,10 +48,14 @@ export const AppProvider = ({ children }: Props) => {
 				closeTaskListModal,
 				addTaskListModal,
 				setUserInfo,
-				userDetails
+				userDetails,
+				isUpgradeModalOpen,
+				setIsUpgradeModalOpen,
+				openUpgradeModal
 			}}
 		>
 			{children}
 		</AppContext.Provider>
 	);
 };
+
