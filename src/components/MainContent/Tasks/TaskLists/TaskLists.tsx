@@ -9,7 +9,6 @@ import TaskList from '../TaskList/TaskList';
 import './TaskLists.css';
 
 const TaskLists = () => {
-	const [ page_id, setPageID ] = useState(1);
 	const [ hasMore, setHasMore ] = useState(true);
 
 	let axiosConfig = {
@@ -19,42 +18,58 @@ const TaskLists = () => {
 			}
 	};
 
-	const fetchTaskLists = async () => {
-		console.log(page_id, 'is');
+	interface IList {
+		id: number;
+		name: string;
+		project: number;
+		task_count: number;
+		description?: string;
+	}
+
+	interface ILists {
+		data: IList[];
+		page_current: number;
+		page_total: number;
+	}
+
+	const fetchTaskLists = async (key: any, page_id = 1) => {
+		console.log(page_id, 'is a page id');
 		try {
 			const res = await axios.get(
 				`http://46.101.172.171:8008/project/task_list_view_by_project/87/${page_id}/`,
 				axiosConfig
 			);
-			setPageID((old) => old + 1);
 			return res.data;
 		} catch (err) {
 			console.log('Error: no more task lists to load');
-			setHasMore(false);
 		}
 	};
 
-	// can fetch more, optimization, bug with page_id
-	const { data: lists, isFetching, isFetchingMore, fetchMore } = useInfiniteQuery('task-lists', fetchTaskLists, {
+	const { data: lists, isFetching, isFetchingMore, fetchMore } = useInfiniteQuery<
+		ILists,
+		string,
+		number
+	>('task-lists', fetchTaskLists, {
 		getFetchMore:
-			() => {
-				return page_id;
+			(prev) => {
+				return prev.page_current + 1;
 			}
 	});
 
-	console.log('lists', lists);
-
 	const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
+
+	console.log('task lists', lists);
 
 	if (!lists) return <h5>loading</h5>;
 
 	return (
 		<div>
 			{lists &&
-				lists.map((lists_page: any) => {
+				lists.map((lists_page: ILists) => {
+					console.log(lists_page, 'page');
 					return (
 						lists_page &&
-						lists_page.map((taskList: any) => (
+						lists_page.data.map((taskList: IList) => (
 							<TaskList
 								name={taskList.name}
 								id={taskList.id}
@@ -71,17 +86,22 @@ const TaskLists = () => {
 					onClick={() => {
 						fetchMore();
 					}}
-					disabled={!hasMore || isFetching}
+					disabled={
+						(lists && lists[lists.length - 1].page_current >= lists[lists.length - 1].page_total) ||
+						isFetching
+					}
 					className={
 						'btn load-more-lists ' +
 						(
-							!hasMore || isFetchingMore ? 'disabledBtn' :
+							(lists && lists[lists.length - 1].page_current >= lists[lists.length - 1].page_total) ||
+							isFetchingMore ? 'disabledBtn' :
 							'')
 					}
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						hasMore ? 'Load More' :
+						lists &&
+						lists[lists.length - 1].page_current < lists[lists.length - 1].page_total ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>

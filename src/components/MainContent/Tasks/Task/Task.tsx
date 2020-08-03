@@ -20,6 +20,8 @@ import clockTimeFourOutline from '@iconify/icons-mdi/clock-time-four-outline';
 
 import { ITask, ITag } from './ITask';
 
+import AddTagDropdown from './AddTagDropdown/AddTagDropdown';
+
 import './Task.css';
 
 // add task info popup
@@ -56,14 +58,17 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 
 	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
 		onMutate:
-			(newData: any) => {
+			(newData) => {
 				if (list_id) {
+					console.log(newData, 'is');
 					queryCache.cancelQueries(list_id);
 					queryCache.setQueryData(list_id, (prev: any) => {
 						if (prev) {
-							return prev.filter((task: ITask) => {
+							prev['data'] = prev.data.filter((task: ITask) => {
 								return id !== task.id;
 							});
+
+							return prev;
 						}
 					});
 				} else {
@@ -78,7 +83,7 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 				if (tags && list_id) {
 					queryCache.cancelQueries(list_id);
 					queryCache.setQueryData(list_id, (prev: any) => {
-						let task_to_change = prev.find((task: ITask) => task.id === newData.task_id);
+						let task_to_change = prev.data.find((task: ITask) => task.id === newData.task_id);
 						task_to_change.tags = task_to_change.tags.filter((tag: any) => {
 							return tag.id !== newData.tag_id;
 						});
@@ -89,7 +94,7 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 				} else {
 					queryCache.cancelQueries(`details-for-task-${newData.task_id}`);
 					queryCache.setQueryData(`details-for-task-${newData.task_id}`, (prev: any) => {
-						prev.tags = prev.tags.filter((tag: any) => tag.id !== newData.tag_id);
+						prev.data.tags = prev.tags.filter((tag: any) => tag.id !== newData.tag_id);
 						return prev;
 					});
 				}
@@ -185,6 +190,7 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 			<div className='description-tooltip'>
 				<img src={tag} alt='add tag' className='tag icon pd-left-10' />
 				<span className='tooltip-text'>Add Tag</span>
+				{/* <AddTagDropdown /> */}
 			</div>
 			<img src={eye} alt='eye icon' className='eye icon pd-left-10' />
 			{description &&

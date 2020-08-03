@@ -28,7 +28,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ isEditing, setIsEditing ] = useState(false);
 	let { projectID } = useParams();
 	const taskInput = useRef<HTMLInputElement>(null);
-	const [ listEditing, setListEditing ] = useState(name);
+	const [ listEditingName, setListEditingName ] = useState(name);
 	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
 	let axiosConfig = {
@@ -39,6 +39,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	};
 
 	const addTask: any = async ({ title, description }: AddTaskParams) => {
+		console.log(title, description, id);
 		taskInput.current!.value = '';
 		taskDescription.current!.value = '';
 		const res = await axios
@@ -51,7 +52,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 				},
 				axiosConfig
 			)
-			.then((res) => res)
 			.catch(() => console.log('Error: can not add a task'));
 		if (res) {
 			return res.data;
@@ -69,13 +69,13 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			(newData: any) => {
 				queryCache.cancelQueries(newData.id);
 				queryCache.setQueryData('task-lists', (prev: any) => {
-					console.log(prev, 'data is', newData.id);
-					const filteredRes = prev.map((taskLists: any) => {
-						return taskLists.filter((taskList: any) => {
+					prev = prev.map((taskLists: any) => {
+						taskLists.data = taskLists.data.filter((taskList: any) => {
 							return taskList.id !== newData.id;
 						});
+						return taskLists;
 					});
-					return filteredRes;
+					return prev;
 				});
 			}
 	});
@@ -83,9 +83,14 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ mutate ]: any = useMutation(addTask, {
 		onMutate:
 			(newData: any) => {
+				console.log(newData, 'isdg new data');
 				queryCache.cancelQueries(id);
 				if (newData.title.length > 1) {
-					queryCache.setQueryData(id, (prev: any) => [ ...prev, { ...newData, id: new Date().toISOString } ]);
+					queryCache.setQueryData(id, (prev: any) => {
+						console.log(prev, 'is prev', [ ...prev.data, { ...newData, id: new Date().toISOString() } ]);
+						prev['data'] = [ ...prev.data, { ...newData, id: new Date().toISOString } ];
+						return prev;
+					});
 				}
 			},
 		onSettled: () => queryCache.invalidateQueries(id)
@@ -96,14 +101,12 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 		axios.put(
 			`http://46.101.172.171:8008/project/tasklist_update/${id}/`,
 			{
-				name: listEditing,
+				name: listEditingName,
 				project: 87
 			},
 			axiosConfig
 		);
 	};
-
-	console.log(tasks);
 
 	return (
 		<Fragment>
@@ -127,14 +130,14 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 						<input
 							type='text'
 							className='edit-input'
-							value={listEditing}
-							onChange={(evt) => setListEditing(evt.target.value)}
+							value={listEditingName}
+							onChange={(evt) => setListEditingName(evt.target.value)}
 						/>
 						<button className='btn save-changes' onClick={() => saveChanges()}>
 							Save Changes
 						</button>
 					</Fragment> :
-					<h3 className='list-label'>{listEditing}</h3>}
+					<h3 className='list-label'>{listEditingName}</h3>}
 				<div className='taskList-tooltip'>
 					<Icon icon={ellipsisDotsH} className='dots' />
 					<div className='taskList-content'>
@@ -155,7 +158,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 				</div>
 				<span className='task-count'>{task_count}</span>
 			</div>
-			{tasks && (
+			{tasks.data && (
 				<div className='task-container'>
 					{description &&
 					isOpen && (
@@ -163,10 +166,10 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 							<p>{description}</p>
 						</div>
 					)}
-					{isOpen && !tasks.length && <div className='no-tasks'>No tasks in this list yet.</div>}
+					{isOpen && !tasks.data.length && <div className='no-tasks'>No tasks in this list yet.</div>}
 					{isOpen &&
-						tasks.length > 0 &&
-						tasks.map((task: any) => (
+						tasks.data.length > 0 &&
+						tasks.data.map((task: any) => (
 							<Task
 								title={task.title}
 								description={task.description}

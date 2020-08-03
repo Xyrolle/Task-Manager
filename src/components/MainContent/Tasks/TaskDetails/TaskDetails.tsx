@@ -17,43 +17,49 @@ let axiosConfig = {
 		}
 };
 
+interface CommentType {
+	[x: string]: CommentType[] | undefined;
+	data: [];
+	page_current: any;
+	page_total: any;
+}
+
 const TaskDetails: React.FC = () => {
-	const [ hasMore, setHasMore ] = useState(true);
 	const [ tagExist, setTagExist ] = useState(false);
-	const [ comments_page_id, setPageID ] = useState(1);
-
 	const { task_id } = useParams();
-
-	const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	const fetchTaskDetails: any = async () => {
 		const res = await axios.get(`http://46.101.172.171:8008/tasks/item/${task_id}`, axiosConfig);
 		return res.data;
 	};
 
-	const fetchComments: any = async () => {
-		const res = await axios.get(
-			`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
-			axiosConfig
-		);
-
-		setPageID((old) => old + 1);
-		return res.data;
-	};
-
 	const { error, data: taskInfo } = useQuery<any, any>(`details-for-task-${task_id}`, fetchTaskDetails);
 
-	const {
-		status,
-		data: comments,
-		isFetching,
-		isFetchingMore,
-		fetchMore,
-		canFetchMore
-	} = useInfiniteQuery(`comments-${task_id}`, fetchComments, {
-		getFetchMore: () => comments_page_id
-	});
+	const { status, data: comments, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
+		CommentType,
+		[any, any],
+		any
+	>(
+		[ `comments`, task_id ],
+		async (key: any, comments_page_id: any, abc?: any) => {
+			console.log(comments_page_id, 'is page id for comments', key, 'abc', abc);
+			const res = await axios.get(
+				`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
+				axiosConfig
+			);
+			console.log(res.data, 'is data');
+			return res.data;
+		},
+		{
+			getFetchMore:
+				(prev: any, all: any) => {
+					console.log('prev is ', prev, prev.page_current + 1, all);
+					return prev.page_curent + 1;
+				}
+		}
+	);
 
+	console.log(comments, canFetchMore, 'are comments');
 	const commentArea = useRef<HTMLTextAreaElement>(null);
 	const tagArea = useRef<HTMLTextAreaElement>(null);
 
@@ -66,10 +72,12 @@ const TaskDetails: React.FC = () => {
 	const [ addCommentMutate ] = useMutation(addComment, {
 		onMutate:
 			(newData: any) => {
-				const query = `comments-${task_id}`;
-				queryCache.cancelQueries(query);
-				queryCache.setQueryData(query, (prev: any) => {
-					return prev.concat({ ...newData, date: '0', author: 'You' });
+				console.log(newData, 'sifsdfasd');
+				queryCache.cancelQueries([ `comments`, task_id ]);
+				queryCache.setQueryData([ `comments`, task_id ], (prev: any) => {
+					console.log(prev, 'isadfsd a prev data');
+					prev[0].data = prev[0].data.concat({ ...newData, date: '0', author: 'You' });
+					return prev;
 				});
 			}
 	});
@@ -110,10 +118,6 @@ const TaskDetails: React.FC = () => {
 			}
 	});
 
-	if (!comments) return <div>loading</div>;
-
-	console.log(comments[0]);
-
 	return (
 		<div className='details-container'>
 			details
@@ -130,35 +134,41 @@ const TaskDetails: React.FC = () => {
 			<div className='comments-section'>
 				<h3>Comments</h3>
 				{comments &&
-					comments
-						.flat()
-						.map((comment: any) => (
-							<Comment
-								text={comment.text}
-								author={comment.author}
-								date={comment.date}
-								id={comment.id}
-								key={uuidv4()}
-							/>
-						))}
+					comments[0].data.map((comment: any) => (
+						<Comment
+							text={comment.text}
+							author={comment.author}
+							date={comment.date}
+							id={comment.id}
+							key={uuidv4()}
+						/>
+					))}
 			</div>
 			<div className='btn-container'>
 				<button
-					ref={loadMoreButtonRef}
 					onClick={() => {
 						fetchMore();
 					}}
-					disabled={!hasMore || isFetching}
+					disabled={
+						isFetching ||
+						(comments &&
+							comments[comments.length - 1].page_current >= comments[comments.length - 1].page_total)
+					}
 					className={
 						'btn load-more-lists comments-load ' +
 						(
-							!hasMore || isFetching ? 'disabledBtn' :
+							isFetching ||
+							(comments &&
+								comments[comments.length - 1].page_current >=
+									comments[comments.length - 1].page_total) ? 'disabledBtn' :
 							'')
 					}
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						hasMore ? 'Load More' :
+						comments &&
+						comments[comments.length - 1].page_current <
+							comments[comments.length - 1].page_total ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>
