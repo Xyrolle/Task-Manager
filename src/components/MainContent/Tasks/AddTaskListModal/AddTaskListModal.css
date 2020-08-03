@@ -54,10 +54,6 @@
 	flex-direction: column;
 }
 
-input[type=text]:focus {
-	border: 1px solid #555;
-}
-
 .form-group {
 	display: -webkit-box;
 	display: -ms-flexbox;

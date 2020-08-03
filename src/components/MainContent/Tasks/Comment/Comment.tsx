@@ -15,18 +15,28 @@ const Comment: React.FC<IComment> = ({ text, date, author, id }: IComment) => {
 	}
 
 	const whenPosted = (ms: number) => {
-		if (ms > 60000 && ms < 3600000) return Math.round(ms / 1000 / 60) + ' minutes ago';
-		else if (ms > 3600000 && ms < 3600000 * 24) {
-			return Math.round(ms / 1000 / 60 / 24) + ' hours ago';
-		} else if (ms < 1000) return 'a few seconds ago';
-		else return Math.round(ms / 1000) + ' seconds ago';
+		if (ms > 60000 && ms < 3600000) {
+			let res = Math.round(ms / 1000 / 60);
+			if (res > 1) return res + ' minutes ago';
+			return res + ' minute ago';
+		} else if (ms > 3600000 && ms < 3600000 * 24) {
+			let res = Math.round(ms / 1000 / 60 / 24);
+			if (res > 1) return res + ' hours ago';
+			return res + ' hour ago';
+		} else if (ms < 1000) return ' a few seconds ago';
+		else if (ms < 60000) return Math.round(ms / 1000) + ' seconds ago';
+		else {
+			let res = Math.round(ms / 1000 / 60 / 24 / 30);
+			if (res > 1) return res + ' days ago';
+			return res + ' day ago';
+		}
 	};
 
 	return (
 		<div className='comment'>
 			<span className='comment-profile'>SH</span>
 			<div className='comment-content'>
-				<h3 className='author'>{author}</h3>
+				<h4 className='author'>{author}</h4>
 				<p>{text}</p>
 				<div className='when-posted'>{whenPosted(ms)}</div>
 			</div>

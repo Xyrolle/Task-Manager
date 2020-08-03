@@ -25,8 +25,10 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	const { error, data: tasks = {} } = useQuery(id, fetchTasks, {
 		enabled: isOpen
 	});
+	const [ isEditing, setIsEditing ] = useState(false);
 	let { projectID } = useParams();
 	const taskInput = useRef<HTMLInputElement>(null);
+	const [ listEditing, setListEditing ] = useState(name);
 	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
 	let axiosConfig = {
@@ -78,8 +80,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			}
 	});
 
-	console.log('tasklist');
-
 	const [ mutate ]: any = useMutation(addTask, {
 		onMutate:
 			(newData: any) => {
@@ -90,6 +90,20 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			},
 		onSettled: () => queryCache.invalidateQueries(id)
 	});
+
+	const saveChanges = () => {
+		setIsEditing(false);
+		axios.put(
+			`http://46.101.172.171:8008/project/tasklist_update/${id}/`,
+			{
+				name: listEditing,
+				project: 87
+			},
+			axiosConfig
+		);
+	};
+
+	console.log(tasks);
 
 	return (
 		<Fragment>
@@ -108,13 +122,33 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 						setIsAddingTask(false);
 					}}
 				/>
-				<h3 className='list-label'>{name}</h3>
+				{
+					isEditing ? <Fragment>
+						<input
+							type='text'
+							className='edit-input'
+							value={listEditing}
+							onChange={(evt) => setListEditing(evt.target.value)}
+						/>
+						<button className='btn save-changes' onClick={() => saveChanges()}>
+							Save Changes
+						</button>
+					</Fragment> :
+					<h3 className='list-label'>{listEditing}</h3>}
 				<div className='taskList-tooltip'>
 					<Icon icon={ellipsisDotsH} className='dots' />
 					<div className='taskList-content'>
 						<ul>
 							<li className='delete-task-list' onClick={() => deleteTaskListMutate({ id })}>
 								Delete Task List
+							</li>
+							<li
+								className='edit-list'
+								onClick={() => {
+									setIsEditing(true);
+								}}
+							>
+								Edit List
 							</li>
 						</ul>
 					</div>

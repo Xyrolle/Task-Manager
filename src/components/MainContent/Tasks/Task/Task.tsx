@@ -49,13 +49,9 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 			.catch((err) => console.error(err));
 	};
 
-	const deleteTag: any = async (tag_id: number, task_id: number) => {
-		const res = await axios.delete(
-			`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${tag_id}`,
-			axiosConfig
-		);
-		if (list_id) queryCache.invalidateQueries(list_id);
-		else queryCache.invalidateQueries(`details-for-task-${id}`);
+	const deleteTag: any = ({ tag_id, task_id }: any) => {
+		console.log('tag id is', tag_id, task_id);
+		axios.delete(`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${tag_id}`, axiosConfig);
 	};
 
 	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
@@ -72,6 +68,30 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 					});
 				} else {
 					queryCache.setQueryData(id, null);
+				}
+			}
+	});
+
+	const [ deleteTagMutate ]: any = useMutation(deleteTag, {
+		onMutate:
+			(newData: any) => {
+				if (tags && list_id) {
+					queryCache.cancelQueries(list_id);
+					queryCache.setQueryData(list_id, (prev: any) => {
+						let task_to_change = prev.find((task: ITask) => task.id === newData.task_id);
+						task_to_change.tags = task_to_change.tags.filter((tag: any) => {
+							return tag.id !== newData.tag_id;
+						});
+						return prev;
+					});
+					tags = tags.filter((tag: any) => tag.id !== newData.tag_id);
+					return tags;
+				} else {
+					queryCache.cancelQueries(`details-for-task-${newData.task_id}`);
+					queryCache.setQueryData(`details-for-task-${newData.task_id}`, (prev: any) => {
+						prev.tags = prev.tags.filter((tag: any) => tag.id !== newData.tag_id);
+						return prev;
+					});
 				}
 			}
 	});
@@ -136,7 +156,10 @@ const Task: React.FC<ITask> = ({ description, title, creationDate, tags, id, lis
 				tags.map((tag: ITag) => (
 					<span className='tag-oval' key={uuidv4()}>
 						{tag.title}
-						<span className='close-tag-btn' onClick={() => deleteTag(tag.id, id)}>
+						<span
+							className='close-tag-btn'
+							onClick={() => deleteTagMutate({ tag_id: tag.id, task_id: id })}
+						>
 							&times;
 						</span>
 					</span>

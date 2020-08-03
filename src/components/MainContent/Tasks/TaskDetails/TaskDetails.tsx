@@ -19,6 +19,7 @@ let axiosConfig = {
 
 const TaskDetails: React.FC = () => {
 	const [ hasMore, setHasMore ] = useState(true);
+	const [ tagExist, setTagExist ] = useState(false);
 	const [ comments_page_id, setPageID ] = useState(1);
 
 	const { task_id } = useParams();
@@ -57,6 +58,7 @@ const TaskDetails: React.FC = () => {
 	const tagArea = useRef<HTMLTextAreaElement>(null);
 
 	const addComment = async ({ task_id, text }: any) => {
+		commentArea.current!.value = '';
 		const res = await axios.post(`http://46.101.172.171:8008/comment/to_task/${task_id}`, { text }, axiosConfig);
 		return res.data;
 	};
@@ -70,21 +72,25 @@ const TaskDetails: React.FC = () => {
 					return prev.concat({ ...newData, date: '0', author: 'You' });
 				});
 			}
-		// onSettled: () => queryCache.invalidateQueries(`comments-${task_id}`)
 	});
 
 	const assignTagToTask = async (id: number) => {
-		console.log('tag id is', id, task_id);
 		const res = await axios.get(`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${id}`, axiosConfig);
-		console.log(res.data, 'assigned to task', id, 'is id', task_id);
 		return id;
 	};
 
 	const addTag = async (title: string) => {
-		const res = await axios.post(`http://46.101.172.171:8008/tags/create`, { title }, axiosConfig);
-		console.log(res.data, 'tag info');
-		assignTagToTask(res.data.id);
-		return res.data.id;
+		tagArea.current!.value = '';
+		try {
+			const res = await axios.post(`http://46.101.172.171:8008/tags/create`, { title }, axiosConfig);
+			assignTagToTask(res.data.id);
+			return res.data.id;
+		} catch (err) {
+			setTagExist(true);
+			setTimeout(() => {
+				setTagExist(false);
+			}, 2000);
+		}
 	};
 
 	const [ addTagMutate ] = useMutation(addTag, {
@@ -93,7 +99,6 @@ const TaskDetails: React.FC = () => {
 				queryCache.cancelQueries(`details-for-task-${task_id}`);
 				queryCache.setQueryData(`details-for-task-${task_id}`, (prev: any) => {
 					prev['tags'] = [ ...prev['tags'], { title: newData } ];
-					console.log('prev data is', prev, newData, task_id);
 					return prev;
 				});
 			},
@@ -101,11 +106,13 @@ const TaskDetails: React.FC = () => {
 			() => {
 				setTimeout(() => {
 					queryCache.invalidateQueries(`details-for-task-${task_id}`);
-				}, 50);
+				}, 80);
 			}
 	});
 
 	if (!comments) return <div>loading</div>;
+
+	console.log(comments[0]);
 
 	return (
 		<div className='details-container'>
@@ -120,14 +127,8 @@ const TaskDetails: React.FC = () => {
 					key={task_id}
 				/>
 			)}
-			<div className='add-comment-section'>
-				<h3>Comments</h3>
-				<textarea rows={10} cols={80} ref={commentArea} className='description-area details-input' />
-				<button className='btn' onClick={() => addCommentMutate({ task_id, text: commentArea.current!.value })}>
-					Add Comment
-				</button>
-			</div>
 			<div className='comments-section'>
+				<h3>Comments</h3>
 				{comments &&
 					comments
 						.flat()
@@ -149,7 +150,7 @@ const TaskDetails: React.FC = () => {
 					}}
 					disabled={!hasMore || isFetching}
 					className={
-						'btn load-more-lists ' +
+						'btn load-more-lists comments-load ' +
 						(
 							!hasMore || isFetching ? 'disabledBtn' :
 							'')
@@ -161,12 +162,20 @@ const TaskDetails: React.FC = () => {
 						'Nothing more to load'}
 				</button>
 			</div>
-			<div className='add-tag-section'>
+			<div className='add-section comments-add'>
+				<label>Add Comment</label>
+				<textarea rows={10} cols={80} ref={commentArea} className='description-area details-input' />
+				<button className='btn' onClick={() => addCommentMutate({ task_id, text: commentArea.current!.value })}>
+					Add Comment
+				</button>
+			</div>
+			<div className='add-section tags-add'>
 				<label>Add Tag</label>
-				<textarea rows={10} cols={80} ref={tagArea} className='description-area details-input' />
+				<textarea rows={10} cols={80} placeholder='' ref={tagArea} className='description-area details-input' />
 				<button className='btn' onClick={() => addTagMutate(tagArea.current!.value)}>
 					Add Tag
 				</button>
+				{tagExist && <div className='tag-exists'>Sorry, this tag already exists</div>}
 			</div>
 		</div>
 	);
