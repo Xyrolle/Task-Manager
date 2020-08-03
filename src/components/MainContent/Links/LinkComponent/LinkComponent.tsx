@@ -28,7 +28,7 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
                 </div>
                 <div className="linkDetailsContainer">
                     <div className="linkTitleWrap">
-                        <p className="linkTitle">{data.title}</p>
+                        <p className="linkTitle"><a href={'https:' + data.title}>{data.title}</a></p>
                         <Link to={`links/${data.id}`} className="linkDetailsLink">(Details)</Link>
                     </div>
                     <div className="tagWrap">

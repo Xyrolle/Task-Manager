@@ -14,6 +14,7 @@ const AllPages: React.FC = () => {
 	useEffect(() => {
 		ctx.setUserInfo()
 	}, [])
+
 	return (
 		<div>
 			{ctx.addTaskListModal ? (
