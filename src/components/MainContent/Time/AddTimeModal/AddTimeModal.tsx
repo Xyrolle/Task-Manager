@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { useParams } from 'react-router';
 
-
 const createTimeGroup = async (projectId: number) => {
 
     const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, {},
@@ -36,8 +35,14 @@ const createTimePoints = async ({ projectId, groupId, description, startTimeValu
         await axiosConfig
     );
     queryCache.setQueryData('getTimeGroups', (prev: any) => {
-        console.log('prev', prev)
-        return [[{ id: groupId, project: projectId, date: new Date(), times_points: [response.data.id] }], ...prev,]
+        console.log('prev1', prev[0])
+        prev[0].data.push({
+            id: groupId,
+            project: projectId,
+            date: new Date(),
+            times_points: [response.data.id]
+        })
+        return prev
     });
     queryCache.setQueryData(groupId.toString(), (prev: any) => {
         return [{

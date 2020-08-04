@@ -31,7 +31,7 @@ const createTimePoints = async ({
         );
         if (response.status === 200) {
             queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
-                prev.push({
+                prev.data.push({
                     id: response.data.id,
                     title,
                     content,

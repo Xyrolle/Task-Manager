@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
 import './LinkComponent.css';
 import link from '../../../../assets/link.png'
 import tag from '../../../../assets/tag.png'
+import TagDropdown from '../TagDropdown/TagDropdown';
 
 interface LinkComponentInterface {
     data: {
@@ -17,8 +18,15 @@ interface LinkComponentInterface {
         user: number
     }
 }
+interface tagInterface {
+    id: number;
+    title: string;
+}
+
 
 const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
+    const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
+
     return (
         <div>
             <p>{data.title.charAt(0).toUpperCase()}.</p>
@@ -31,18 +39,32 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
                         <p className="linkTitle"><a href={'https:' + data.title}>{data.title}</a></p>
                         <Link to={`links/${data.id}`} className="linkDetailsLink">(Details)</Link>
                     </div>
+                    {data.tags.map((tag: any, key: number) => {
+                        return <span className="tag" key={key}>{tag.title} <span>x</span></span>
+                    })}
                     <div className="tagWrap">
-                        <span className="tag">tag <span>x</span></span>
+                        {/* {data && data.map((tag: tagInterface, key: number) => {
+                            <div>
+
+                            </div>
+                        })} */}
+
                     </div>
-                    <div >
+                    <div>
                         <p className="linkContent">
                             {data.content}
                         </p>
                     </div>
                     <div className="buttonsWrap">
-                        <span className="tagIconWrap">
-                            <img src={tag} alt="tag icon" className="tagIcon" />
-                            Add tag
+                        <span>
+                            <div
+                                onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
+                                className="tagIconWrap"
+                            >
+                                <img src={tag} alt="tag icon" className="tagIcon" />
+                                Add tag
+                            </div>
+                            {isTagDropdownOpen && <TagDropdown linkId={data.id} />}
                         </span>
                     </div>
                     <div className="linkInfoWrap">

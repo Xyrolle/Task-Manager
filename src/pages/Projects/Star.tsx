@@ -29,7 +29,8 @@ const Star: React.FC<{ userId: number; projectId: number }> = ({ userId, project
 				queryCache.cancelQueries('getLikes');
 				const snapshot = queryCache.getQueryData('getLikes');
 				queryCache.setQueryData('getLikes', (prev: any) => {
-					return [...prev, { project: newData }];
+					prev.data.push({ project: newData })
+					return prev;
 				});
 				return () => queryCache.setQueryData('getLikes', snapshot);
 			},
@@ -40,7 +41,7 @@ const Star: React.FC<{ userId: number; projectId: number }> = ({ userId, project
 	return (
 		<div onClick={() => mutate(projectId)}>
 			{data &&
-				data.some((element: any) => {
+				data.data.some((element: any) => {
 					return element.project == projectId;
 				}) ? <Icon icon={starFilled} color='gold' className='starIcon' /> :
 				<Icon icon={starFilled} color='#ccc' className='starIcon' />
