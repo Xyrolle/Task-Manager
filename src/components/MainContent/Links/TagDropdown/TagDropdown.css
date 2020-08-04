@@ -1,0 +1,144 @@
+.tagLinkDropdownContainer {
+  background: #fff;
+  width: 15rem;
+  border: 1px solid #dad0d0;
+  border-radius: 4px;
+  z-index: 1500;
+  position: absolute;
+  margin-top: 10px;
+  /* top: 3.3rem;  */
+   /* left: 7.5rem; */
+}
+
+.tagLinkDropdownContainer::before {
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+   top: -0.54rem; 
+  left: 0.5rem; 
+  border: 1px solid #dad0d0;
+  transform: rotate(45deg);
+  border-bottom-width: 0;
+  border-right-width: 0;
+}
+
+.tagLinkDropdownHeader {
+  border-bottom: 1px solid #dad0d0;
+  padding: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tagLinkDropdownHeader input {
+  padding: 0.2rem 0.3rem 0.3rem 0.3rem;
+  width: 75%;
+  font-size: 0.7rem;
+}
+
+/* @media screen and (max-width: 992px) {
+  .tagLinkDropdownContainer {
+    width: 16rem;
+    height: 14rem;
+    top: 2.9rem;
+    right: 5.4rem;
+  }
+
+  .tagLinkDropdownContainer::before {
+    width: 14px;
+    height: 14px;
+    top: -0.45rem;
+  }
+}
+@media screen and (max-width: 768px) {
+  .tagLinkDropdownContainer {
+    width: 14rem;
+    height: 13rem;
+    top: 2.45rem;
+    right: 3.6rem;
+  }
+
+  .tagLinkDropdownContainer::before {
+    width: 12px;
+    height: 12px;
+    top: -0.4rem;
+  }
+
+  .tagLinkDropdownHeader {
+    flex-direction: column;
+    padding: 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  .tagLinkDropdownHeader input {
+    margin-top: 0.2rem;
+    padding: 0.15rem 0.25rem 0.25rem 0.25rem;
+    width: 90%;
+    font-size: 0.6rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .tagLinkDropdownContainer {
+    width: 12rem;
+    height: 11rem;
+    top: 2.1rem;
+    right: 2.7rem;
+  }
+
+  .tagLinkDropdownContainer::before {
+    width: 10px;
+    height: 10px;
+    top: -0.38rem;
+  }
+  .tagLinkDropdownHeader {
+    padding: 0.45rem;
+    font-size: 0.6rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .tagLinkDropdownContainer {
+    width: 10rem;
+    height: 9rem;
+    top: 1.9rem;
+    right: 2.75rem;
+  }
+
+  .tagLinkDropdownContainer::before {
+    width: 9px;
+    height: 9px;
+    top: -0.32rem;
+  }
+  .tagLinkDropdownHeader {
+    padding: 0.3rem;
+    font-size: 0.55rem;
+  }
+  .tagLinkDropdownHeader input {
+    padding: 0.1rem 0.2rem 0.2rem 0.2rem;
+    font-size: 0.45rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .tagLinkDropdownContainer {
+    width: 8rem;
+    height: 7rem;
+    right: 2.35rem;
+  }
+  .tagLinkDropdownContainer::before {
+    width: 8px;
+    height: 8px;
+  }
+  .tagLinkDropdownHeader {
+    padding: 0.2rem;
+    font-size: 0.5rem;
+  }
+  .tagLinkDropdownHeader input {
+    margin-top: 0.15rem;
+    padding: 0.08rem 0.15rem 0.15rem 0.15rem;
+    font-size: 0.4rem;
+  }
+} */

@@ -22,7 +22,6 @@ const LinkContent: React.FC = () => {
                 + Add Link
             </button>
             {isAddLinkOpen && <AddTLinkModal handleShowModal={handleShowModal} />}
-            {console.log(data)}
             <div className="linkComponentContainer">
                 {data && data.data.map((link: any, key: number) => (
                     <div key={key}>

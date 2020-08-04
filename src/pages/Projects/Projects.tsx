@@ -16,6 +16,7 @@ const deleteProject = async (id: number) => {
 }
 
 const getProjects = async (key: string, userId: string) => {
+    console.log(userId)
     const response = await axios.get(`http://46.101.172.171:8008/project/project_view_by_user/${userId}/1/`,
         axiosConfig
     );
@@ -29,16 +30,16 @@ const Projects: React.FC = () => {
     if (!ctx) {
         throw new Error('You probably forgot to put <AppProvider>.');
     }
-    const { status, data, error } = useQuery(['getProjects', ctx.userDetails && ctx.userDetails.id], getProjects);
+    const { status, data, error } = useQuery(['getProjects', ctx.userDetails.id], getProjects);
 
     const [mutateDeleteProject] = useMutation(deleteProject, {
 
         onMutate: (newData: any) => {
-            queryCache.cancelQueries('getProjects');
-            const snapshot = queryCache.getQueryData('getProjects');
+            queryCache.cancelQueries(['getProjects', ctx.userDetails.id]);
+            const snapshot = queryCache.getQueryData(['getProjects', ctx.userDetails.id]);
 
             queryCache.setQueryData(['getProjects', ctx.userDetails && ctx.userDetails.id], (prev: any) => {
-                return prev.filter(({ project }: any) => project.id !== newData)
+                return { data: prev.data.filter(({ project }: any) => project.id !== newData) }
             });
             return () => queryCache.setQueryData('getProjects', snapshot);
         },
@@ -58,9 +59,10 @@ const Projects: React.FC = () => {
             >
                 + Add project
             </button>
-            {isAddProjectModalOpen && <AddProjectModal handleShowModal={handleShowModal} />}
+            {isAddProjectModalOpen && <AddProjectModal userId={ctx.userDetails.id} handleShowModal={handleShowModal} />}
             <div className="projectsContainer">
-                {data && data.map(({ project }: any, key: number) => {
+                {console.log(data)}
+                {data && data.data.map(({ project }: any, key: number) => {
                     return <div className="project" key={key}>
                         <div className="projectHeader">
                             <div className="projectNameWrap">

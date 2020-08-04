@@ -7,8 +7,9 @@ interface foo {
     name: string;
     description: string;
     company: string;
+    userId: string;
 }
-const createProject = ({ name, description, company }: foo): Promise<void> => {
+const createProject = ({ name, description, company, userId }: foo): Promise<void> => {
     return axios.post('http://46.101.172.171:8008/project/project_create/', {
         name,
         description,
@@ -17,16 +18,16 @@ const createProject = ({ name, description, company }: foo): Promise<void> => {
         axiosConfig
     )
         .then(function (response) {
-            queryCache.setQueryData('getProjects', (prev: any) => {
-                return [...prev,
-                {
+            queryCache.setQueryData(['getProjects', 5], (prev: any) => {
+                prev.data.push({
                     project: {
                         id: response.data.id,
                         company,
                         description,
                         name
                     }
-                }]
+                })
+                return prev;
             });
         })
         .catch(function (error) {
@@ -34,14 +35,14 @@ const createProject = ({ name, description, company }: foo): Promise<void> => {
         })
 }
 
-const AddProjectModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
+const AddProjectModal: React.FC<{ userId: number, handleShowModal(): void }> = ({ userId, handleShowModal }) => {
     const nameInput = useRef<HTMLInputElement>(null)
     const companyInput = useRef<HTMLInputElement>(null)
     const descriptionInput = useRef<HTMLTextAreaElement>(null)
 
     const [mutate] = useMutation(createProject, {
         onMutate: (newData: any) => {
-            queryCache.cancelQueries('getProjects');
+            queryCache.cancelQueries(['getProjects', userId.toString()]);
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),
         // onSettled: () => queryCache.prefetchQuery('getProjects)
@@ -83,6 +84,7 @@ const AddProjectModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModa
                                     name: nameInput.current!.value,
                                     description: descriptionInput.current!.value,
                                     company: companyInput.current!.value,
+                                    userId: userId.toString()
                                 }
                                 )
                                 await handleShowModal()
