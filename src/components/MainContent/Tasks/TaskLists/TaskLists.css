@@ -6,3 +6,11 @@
 .load-more-lists {
 	margin: 0.4rem 0 0.4rem 2rem;
 }
+
+.save-changes {
+	width: fit-content;
+	height: fit-content;
+	padding: 3px 6px;
+	margin: 0px 0.2rem 0 1rem;
+	font-size: 1rem;
+}

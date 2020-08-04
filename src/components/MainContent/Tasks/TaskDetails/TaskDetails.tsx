@@ -17,46 +17,54 @@ let axiosConfig = {
 		}
 };
 
+interface CommentType {
+	[x: string]: CommentType[] | undefined;
+	data: [];
+	page_current: any;
+	page_total: any;
+}
+
 const TaskDetails: React.FC = () => {
-	const [ hasMore, setHasMore ] = useState(true);
-	const [ comments_page_id, setPageID ] = useState(1);
-
+	const [ tagExist, setTagExist ] = useState(false);
 	const { task_id } = useParams();
-
-	const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	const fetchTaskDetails: any = async () => {
 		const res = await axios.get(`http://46.101.172.171:8008/tasks/item/${task_id}`, axiosConfig);
 		return res.data;
 	};
 
-	const fetchComments: any = async () => {
-		const res = await axios.get(
-			`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
-			axiosConfig
-		);
-
-		setPageID((old) => old + 1);
-		return res.data;
-	};
-
 	const { error, data: taskInfo } = useQuery<any, any>(`details-for-task-${task_id}`, fetchTaskDetails);
 
-	const {
-		status,
-		data: comments,
-		isFetching,
-		isFetchingMore,
-		fetchMore,
-		canFetchMore
-	} = useInfiniteQuery(`comments-${task_id}`, fetchComments, {
-		getFetchMore: () => comments_page_id
-	});
+	const { status, data: comments, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
+		CommentType,
+		[any, any],
+		any
+	>(
+		[ `comments`, task_id ],
+		async (key: any, comments_page_id: any, abc?: any) => {
+			console.log(comments_page_id, 'is page id for comments', key, 'abc', abc);
+			const res = await axios.get(
+				`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
+				axiosConfig
+			);
+			console.log(res.data, 'is data');
+			return res.data;
+		},
+		{
+			getFetchMore:
+				(prev: any, all: any) => {
+					console.log('prev is ', prev, prev.page_current + 1, all);
+					return prev.page_curent + 1;
+				}
+		}
+	);
 
+	console.log(comments, canFetchMore, 'are comments');
 	const commentArea = useRef<HTMLTextAreaElement>(null);
 	const tagArea = useRef<HTMLTextAreaElement>(null);
 
 	const addComment = async ({ task_id, text }: any) => {
+		commentArea.current!.value = '';
 		const res = await axios.post(`http://46.101.172.171:8008/comment/to_task/${task_id}`, { text }, axiosConfig);
 		return res.data;
 	};
@@ -64,27 +72,33 @@ const TaskDetails: React.FC = () => {
 	const [ addCommentMutate ] = useMutation(addComment, {
 		onMutate:
 			(newData: any) => {
-				const query = `comments-${task_id}`;
-				queryCache.cancelQueries(query);
-				queryCache.setQueryData(query, (prev: any) => {
-					return prev.concat({ ...newData, date: '0', author: 'You' });
+				console.log(newData, 'sifsdfasd');
+				queryCache.cancelQueries([ `comments`, task_id ]);
+				queryCache.setQueryData([ `comments`, task_id ], (prev: any) => {
+					console.log(prev, 'isadfsd a prev data');
+					prev[0].data = prev[0].data.concat({ ...newData, date: '0', author: 'You' });
+					return prev;
 				});
 			}
-		// onSettled: () => queryCache.invalidateQueries(`comments-${task_id}`)
 	});
 
 	const assignTagToTask = async (id: number) => {
-		console.log('tag id is', id, task_id);
 		const res = await axios.get(`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${id}`, axiosConfig);
-		console.log(res.data, 'assigned to task', id, 'is id', task_id);
 		return id;
 	};
 
 	const addTag = async (title: string) => {
-		const res = await axios.post(`http://46.101.172.171:8008/tags/create`, { title }, axiosConfig);
-		console.log(res.data, 'tag info');
-		assignTagToTask(res.data.id);
-		return res.data.id;
+		tagArea.current!.value = '';
+		try {
+			const res = await axios.post(`http://46.101.172.171:8008/tags/create`, { title }, axiosConfig);
+			assignTagToTask(res.data.id);
+			return res.data.id;
+		} catch (err) {
+			setTagExist(true);
+			setTimeout(() => {
+				setTagExist(false);
+			}, 2000);
+		}
 	};
 
 	const [ addTagMutate ] = useMutation(addTag, {
@@ -93,7 +107,6 @@ const TaskDetails: React.FC = () => {
 				queryCache.cancelQueries(`details-for-task-${task_id}`);
 				queryCache.setQueryData(`details-for-task-${task_id}`, (prev: any) => {
 					prev['tags'] = [ ...prev['tags'], { title: newData } ];
-					console.log('prev data is', prev, newData, task_id);
 					return prev;
 				});
 			},
@@ -101,11 +114,9 @@ const TaskDetails: React.FC = () => {
 			() => {
 				setTimeout(() => {
 					queryCache.invalidateQueries(`details-for-task-${task_id}`);
-				}, 50);
+				}, 80);
 			}
 	});
-
-	if (!comments) return <div>loading</div>;
 
 	return (
 		<div className='details-container'>
@@ -120,53 +131,61 @@ const TaskDetails: React.FC = () => {
 					key={task_id}
 				/>
 			)}
-			<div className='add-comment-section'>
-				<h3>Comments</h3>
-				<textarea rows={10} cols={80} ref={commentArea} className='description-area details-input' />
-				<button className='btn' onClick={() => addCommentMutate({ task_id, text: commentArea.current!.value })}>
-					Add Comment
-				</button>
-			</div>
 			<div className='comments-section'>
+				<h3>Comments</h3>
 				{comments &&
-					comments
-						.flat()
-						.map((comment: any) => (
-							<Comment
-								text={comment.text}
-								author={comment.author}
-								date={comment.date}
-								id={comment.id}
-								key={uuidv4()}
-							/>
-						))}
+					comments[0].data.map((comment: any) => (
+						<Comment
+							text={comment.text}
+							author={comment.author}
+							date={comment.date}
+							id={comment.id}
+							key={uuidv4()}
+						/>
+					))}
 			</div>
 			<div className='btn-container'>
 				<button
-					ref={loadMoreButtonRef}
 					onClick={() => {
 						fetchMore();
 					}}
-					disabled={!hasMore || isFetching}
+					disabled={
+						isFetching ||
+						(comments &&
+							comments[comments.length - 1].page_current >= comments[comments.length - 1].page_total)
+					}
 					className={
-						'btn load-more-lists ' +
+						'btn load-more-lists comments-load ' +
 						(
-							!hasMore || isFetching ? 'disabledBtn' :
+							isFetching ||
+							(comments &&
+								comments[comments.length - 1].page_current >=
+									comments[comments.length - 1].page_total) ? 'disabledBtn' :
 							'')
 					}
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						hasMore ? 'Load More' :
+						comments &&
+						comments[comments.length - 1].page_current <
+							comments[comments.length - 1].page_total ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>
-			<div className='add-tag-section'>
+			<div className='add-section comments-add'>
+				<label>Add Comment</label>
+				<textarea rows={10} cols={80} ref={commentArea} className='description-area details-input' />
+				<button className='btn' onClick={() => addCommentMutate({ task_id, text: commentArea.current!.value })}>
+					Add Comment
+				</button>
+			</div>
+			<div className='add-section tags-add'>
 				<label>Add Tag</label>
-				<textarea rows={10} cols={80} ref={tagArea} className='description-area details-input' />
+				<textarea rows={10} cols={80} placeholder='' ref={tagArea} className='description-area details-input' />
 				<button className='btn' onClick={() => addTagMutate(tagArea.current!.value)}>
 					Add Tag
 				</button>
+				{tagExist && <div className='tag-exists'>Sorry, this tag already exists</div>}
 			</div>
 		</div>
 	);
