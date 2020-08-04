@@ -380,7 +380,7 @@
 .tag-oval {
 	background-color: #2e8de3;
 	width: fit-content;
-	margin: 0 4px 0 10px;
+	margin: 0.4rem;
 	padding: 3px 10px;
 	border-radius: 12px;
 	color: #eee;

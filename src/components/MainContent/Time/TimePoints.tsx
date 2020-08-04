@@ -13,7 +13,7 @@ const TimePoints: React.FC<{ id: number }> = ({ id }) => {
         <>
             {data && data.map((timePoint: any, key: any) => {
                 return (
-                    <div className="tableContentWrap">
+                    <div className="tableContentWrap" key={key}>
                         <div className="tableContent">
                             <div className="timeDescription">
                                 <p>{timePoint.description}</p>

@@ -55,7 +55,7 @@ const Time: React.FC = () => {
                         <>
                             {data && data.map((page: any, key: any) => (
                                 page.data.map((timeGroup: any, key: any) => (
-                                    <div>
+                                    <div key={key}>
                                         <div className="tableHeaderWrap" >
                                             <div className="tableHeader">
                                                 <div className="timeDescription">
