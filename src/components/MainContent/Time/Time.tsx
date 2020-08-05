@@ -14,9 +14,10 @@ const Time: React.FC = () => {
   const [hasMore, setHasMore] = useState(true);
   const { projectId } = useParams();
 
-  const getTimeGroups = async () => {
+  const getTimeGroups = async (key: string, param1: number, next = 1) => {
+    console.log('next', next);
     const response = await axios.get(
-      `http://46.101.172.171:8008/times/time_groups/${projectId}/${pageId}`,
+      `http://46.101.172.171:8008/times/time_groups/${projectId}/${next}`,
       await axiosConfig
     );
     return response.data;
@@ -29,8 +30,15 @@ const Time: React.FC = () => {
     isFetching,
     isFetchingMore,
     fetchMore,
-  }: any = useInfiniteQuery('getTimeGroups', getTimeGroups, {
-    getFetchMore: () => pageId,
+    canFetchMore,
+  }: any = useInfiniteQuery(['getTimeGroups', 1], getTimeGroups, {
+    getFetchMore: (lastGroup: any, allPages: any) => {
+      if (lastGroup.page_current + 1 > lastGroup.page_total) {
+        return false;
+      } else {
+        return lastGroup.page_current + 1;
+      }
+    },
   });
 
   const ctx = useContext(AppContext);
@@ -81,14 +89,26 @@ const Time: React.FC = () => {
           <div>
             {console.log('hasmore', hasMore)}
 
+            {/* <button
+                                ref={loadMoreButtonRef}
+                                onClick={() => fetchMore()}
+                                disabled={!hasMore || isFetchingMore}
+                            >
+                                {isFetchingMore
+                                    ? 'Loading more...'
+                                    : hasMore
+                                        ? 'Load More'
+                                        : 'Nothing more to load'}
+                            </button> */}
+            {console.log('canfetchmore', canFetchMore)}
             <button
               ref={loadMoreButtonRef}
               onClick={() => fetchMore()}
-              disabled={!hasMore || isFetchingMore}
+              disabled={!canFetchMore || isFetchingMore}
             >
               {isFetchingMore
                 ? 'Loading more...'
-                : hasMore
+                : canFetchMore
                 ? 'Load More'
                 : 'Nothing more to load'}
             </button>
