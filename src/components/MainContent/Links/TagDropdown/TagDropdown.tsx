@@ -23,7 +23,7 @@ const createTag = async ({ title, linkId, projectId }: createTagInterface): Prom
     axiosConfig
   )
   if (response.status === 200) {
-    queryCache.setQueryData(['getLinks', '84'], (prev: any) => {
+    queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
       const index = prev.data.findIndex((e: any) => e.id === linkId)
 
       prev.data[index].tags.push({

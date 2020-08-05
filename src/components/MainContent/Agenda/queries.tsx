@@ -65,17 +65,3 @@ export const addTagInAgenda = (id: number, title: string) => {
             // console.log(error);
         })
 }
-
-export const createTag = (title: string) => {
-    axios.post('http://46.101.172.171:8008/tags/create', {
-        title
-    },
-        axiosConfig
-    )
-        .then(function ({ data }) {
-            addTagInAgenda(data.id, title)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-}

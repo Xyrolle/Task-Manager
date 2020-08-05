@@ -3,7 +3,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../../utils/axiosConfig'
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { useParams } from 'react-router';
 
@@ -34,9 +33,10 @@ const createTimePoints = async ({ projectId, groupId, description, startTimeValu
     },
         await axiosConfig
     );
-    queryCache.setQueryData('getTimeGroups', (prev: any) => {
-        console.log('prev1', prev[0])
-        prev[0].data.push({
+    queryCache.setQueryData(['getTimeGroups', 1], (prev: any) => {
+        const index = prev[0].page_total;
+
+        prev[index - 1] && prev[index - 1].data.push({
             id: groupId,
             project: projectId,
             date: new Date(),

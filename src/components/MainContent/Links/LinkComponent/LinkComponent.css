@@ -9,6 +9,8 @@
 }
 .linkContentWrap{
     display: flex;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgb(226, 226, 226);
 }
 .linkTitleWrap{
     display: flex;
@@ -23,13 +25,14 @@
     margin-right: 15px;
     font-weight: 600;
 }
-.tag{
+.tagLink{
     font-size: 13px;
     font-weight: 300;
     padding: 2px 8px 4px 8px;
     background-color: rgb(47, 141, 228);
     border-radius: 10px;
     color: #fff;
+    margin-right: 5px;
 }
 .tagWrap{
     margin-top: 5px;
@@ -41,16 +44,18 @@
 .linkContent{
     margin-top: 12px;
 }
-.buttonsWrap{
+.buttonsLinkInfoWrap{
     margin-top: 15px;
+    display: flex;
 }
-.tagIconWrap{
+.tagLinkIconWrap{
     opacity: 40%;
     font-size: 12px;
     font-weight: 400;
     cursor: pointer;
+    margin-right: 10px;
 }
-.tagIconWrap:hover{
+.tagLinkIconWrap:hover{
     opacity: 70%;
 }
 .tagIcon{
