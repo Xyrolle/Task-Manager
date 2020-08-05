@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+
 import './LinkComponent.css';
-import link from '../../../../assets/link.png'
-import tag from '../../../../assets/tag.png'
+import link from 'assets/link.png'
+import tag from 'assets/tag.png'
 import TagDropdown from '../TagDropdown/TagDropdown';
 
 interface LinkComponentInterface {

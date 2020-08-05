@@ -1,15 +1,15 @@
 import React, { useContext, useState, Fragment } from 'react';
 
 import './Header.css';
-import Vector from '../../assets/Vector.svg';
-import SearchIcon from '../../assets/SearchIcon.svg';
-import CancelSearch from '../../assets/CancelSearch.svg';
-import Bell from '../../assets/Bell.svg';
-import Logo from '../../assets/Logo.png';
+import Vector from 'assets/Vector.svg';
+import SearchIcon from 'assets/SearchIcon.svg';
+import CancelSearch from 'assets/CancelSearch.svg';
+import Bell from 'assets/Bell.svg';
+import Logo from 'assets/Logo.png';
 import PlusDropdown from './PlusDropdown/PlusDropdown';
 import FolderDropdown from './FolderDropdown/FolderDropdown';
 import BellDropdown from './BellDropdown/BellDropdown';
-import { AppContext } from '../../context/AppContext';
+import { AppContext } from 'context/AppContext';
 
 const Header: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string>('');
@@ -26,6 +26,8 @@ const Header: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+
+  console.log('Header:React.FC -> ctx', ctx);
   return (
     <header className='mainHeader' data-testid='mainHeader'>
       <nav className='nav'>
@@ -60,7 +62,7 @@ const Header: React.FC = () => {
               <button
                 type='button'
                 className='addTeamBtn'
-                onClick={ctx.openModal}
+                onClick={() => ctx.setOpenModal('addTeamModal')}
               >
                 <img
                   src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
@@ -71,7 +73,7 @@ const Header: React.FC = () => {
               <button
                 type='button'
                 className='upgradeBtn'
-                onClick={ctx.openUpgradeModal}
+                onClick={() => ctx.setOpenModal('upgradeModal')}
               >
                 Upgrade Now
               </button>
@@ -83,23 +85,23 @@ const Header: React.FC = () => {
               </span>
             </Fragment>
           ) : (
-              <div className='searchInputContainer'>
-                <img src={SearchIcon} alt='search' className='searchInInput' />
-                <input
-                  id='search'
-                  className='searchInput'
-                  type='search'
-                  autoComplete='off'
-                  placeholder='Search'
-                />
-                <img
-                  src={CancelSearch}
-                  alt='cancel search'
-                  className='cancelSearchInInput'
-                  onClick={() => setSearchInputIsOpen(false)}
-                />
-              </div>
-            )}
+            <div className='searchInputContainer'>
+              <img src={SearchIcon} alt='search' className='searchInInput' />
+              <input
+                id='search'
+                className='searchInput'
+                type='search'
+                autoComplete='off'
+                placeholder='Search'
+              />
+              <img
+                src={CancelSearch}
+                alt='cancel search'
+                className='cancelSearchInInput'
+                onClick={() => setSearchInputIsOpen(false)}
+              />
+            </div>
+          )}
           <div className='plusContainer'>
             <div
               className={openDropdown !== 'plusDropdown' ? 'plus' : 'whitePlus'}

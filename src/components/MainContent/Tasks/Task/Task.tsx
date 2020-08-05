@@ -4,13 +4,13 @@ import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useQuery, useMutation, queryCache } from 'react-query';
 
-import assignPencil from '../../../../assets/assignPencil.svg';
-import subtask from '../../../../assets/subtask.svg';
-import clock from '../../../../assets/clock.svg';
-import calendar from '../../../../assets/calendar.svg';
-import eye from '../../../../assets/eye.svg';
-import comments from '../../../../assets/comments.svg';
-import tag from '../../../../assets/tag.png';
+import assignPencil from 'assets/assignPencil.svg';
+import subtask from 'assets/subtask.svg';
+import clock from 'assets/clock.svg';
+import calendar from 'assets/calendar.svg';
+import eye from 'assets/eye.svg';
+import comments from 'assets/comments.svg';
+import tag from 'assets/tag.png';
 
 import { Icon } from '@iconify/react';
 import alertCircleCheck from '@iconify/icons-mdi/alert-circle-check';

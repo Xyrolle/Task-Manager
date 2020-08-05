@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { axiosConfig } from '../../../utils/axiosConfig';
+
+import { axiosConfig } from 'utils/axiosConfig';
 import { IupdateAgendaContent } from './interfaces'
 
 export const getAgendasByProjectId = async (key: string, projectId: string) => {

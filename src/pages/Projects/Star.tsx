@@ -1,9 +1,10 @@
 import React from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
-import { axiosConfig } from '../../utils/axiosConfig';
 import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
+
+import { axiosConfig } from 'utils/axiosConfig';
 
 const getLikes = async () => {
 	const response = await axios.get(`http://46.101.172.171:8008/project/liked_projects_by_users/5/1/`, axiosConfig);

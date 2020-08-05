@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { createTag } from '../queries';
+
 import './Tag.css';
 
 const TagDropdown: React.FC = () => {
