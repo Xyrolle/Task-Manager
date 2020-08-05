@@ -14,8 +14,9 @@ const Time: React.FC = () => {
     const [hasMore, setHasMore] = useState(true);
     const { projectId } = useParams();
 
-    const getTimeGroups = async (key: string, i: number, next = 0) => {
-        const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/${projectId}/${pageId}`,
+    const getTimeGroups = async (key: string, param1: number, next = 1) => {
+        console.log('next', next)
+        const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/${projectId}/${next}`,
             await axiosConfig
         );
         return response.data;
@@ -29,10 +30,17 @@ const Time: React.FC = () => {
         isFetching,
         isFetchingMore,
         fetchMore,
+        canFetchMore
     }: any = useInfiniteQuery(['getTimeGroups', 1],
         getTimeGroups,
         {
-            getFetchMore: () => pageId
+            getFetchMore: (lastGroup: any, allPages: any) => {
+                if (lastGroup.page_current + 1 > lastGroup.page_total) {
+                    return false;
+                } else {
+                    return lastGroup.page_current + 1;
+                }
+            }
         })
 
     const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
@@ -79,7 +87,7 @@ const Time: React.FC = () => {
                             <div>
                                 {console.log('hasmore', hasMore)}
 
-                                <button
+                                {/* <button
                                     ref={loadMoreButtonRef}
                                     onClick={() => fetchMore()}
                                     disabled={!hasMore || isFetchingMore}
@@ -88,6 +96,18 @@ const Time: React.FC = () => {
                                     {isFetchingMore
                                         ? 'Loading more...'
                                         : hasMore
+                                            ? 'Load More'
+                                            : 'Nothing more to load'}
+                                </button> */}
+                                {console.log('canfetchmore', canFetchMore)}
+                                <button
+                                    ref={loadMoreButtonRef}
+                                    onClick={() => fetchMore()}
+                                    disabled={!canFetchMore || isFetchingMore}
+                                >
+                                    {isFetchingMore
+                                        ? 'Loading more...'
+                                        : canFetchMore
                                             ? 'Load More'
                                             : 'Nothing more to load'}
                                 </button>
