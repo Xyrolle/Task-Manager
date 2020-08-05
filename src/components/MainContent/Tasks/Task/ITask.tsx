@@ -8,6 +8,8 @@ export interface ITask {
 	description: string;
 	creationDate: string;
 	id: string;
-	list_id?: string;
+	task_list: string;
 	tags: ITag[];
+	parent?: [];
+	contributors?: [];
 }

@@ -39,7 +39,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	};
 
 	const addTask: any = async ({ title, description }: AddTaskParams) => {
-		console.log(title, description, id);
 		taskInput.current!.value = '';
 		taskDescription.current!.value = '';
 		const res = await axios
@@ -88,7 +87,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 				if (newData.title.length > 1) {
 					queryCache.setQueryData(id, (prev: any) => {
 						console.log(prev, 'is prev', [ ...prev.data, { ...newData, id: new Date().toISOString() } ]);
-						prev['data'] = [ ...prev.data, { ...newData, id: new Date().toISOString } ];
+						prev['data'] = [ ...prev.data, { ...newData, id: new Date().toISOString() } ];
 						return prev;
 					});
 				}
@@ -102,7 +101,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			`http://46.101.172.171:8008/project/tasklist_update/${id}/`,
 			{
 				name: listEditingName,
-				project: 87
+				project: 115
 			},
 			axiosConfig
 		);
@@ -176,7 +175,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 								creationDate={task.creation_date}
 								tags={task.tags}
 								id={task.id}
-								list_id={id}
+								task_list={id}
 								key={uuidv4()}
 							/>
 						))}

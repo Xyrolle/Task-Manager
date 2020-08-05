@@ -33,9 +33,9 @@ const TaskDetails: React.FC = () => {
 		return res.data;
 	};
 
-	const { error, data: taskInfo } = useQuery<any, any>(`details-for-task-${task_id}`, fetchTaskDetails);
+	const { data: taskInfo } = useQuery<any, any>(`details-for-task-${task_id}`, fetchTaskDetails);
 
-	const { status, data: comments, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
+	const { data: comments, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
 		CommentType,
 		[any, any],
 		any
@@ -53,13 +53,13 @@ const TaskDetails: React.FC = () => {
 		{
 			getFetchMore:
 				(prev: any, all: any) => {
-					console.log('prev is ', prev, prev.page_current + 1, all);
 					return prev.page_curent + 1;
 				}
 		}
 	);
 
-	console.log(comments, canFetchMore, 'are comments');
+	console.log(taskInfo, 'is info');
+
 	const commentArea = useRef<HTMLTextAreaElement>(null);
 	const tagArea = useRef<HTMLTextAreaElement>(null);
 
@@ -128,6 +128,9 @@ const TaskDetails: React.FC = () => {
 					creationDate={taskInfo.creationDate}
 					tags={taskInfo.tags}
 					id={task_id}
+					task_list={taskInfo.task_list}
+					parent={taskInfo.parent}
+					contributors={taskInfo.contributors}
 					key={task_id}
 				/>
 			)}

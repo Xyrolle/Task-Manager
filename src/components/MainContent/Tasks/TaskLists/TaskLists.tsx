@@ -9,8 +9,6 @@ import TaskList from '../TaskList/TaskList';
 import './TaskLists.css';
 
 const TaskLists = () => {
-	const [ hasMore, setHasMore ] = useState(true);
-
 	let axiosConfig = {
 		headers:
 			{
@@ -33,16 +31,11 @@ const TaskLists = () => {
 	}
 
 	const fetchTaskLists = async (key: any, page_id = 1) => {
-		console.log(page_id, 'is a page id');
-		try {
-			const res = await axios.get(
-				`http://46.101.172.171:8008/project/task_list_view_by_project/87/${page_id}/`,
-				axiosConfig
-			);
-			return res.data;
-		} catch (err) {
-			console.log('Error: no more task lists to load');
-		}
+		const res = await axios.get(
+			`http://46.101.172.171:8008/project/task_list_view_by_project/115/${page_id}/`,
+			axiosConfig
+		);
+		return res.data;
 	};
 
 	const { data: lists, isFetching, isFetchingMore, fetchMore } = useInfiniteQuery<
@@ -59,6 +52,8 @@ const TaskLists = () => {
 	const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
 
 	console.log('task lists', lists);
+
+	let canFetch = lists && lists[lists.length - 1].page_current < lists[lists.length - 1].page_total;
 
 	if (!lists) return <h5>loading</h5>;
 
@@ -86,22 +81,17 @@ const TaskLists = () => {
 					onClick={() => {
 						fetchMore();
 					}}
-					disabled={
-						(lists && lists[lists.length - 1].page_current >= lists[lists.length - 1].page_total) ||
-						isFetching
-					}
+					disabled={!canFetch || isFetching}
 					className={
 						'btn load-more-lists ' +
 						(
-							(lists && lists[lists.length - 1].page_current >= lists[lists.length - 1].page_total) ||
-							isFetchingMore ? 'disabledBtn' :
+							!canFetch || isFetching ? 'disabledBtn' :
 							'')
 					}
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						lists &&
-						lists[lists.length - 1].page_current < lists[lists.length - 1].page_total ? 'Load More' :
+						lists && canFetch ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>
