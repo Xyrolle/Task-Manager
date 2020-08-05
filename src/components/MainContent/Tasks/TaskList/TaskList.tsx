@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-import arrow from '../../../../assets/arrow.svg';
-import addTaskPlus from '../../../../assets/addTaskPlus.svg';
+import arrow from 'assets/arrow.svg';
+import addTaskPlus from 'assets/addTaskPlus.svg';
 
 import { Icon, InlineIcon } from '@iconify/react';
 import ellipsisDotsH from '@iconify/icons-vaadin/ellipsis-dots-h';

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { axiosConfig } from '../utils/axiosConfig'
+import { axiosConfig } from 'utils/axiosConfig'
 
 export const getUserInfo = async () => {
     try {

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { IComment } from './IComment';
-
 import './Comment.css';
 
 const Comment: React.FC<IComment> = ({ text, date, author, id }: IComment) => {
