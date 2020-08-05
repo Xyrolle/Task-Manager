@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import './LinkComponent.css';
 import link from '../../../../assets/link.png'
 import tag from '../../../../assets/tag.png'
 import TagDropdown from '../TagDropdown/TagDropdown';
+import EditLinkModal from '../EditLinkModal/EditLinkModal'
 
 interface LinkComponentInterface {
     data: {
@@ -25,7 +26,10 @@ interface tagInterface {
 
 
 const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
+    const [isEditLinkModalOpen, setIsEditLinkModalOpen] = useState(false)
     const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
+    const { linkId } = useParams();
+    const handleShowModal = () => setIsEditLinkModalOpen(false);
 
     return (
         <div>
@@ -37,35 +41,38 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
                 <div className="linkDetailsContainer">
                     <div className="linkTitleWrap">
                         <p className="linkTitle"><a href={'https:' + data.title}>{data.title}</a></p>
-                        <Link to={`links/${data.id}`} className="linkDetailsLink">(Details)</Link>
+                        {!linkId &&
+                            <Link to={`links/${data.id}`} className="linkDetailsLink">
+                                (Details)
+                            </Link>
+                        }
                     </div>
-                    {data.tags.map((tag: any, key: number) => {
-                        return <span className="tag" key={key}>{tag.title} <span>x</span></span>
+                    {!linkId && data.tags.map((tag: any, key: number) => {
+                        return <span className="tagLink" key={key}>{tag.title} <span>x</span></span>
                     })}
-                    <div className="tagWrap">
-                        {/* {data && data.map((tag: tagInterface, key: number) => {
-                            <div>
 
-                            </div>
-                        })} */}
-
-                    </div>
                     <div>
                         <p className="linkContent">
                             {data.content}
                         </p>
                     </div>
-                    <div className="buttonsWrap">
-                        <span>
-                            <div
-                                onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
-                                className="tagIconWrap"
-                            >
-                                <img src={tag} alt="tag icon" className="tagIcon" />
-                                Add tag
-                            </div>
-                            {isTagDropdownOpen && <TagDropdown linkId={data.id} />}
-                        </span>
+                    <div className="buttonsLinkInfoWrap">
+                        <div
+                            onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
+                            className="tagLinkIconWrap"
+                        >
+                            <img src={tag} alt="tag icon" className="tagIcon" />
+                            Add tag
+                        </div>
+                        {isTagDropdownOpen && <TagDropdown linkId={data.id} />}
+                        <div
+                            onClick={() => setIsEditLinkModalOpen(!isEditLinkModalOpen)}
+                            className="tagLinkIconWrap"
+                        >
+                            <img src={tag} alt="tag icon" className="tagIcon" />
+                            Edit
+                        </div>
+                        {isEditLinkModalOpen && <EditLinkModal handleShowModal={handleShowModal} data={data} />}
                     </div>
                     <div className="linkInfoWrap">
                         <p className="linkInfo">

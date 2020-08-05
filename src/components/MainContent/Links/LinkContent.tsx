@@ -25,7 +25,6 @@ const LinkContent: React.FC = () => {
             <div className="linkComponentContainer">
                 {data && data.data.map((link: any, key: number) => (
                     <div key={key}>
-                        {console.log(link)}
                         <LinkComponent data={link} />
                     </div>
                 ))}

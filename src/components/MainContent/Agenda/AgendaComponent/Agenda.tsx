@@ -1,17 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { AgendaInterface } from '../interfaces';
-import Notebook from '../../../../assets/Notebook.png';
 import './../Agenda.css';
-import '../TagDropdown/Tag.css'
+import '../TagDropdown/TagDropdown.css'
+import Notebook from '../../../../assets/Notebook.png';
+import tag from '../../../../assets/tag.png';
+import TagDropdown from '../TagDropdown/TagDropdown';
+
 
 const deleteTag = () => {
 
 }
 
 const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda, style }) => {
-    const [tagDropDownIsOpen, setTagDropDownIsOpen] = useState(false)
+    const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
     const agendaContentTextArea = useRef<HTMLTextAreaElement>(null)
+    const { agendaID } = useParams()
 
     return (
         <div className='agendaContainer' data-testid='agenda-testid'>
@@ -23,14 +27,23 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                         <Link to={`agenda/${agenda.id}`}>
                             <p >v{agenda.title}</p>
                         </Link>
-                        <div className="tagsWrap" >
-                            {agenda.tags.map((tag: any, key: number) =>
-                                <div className="agendaTag" key={key}>
-                                    {tag.title}
-                                    <button>X</button>
-                                </div>)}
-                        </div>
+                        {agenda.tags.map((tag: any, key: number) =>
+                            <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
+                        }
+
                     </div>
+                    {!agendaID &&
+                        <div className="buttonsAgendaInfoWrap">
+                            <div
+                                onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
+                                className="tagIconAgendaWrap"
+                            >
+                                <img src={tag} alt="tag icon" className="tagIcon" />
+                                Add tag
+                        </div>
+                            {isTagDropdownOpen && <TagDropdown agendaId={agenda.id} />}
+                        </div>
+                    }
                     <p className="agendaInfo">
                         {/* <TagDropdown /> */}
                         Last modified by:{agenda.user} at {agenda.last_update}

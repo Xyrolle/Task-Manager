@@ -14,7 +14,7 @@ const Time: React.FC = () => {
     const [hasMore, setHasMore] = useState(true);
     const { projectId } = useParams();
 
-    const getTimeGroups = async () => {
+    const getTimeGroups = async (key: string, i: number, next = 0) => {
         const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/${projectId}/${pageId}`,
             await axiosConfig
         );
@@ -29,7 +29,7 @@ const Time: React.FC = () => {
         isFetching,
         isFetchingMore,
         fetchMore,
-    }: any = useInfiniteQuery('getTimeGroups',
+    }: any = useInfiniteQuery(['getTimeGroups', 1],
         getTimeGroups,
         {
             getFetchMore: () => pageId

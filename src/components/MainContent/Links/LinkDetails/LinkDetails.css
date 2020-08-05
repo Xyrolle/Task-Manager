@@ -1,0 +1,48 @@
+h3{
+    font-weight: 300;
+}
+.linkDetailsComponentContainer{
+    margin-left: 20%;
+}
+.profileImage{
+    width: 36px;
+    height: 36px;
+    background-color: orange;
+    border-radius: 20px;
+    color: white;
+    display: flex;
+    justify-content: center;  
+    align-items: center;
+    font-weight: 300;
+    margin-right: 10px;
+}
+.commentInputLinkWrap{
+    display: flex;
+}
+.linkDetailsTextArea{
+   display: flex;
+}
+.linkDetailsTextArea{
+    width: 80%;
+    padding: 10px;
+}
+.linkDetailsTextAreaWrap{
+    width: 100%;
+}
+.authorCommentLink{
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 5px;
+}
+.commentLinkWrap{
+    display: flex; 
+    padding-bottom: 30px;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    padding-top: 10px;
+}
+.textCommentLink{
+    font-size: 14px;
+    font-weight: 300;
+}
+.commentDetailsLink{
+}
