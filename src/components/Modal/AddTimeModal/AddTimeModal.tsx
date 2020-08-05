@@ -46,14 +46,16 @@ const createTimePoints = async ({
     },
     await axiosConfig
   );
-  queryCache.setQueryData('getTimeGroups', (prev: any) => {
-    console.log('prev1', prev[0]);
-    prev[0].data.push({
-      id: groupId,
-      project: projectId,
-      date: new Date(),
-      times_points: [response.data.id],
-    });
+  queryCache.setQueryData(['getTimeGroups', 1], (prev: any) => {
+    const index = prev[0].page_total;
+
+    prev[index - 1] &&
+      prev[index - 1].data.push({
+        id: groupId,
+        project: projectId,
+        date: new Date(),
+        times_points: [response.data.id],
+      });
     return prev;
   });
   queryCache.setQueryData(groupId.toString(), (prev: any) => {
