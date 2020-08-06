@@ -10,10 +10,10 @@ interface ModalProps {
 const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen, closeModal }) => {
   const params = !isUpgradeModalOpen
     ? [
-        'Add your team',
-        'Start collaborating today by adding your team',
-        'Invite',
-      ]
+      'Add your team',
+      'Start collaborating today by adding your team',
+      'Invite',
+    ]
     : ['Upgrade', 'Upgrade today for free', 'Go'];
 
   return (
@@ -38,7 +38,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen, closeModal }) => {
                 id="priorityList"
                 name="priorityList"
                 required
-                //   onChange=
+              //   onChange=
               >
                 {/* will use code below when we rearrange get data from API to query files. */}
                 {/* {ctx.data &&
@@ -60,7 +60,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen, closeModal }) => {
             <button
               type="button"
               className="inviteModalButton"
-              //   onClick=
+            //   onClick=
             >
               {params[2]}
             </button>

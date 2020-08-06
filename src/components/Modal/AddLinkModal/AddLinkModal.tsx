@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import { useParams } from 'react-router';
+import { useParams, Router } from 'react-router-dom';
 
 import { axiosConfig } from 'utils/axiosConfig';
 
@@ -16,7 +16,7 @@ const createTimePoints = async ({ projectId, userId, title, content }: foo) => {
     const response = await axios.post(
       `http://46.101.172.171:8008/link/`,
       {
-        project: projectId,
+        project: '137',
         user: userId,
         title,
         content,
@@ -37,7 +37,7 @@ const createTimePoints = async ({ projectId, userId, title, content }: foo) => {
       });
     }
     return response.data;
-  } catch (err) {}
+  } catch (err) { }
 };
 
 interface AddLinkModalProps {

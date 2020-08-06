@@ -3,11 +3,12 @@ import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache } from 'react-query';
 import TextField from '@material-ui/core/TextField';
-import { useParams } from 'react-router';
+import { useParams } from 'react-router-dom';
 
 import { axiosConfig } from 'utils/axiosConfig';
 
 const createTimeGroup = async (projectId: number) => {
+
   const response = await axios.post(
     `http://46.101.172.171:8008/times/new_time_group/${projectId}`,
     {},
@@ -81,6 +82,7 @@ const AddTimeModal: React.FC<AddTimeModalProps> = ({ closeModal }) => {
   const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
   const { projectId } = useParams();
+  console.log('projectID', projectId)
 
   const [mutate] = useMutation(createTimePoints, {
     onMutate: (newData: any) => {

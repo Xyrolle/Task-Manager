@@ -26,6 +26,7 @@ const LinkContent: React.FC = () => {
         + Add Link
       </button>
       <div className="linkComponentContainer">
+        {console.log(data)}
         {data &&
           data.data.map((link: any, key: number) => (
             <div key={key}>

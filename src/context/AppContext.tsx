@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 import { getUserInfo } from './queries';
 
 type Props = {
-  children: React.ReactNode,
+  children: React.ReactNode;
 };
 
 export const AppContext = createContext<ContextProps | null>(null);
