@@ -50,6 +50,7 @@ const AddProjectModal: React.FC<{ userId: number }> = ({ userId }) => {
   const companyInput = useRef<HTMLInputElement>(null);
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
 
+
   const ctx = useContext(AppContext);
 
   if (!ctx) {

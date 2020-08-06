@@ -1,72 +1,71 @@
-
-.linkDetailsLink{
-    font-size: 14px;
-    font-weight: 300;
-    color: #3D8AED;
+.linkDetailsLink {
+  font-size: 14px;
+  font-weight: 300;
+  color: #3d8aed;
 }
-.linkDetailsContainer{
-    margin-left: 20px;
+.linkDetailsContainer {
+  margin-left: 20px;
 }
-.linkContentWrap{
-    display: flex;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgb(226, 226, 226);
+.linkContentWrap {
+  display: flex;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(226, 226, 226);
 }
-.linkTitleWrap{
-    display: flex;
+.linkTitleWrap {
+  display: flex;
 }
-.linkTitleWrap a{
-    align-self: center;
+.linkTitleWrap a {
+  align-self: center;
 }
-.linkTitleWrap a:hover{
-    color: rgb(139, 182, 238);
+.linkTitleWrap a:hover {
+  color: rgb(139, 182, 238);
 }
-.linkTitle{
-    margin-right: 15px;
-    font-weight: 600;
+.linkTitle {
+  margin-right: 15px;
+  font-weight: 600;
 }
-.tagLink{
-    font-size: 13px;
-    font-weight: 300;
-    padding: 2px 8px 4px 8px;
-    background-color: rgb(47, 141, 228);
-    border-radius: 10px;
-    color: #fff;
-    margin-right: 5px;
+.tagLink {
+  font-size: 13px;
+  font-weight: 300;
+  padding: 2px 8px 4px 8px;
+  background-color: rgb(47, 141, 228);
+  border-radius: 10px;
+  color: #fff;
+  margin-right: 5px;
 }
-.tagWrap{
-    margin-top: 5px;
+.tagWrap {
+  margin-top: 5px;
 }
-.linkContent{
-    font-size: 14px;
-    font-weight: 320;
+.linkContent {
+  font-size: 14px;
+  font-weight: 320;
 }
-.linkContent{
-    margin-top: 12px;
+.linkContent {
+  margin-top: 12px;
 }
-.buttonsLinkInfoWrap{
-    margin-top: 15px;
-    display: flex;
+.buttonsLinkInfoWrap {
+  margin-top: 15px;
+  display: flex;
 }
-.tagLinkIconWrap{
-    opacity: 40%;
-    font-size: 12px;
-    font-weight: 400;
-    cursor: pointer;
-    margin-right: 10px;
+.tagLinkIconWrap {
+  opacity: 40%;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  margin-right: 10px;
 }
-.tagLinkIconWrap:hover{
-    opacity: 70%;
+.tagLinkIconWrap:hover {
+  opacity: 70%;
 }
-.tagIcon{
-    font-size: 12px;
-    margin-right: 5px;
+.tagIcon {
+  font-size: 12px;
+  margin-right: 5px;
 }
-.linkInfoWrap{
-    margin-top: 10px;
+.linkInfoWrap {
+  margin-top: 10px;
 }
-.linkInfo{
-    font-size: 13px;
-    color:#999;
-    font-weight: 350;
+.linkInfo {
+  font-size: 13px;
+  color: #999;
+  font-weight: 350;
 }

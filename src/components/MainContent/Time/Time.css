@@ -1,60 +1,58 @@
-
-.tableHeaderWrap{
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
+.tableHeaderWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
 }
-.tableHeader{
-    width: 700px;
-    display: flex;
-    align-self: center;
-    align-items: center;
-    background-color: rgb(21, 21, 42);
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
+.tableHeader {
+  width: 700px;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  background-color: rgb(21, 21, 42);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 .tableHeader p {
-    padding: 10px;
-    justify-content: center;
-    align-items: center; 
-    font-size: 0.9rem;
-    font-weight: 300;
-    color:white;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: white;
 }
-.timeDescription{
-    width: 150px;
+.timeDescription {
+  width: 150px;
 }
-.timeTaskList{
-    width: 150px;
+.timeTaskList {
+  width: 150px;
 }
-.timeStartDate{
-    width: 200px;
+.timeStartDate {
+  width: 200px;
 }
-.timeEndDate{
-    width: 200px;
+.timeEndDate {
+  width: 200px;
 }
-.tableContentWrap{
-    display: flex;
-    justify-content: center;
+.tableContentWrap {
+  display: flex;
+  justify-content: center;
 }
-.tableContent{
-    width: 700px;
-    height: 60px;
-    display: flex;
-    align-self: center;
-    align-items: center;
-    background-color: rgb(250, 250, 250);
-    border-left: 1px solid #eceff3;
-    border-right: 1px solid #eceff3;
-    border-bottom: 1px solid #eceff3;
+.tableContent {
+  width: 700px;
+  height: 60px;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  background-color: rgb(250, 250, 250);
+  border-left: 1px solid #eceff3;
+  border-right: 1px solid #eceff3;
+  border-bottom: 1px solid #eceff3;
 }
 .tableContent div {
-    height: 70px;
-   
+  height: 70px;
 }
-.tableContent p{
-    font-size: 0.8rem;
-    font-weight: 300;
-    padding: 10px 0 0 10px;
-    color: #555; 
+.tableContent p {
+  font-size: 0.8rem;
+  font-weight: 300;
+  padding: 10px 0 0 10px;
+  color: #555;
 }

@@ -21,11 +21,12 @@ const LinkContent: React.FC = () => {
     <div>
       <button
         onClick={() => ctx.setOpenModal('linkModal')}
-        className='addLinkButton'
+        className="addLinkButton"
       >
         + Add Link
       </button>
-      <div className='linkComponentContainer'>
+      <div className="linkComponentContainer">
+        {console.log(data)}
         {data &&
           data.data.map((link: any, key: number) => (
             <div key={key}>

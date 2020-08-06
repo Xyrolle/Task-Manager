@@ -8,7 +8,6 @@ import Notebook from '../../../../assets/Notebook.png';
 import tag from '../../../../assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
 
-
 const deleteTag = () => {
 
 }
@@ -55,14 +54,7 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
           </p>
         </div>
       </div>
-      )}
-          <p className='agendaInfo'>
-        {/* <TagDropdown /> */}
-        Last modified by:{agenda.user} at {agenda.last_update}
-      </p>
     </div>
-      </div >
-    </div >
   );
 };
 

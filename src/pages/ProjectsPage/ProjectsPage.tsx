@@ -11,12 +11,12 @@ const ProjectsPage: React.FC = () => {
     <Router>
       <div>
         <Header />
-        <Layout />
-        <main className='mainContainer'>
+        {/* <Layout /> */}
+        <main className="mainContainer">
           {/* <Route path='/' component={Layout} /> */}
-          <Route exact path='/' component={Projects} />
-          <Route exact path='/projects' component={Projects} />
-          <Route path='/projects/:projectId/' component={Layout} />
+          <Route exact path="/" component={Projects} />
+          <Route exact path="/projects" component={Projects} />
+          <Route path="/projects/:projectId/" component={Layout} />
           <MainContent />
         </main>
         <footer style={{ height: '10rem' }} />

@@ -16,12 +16,12 @@ const PlusDropdown: React.FC = () => {
   ];
 
   return (
-    <div className='plusDropdownContainer'>
-      <header className='plusDropdownHeader'>Quick Add</header>
-      <div className='plusDropdownContent' role='contentinfo'>
+    <div className="plusDropdownContainer">
+      <header className="plusDropdownHeader">Quick Add</header>
+      <div className="plusDropdownContent" role="contentinfo">
         {sections.map((sect, i) => (
           <div
-            className='plusDropdownButton'
+            className="plusDropdownButton"
             key={i}
             // onClick=
           >

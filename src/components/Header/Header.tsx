@@ -27,20 +27,19 @@ const Header: React.FC = () => {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
 
-  console.log('Header:React.FC -> ctx', ctx);
   return (
-    <header className='mainHeader' data-testid='mainHeader'>
-      <nav className='nav'>
-        <div className='mainHeadList'>
-          <div className='logo'>
-            <img src={Logo} alt='logo' />
+    <header className="mainHeader" data-testid="mainHeader">
+      <nav className="nav">
+        <div className="mainHeadList">
+          <div className="logo">
+            <img src={Logo} alt="logo" />
           </div>
-          <div className='burgerMenuWrap'>
-            <input type='checkbox' className='burgerToggler' />
-            <div className='hamburger'>
+          <div className="burgerMenuWrap">
+            <input type="checkbox" className="burgerToggler" />
+            <div className="hamburger">
               <div></div>
             </div>
-            <div className='burgerMenu'>
+            <div className="burgerMenu">
               <div>
                 <div>
                   <ul>
@@ -56,53 +55,53 @@ const Header: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className='mainHeadBtns'>
+        <div className="mainHeadBtns">
           {!searchInputIsOpen ? (
             <Fragment>
               <button
-                type='button'
-                className='addTeamBtn'
+                type="button"
+                className="addTeamBtn"
                 onClick={() => ctx.setOpenModal('addTeamModal')}
               >
                 <img
-                  src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
-                  alt='add team'
+                  src="//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg"
+                  alt="add team"
                 />
                 <span>Add Your Team</span>
               </button>
               <button
-                type='button'
-                className='upgradeBtn'
+                type="button"
+                className="upgradeBtn"
                 onClick={() => ctx.setOpenModal('upgradeModal')}
               >
                 Upgrade Now
               </button>
               <span
-                className='searchCircle'
+                className="searchCircle"
                 onClick={() => setSearchInputIsOpen(true)}
               >
-                <img src={SearchIcon} alt='search' className='search' />
+                <img src={SearchIcon} alt="search" className="search" />
               </span>
             </Fragment>
           ) : (
-            <div className='searchInputContainer'>
-              <img src={SearchIcon} alt='search' className='searchInInput' />
-              <input
-                id='search'
-                className='searchInput'
-                type='search'
-                autoComplete='off'
-                placeholder='Search'
-              />
-              <img
-                src={CancelSearch}
-                alt='cancel search'
-                className='cancelSearchInInput'
-                onClick={() => setSearchInputIsOpen(false)}
-              />
-            </div>
-          )}
-          <div className='plusContainer'>
+              <div className="searchInputContainer">
+                <img src={SearchIcon} alt="search" className="searchInInput" />
+                <input
+                  id="search"
+                  className="searchInput"
+                  type="search"
+                  autoComplete="off"
+                  placeholder="Search"
+                />
+                <img
+                  src={CancelSearch}
+                  alt="cancel search"
+                  className="cancelSearchInInput"
+                  onClick={() => setSearchInputIsOpen(false)}
+                />
+              </div>
+            )}
+          <div className="plusContainer">
             <div
               className={openDropdown !== 'plusDropdown' ? 'plus' : 'whitePlus'}
               onClick={() => handleDropdown('plusDropdown')}
@@ -110,19 +109,19 @@ const Header: React.FC = () => {
             {openDropdown === 'plusDropdown' && <PlusDropdown />}
           </div>
           <div
-            className='folder'
+            className="folder"
             onClick={() => handleDropdown('folderDropdown')}
           />
           {openDropdown === 'folderDropdown' && <FolderDropdown />}
           <span
-            className='bellContainer'
+            className="bellContainer"
             onClick={() => handleDropdown('bellDropdown')}
           >
-            <img src={Bell} alt='bell' className='bell' />
+            <img src={Bell} alt="bell" className="bell" />
           </span>
           {openDropdown === 'bellDropdown' && <BellDropdown />}
-          <span className='profileCircle'>EO</span>
-          <img src={Vector} alt='vector' className='vector' />
+          <span className="profileCircle">EO</span>
+          <img src={Vector} alt="vector" className="vector" />
         </div>
       </nav>
     </header>

@@ -1,9 +1,5 @@
-
 export let axiosConfig = {
-	headers:
-	{
-		Authorization:
-			`Bearer ${localStorage.getItem('token')}`
-	}
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
 };
-

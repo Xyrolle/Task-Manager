@@ -1,54 +1,54 @@
 .layoutNavigation {
-	height: 42px;
-	background-color: #fff;
-	overflow: hidden;
-	border-bottom: 1px solid #eee;
+  height: 42px;
+  background-color: #fff;
+  overflow: hidden;
+  border-bottom: 1px solid #eee;
 }
 
 .layoutNavigation a {
-	padding: 0 2px;
-	padding-bottom: 10px;
-	line-height: 42px;
-	text-decoration: none;
-	display: inline-block;
-	margin: 0 0 0 25px;
+  padding: 0 2px;
+  padding-bottom: 10px;
+  line-height: 42px;
+  text-decoration: none;
+  display: inline-block;
+  margin: 0 0 0 25px;
 }
 
 .layoutNavigation a:hover {
-	display: inline;
-	border-bottom: 2px solid #999999;
+  display: inline;
+  border-bottom: 2px solid #999999;
 }
 
 .layoutNavigation li {
-	display: inline;
+  display: inline;
 }
 
 .active-link a {
-	display: inline;
-	border-bottom: 2px solid #59c894 !important;
-	line-height: 2.4;
-	margin-bottom: 0;
+  display: inline;
+  border-bottom: 2px solid #59c894 !important;
+  line-height: 2.4;
+  margin-bottom: 0;
 }
 
 @media only screen and (max-width: 600px) {
-	.layoutNavigation ul {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
+  .layoutNavigation ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-	.layoutNavigation {
-		height: 60px;
-		padding-bottom: 20px;
-	}
+  .layoutNavigation {
+    height: 60px;
+    padding-bottom: 20px;
+  }
 
-	.layoutNavigation a {
-		padding: 8px 2px;
-		height: 42px;
-		font-size: 0.8rem;
-		line-height: 42px;
-		text-decoration: none;
-		display: inline;
-		margin: 0 0 0 25px;
-	}
+  .layoutNavigation a {
+    padding: 8px 2px;
+    height: 42px;
+    font-size: 0.8rem;
+    line-height: 42px;
+    text-decoration: none;
+    display: inline;
+    margin: 0 0 0 25px;
+  }
 }
