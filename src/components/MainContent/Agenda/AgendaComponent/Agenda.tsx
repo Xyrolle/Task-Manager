@@ -11,6 +11,10 @@ import TagDropdown from '../TagDropdown/TagDropdown';
 const deleteTag = () => {
 
 }
+interface tagInterface {
+    title: string;
+    id: number;
+}
 
 const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda, style }) => {
     const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
@@ -27,10 +31,10 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
                         <Link to={`agenda/${agenda.id}`}>
                             <p >v{agenda.title}</p>
                         </Link>
-                        {agenda.tags.map((tag: any, key: number) =>
-                            <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
+                        {console.log('agenda tags', agenda.tags)}
+                        {agenda.tags.map((tag: any, key: number) => console.log('agenda tag', agenda.tags))
+                            // <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
                         }
-
                     </div>
                     {!agendaID &&
                         <div className="buttonsAgendaInfoWrap">

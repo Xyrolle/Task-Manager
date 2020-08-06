@@ -59,7 +59,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='/files' onClick={() => setActive('files')}>
+					<Link to='files' onClick={() => setActive('files')}>
 						Files
 					</Link>
 				</li>

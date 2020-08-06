@@ -45,7 +45,7 @@ const Time: React.FC = () => {
 
     const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
     return (
-        <div >
+        <div>
             <button
                 onClick={() =>
                     setIsAddTimeModalOpen(!isAddTimeModalOpen)}
@@ -85,21 +85,6 @@ const Time: React.FC = () => {
                                 ))
                             ))}
                             <div>
-                                {console.log('hasmore', hasMore)}
-
-                                {/* <button
-                                    ref={loadMoreButtonRef}
-                                    onClick={() => fetchMore()}
-                                    disabled={!hasMore || isFetchingMore}
-
-                                >
-                                    {isFetchingMore
-                                        ? 'Loading more...'
-                                        : hasMore
-                                            ? 'Load More'
-                                            : 'Nothing more to load'}
-                                </button> */}
-                                {console.log('canfetchmore', canFetchMore)}
                                 <button
                                     ref={loadMoreButtonRef}
                                     onClick={() => fetchMore()}

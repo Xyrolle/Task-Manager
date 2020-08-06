@@ -18,17 +18,7 @@ const createProject = ({ name, description, company, userId }: foo): Promise<voi
         axiosConfig
     )
         .then(function (response) {
-            queryCache.setQueryData(['getProjects', 5], (prev: any) => {
-                prev.data.push({
-                    project: {
-                        id: response.data.id,
-                        company,
-                        description,
-                        name
-                    }
-                })
-                return prev;
-            });
+
         })
         .catch(function (error) {
             console.log(error);
@@ -42,10 +32,22 @@ const AddProjectModal: React.FC<{ userId: number, handleShowModal(): void }> = (
 
     const [mutate] = useMutation(createProject, {
         onMutate: (newData: any) => {
-            queryCache.cancelQueries(['getProjects', userId.toString()]);
+            queryCache.cancelQueries(['getProjects', userId]);
+            queryCache.setQueryData(['getProjects', userId], (prev: any) => {
+                console.log('new', newData)
+                prev.data.push({
+                    project: {
+                        id: new Date().toISOString(),
+                        company: newData.company,
+                        description: newData.description,
+                        name: newData.name
+                    }
+                })
+                return prev;
+            });
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),
-        // onSettled: () => queryCache.prefetchQuery('getProjects)
+        onSettled: () => queryCache.invalidateQueries(['getProjects', userId])
     })
 
     return (

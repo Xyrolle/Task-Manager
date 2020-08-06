@@ -10,12 +10,12 @@ const AgendaContent: React.FC = ({ }) => {
     const { projectId } = useParams();
     const { status, data, error } = useQuery(['getAllAgendas', projectId], getAgendasByProjectId);
 
-
     if (status === 'loading') return <div data-testid="loading">loading</div>;
     if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
     return (
         <div>
+
             <div className="agendaHeader">
                 <h3 role="heading">Notebooks</h3>
                 <Link to={`agenda/create`} data-testid="createAgenda">
