@@ -11,7 +11,7 @@ const ProjectsPage: React.FC = () => {
     <Router>
       <div>
         <Header />
-        <Layout />
+        {/* <Layout /> */}
         <main className="mainContainer">
           {/* <Route path='/' component={Layout} /> */}
           <Route exact path="/" component={Projects} />

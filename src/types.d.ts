@@ -1,9 +1,9 @@
 type ContextProps = {
-  openModal: string,
-  setOpenModal: (modalName: string) => void,
-  userDetails: any,
-  closeModal: () => void,
-  setUserInfo: () => void,
+  openModal: string;
+  setOpenModal: (modalName: string) => void;
+  userDetails: any;
+  closeModal: () => void;
+  setUserInfo: () => void;
 };
 interface userDetailsInterface {
   date_joined: string;

@@ -12,10 +12,10 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
 
   const params = !isUpgradeModalOpen
     ? [
-        'Add your team',
-        'Start collaborating today by adding your team',
-        'Invite',
-      ]
+      'Add your team',
+      'Start collaborating today by adding your team',
+      'Invite',
+    ]
     : ['Upgrade', 'Upgrade today for free', 'Go'];
 
   if (!ctx) {
@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
                 id="email"
                 type="email"
                 placeholder="Email"
-                //   onChange=
+              //   onChange=
               ></input>
 
               <label htmlFor="priorityList" className="secondModalLabel">
@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
                 id="priorityList"
                 name="priorityList"
                 required
-                //   onChange=
+              //   onChange=
               >
                 {/* will use code below when we rearrange get data from API to query files. */}
                 {/* {ctx.data &&
@@ -65,7 +65,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
             <button
               type="button"
               className="inviteModalButton"
-              //   onClick=
+            //   onClick=
             >
               {params[2]}
             </button>

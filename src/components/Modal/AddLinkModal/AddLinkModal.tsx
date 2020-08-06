@@ -1,7 +1,7 @@
 import React, { useState, useRef, useContext } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import { useParams } from 'react-router';
+import { useParams, Router } from 'react-router-dom';
 
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from 'context/AppContext';
@@ -17,7 +17,7 @@ const createTimePoints = async ({ projectId, userId, title, content }: foo) => {
     const response = await axios.post(
       `http://46.101.172.171:8008/link/`,
       {
-        project: projectId,
+        project: '137',
         user: userId,
         title,
         content,
@@ -38,7 +38,7 @@ const createTimePoints = async ({ projectId, userId, title, content }: foo) => {
       });
     }
     return response.data;
-  } catch (err) {}
+  } catch (err) { }
 };
 
 const AddLinkModal: React.FC = () => {
@@ -46,6 +46,7 @@ const AddLinkModal: React.FC = () => {
   const titleInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
   const { projectId } = useParams();
+
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
@@ -95,7 +96,7 @@ const AddLinkModal: React.FC = () => {
                   title: titleInput.current!.value,
                   content: contentInput.current!.value,
                 });
-                await ctx.closeModal;
+                await ctx.closeModal();
               }}
               type='button'
               className='addList-btn btn'

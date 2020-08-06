@@ -6,7 +6,6 @@ import { axiosConfig } from '../../../utils/axiosConfig';
 import axios from 'axios';
 import './Time.css';
 import { useParams } from 'react-router';
-import createMixins from '@material-ui/core/styles/createMixins';
 import { AppContext } from '../../../context/AppContext';
 
 const Time: React.FC = () => {
@@ -52,7 +51,7 @@ const Time: React.FC = () => {
     <div>
       <button
         onClick={() => ctx.setOpenModal('timeModal')}
-        className="addProjectButton"
+        className='addProjectButton'
       >
         + Add Time
       </button>
@@ -61,35 +60,35 @@ const Time: React.FC = () => {
       ) : status === 'error' ? (
         <span>Error: {error.message}</span>
       ) : (
-        <>
-          {data &&
-            data.map((page: any, key: any) =>
-              page.data.map((timeGroup: any, key: any) => (
-                <div key={key}>
-                  <div className="tableHeaderWrap">
-                    <div className="tableHeader">
-                      <div className="timeDescription">
-                        <p>Description</p>
+            <>
+              {data &&
+                data.map((page: any, key: any) =>
+                  page.data.map((timeGroup: any, key: any) => (
+                    <div key={key}>
+                      <div className='tableHeaderWrap'>
+                        <div className='tableHeader'>
+                          <div className='timeDescription'>
+                            <p>Description</p>
+                          </div>
+                          <div className='timeTaskList'>
+                            <p>Task list</p>
+                          </div>
+                          <div className='timeStartDate'>
+                            <p>Start</p>
+                          </div>
+                          <div className='timeEndDate'>
+                            <p>End</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="timeTaskList">
-                        <p>Task list</p>
-                      </div>
-                      <div className="timeStartDate">
-                        <p>Start</p>
-                      </div>
-                      <div className="timeEndDate">
-                        <p>End</p>
-                      </div>
+                      <TimePoints id={timeGroup.id} />
                     </div>
-                  </div>
-                  <TimePoints id={timeGroup.id} />
-                </div>
-              ))
-            )}
-          <div>
-            {console.log('hasmore', hasMore)}
+                  ))
+                )}
+              <div>
+                {console.log('hasmore', hasMore)}
 
-            {/* <button
+                {/* <button
                                 ref={loadMoreButtonRef}
                                 onClick={() => fetchMore()}
                                 disabled={!hasMore || isFetchingMore}
@@ -100,24 +99,24 @@ const Time: React.FC = () => {
                                         ? 'Load More'
                                         : 'Nothing more to load'}
                             </button> */}
-            {console.log('canfetchmore', canFetchMore)}
-            <button
-              ref={loadMoreButtonRef}
-              onClick={() => fetchMore()}
-              disabled={!canFetchMore || isFetchingMore}
-            >
-              {isFetchingMore
-                ? 'Loading more...'
-                : canFetchMore
-                ? 'Load More'
-                : 'Nothing more to load'}
-            </button>
-          </div>
-          <div>
-            {isFetching && !isFetchingMore ? 'Background Updating...' : null}
-          </div>
-        </>
-      )}
+                {console.log('canfetchmore', canFetchMore)}
+                <button
+                  ref={loadMoreButtonRef}
+                  onClick={() => fetchMore()}
+                  disabled={!canFetchMore || isFetchingMore}
+                >
+                  {isFetchingMore
+                    ? 'Loading more...'
+                    : canFetchMore
+                      ? 'Load More'
+                      : 'Nothing more to load'}
+                </button>
+              </div>
+              <div>
+                {isFetching && !isFetchingMore ? 'Background Updating...' : null}
+              </div>
+            </>
+          )}
     </div>
   );
 };

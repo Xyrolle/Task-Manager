@@ -6,6 +6,6 @@ import { useParams } from 'react-router-dom';
 
 import './Agenda.css';
 
-export const AddTagDropdown: React.FC = ({}) => {
+export const AddTagDropdown: React.FC = ({ }) => {
   return <div></div>;
 };

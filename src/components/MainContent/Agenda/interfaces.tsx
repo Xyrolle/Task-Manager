@@ -8,7 +8,7 @@ export interface AgendaInterface {
   project: number;
   user: number;
   last_user: number;
-  tags: string[];
+  tags: object[];
 }
 
 export interface IupdateAgendaContent {
