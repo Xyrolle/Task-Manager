@@ -86,7 +86,6 @@ const Header: React.FC = () => {
               </span>
             </Fragment>
           ) : (
-<<<<<<< HEAD
               <div className="searchInputContainer">
                 <img src={SearchIcon} alt="search" className="searchInInput" />
                 <input
@@ -97,6 +96,7 @@ const Header: React.FC = () => {
                   placeholder="Search"
                 />
                 <img
+                  role="presentation"
                   src={CancelSearch}
                   alt="cancel search"
                   className="cancelSearchInInput"
@@ -104,26 +104,6 @@ const Header: React.FC = () => {
                 />
               </div>
             )}
-=======
-            <div className="searchInputContainer">
-              <img src={SearchIcon} alt="search" className="searchInInput" />
-              <input
-                id="search"
-                className="searchInput"
-                type="search"
-                autoComplete="off"
-                placeholder="Search"
-              />
-              <img
-                role="presentation"
-                src={CancelSearch}
-                alt="cancel search"
-                className="cancelSearchInInput"
-                onClick={() => setSearchInputIsOpen(false)}
-              />
-            </div>
-          )}
->>>>>>> 687ee0a915223d88791c1dc814b3fee7626f0dcd
           <div className="plusContainer">
             <div
               role="button"
