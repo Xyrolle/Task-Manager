@@ -14,24 +14,29 @@ const AllPages: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+  const { setUserInfo, openModal, userDetails, closeModal } = ctx;
   useEffect(() => {
-    ctx.setUserInfo();
+    setUserInfo();
   }, []);
 
   const handleModal = () => {
-    switch (ctx.openModal) {
+    switch (openModal) {
       case 'taskListModal':
-        return <AddTaskListModal />;
+        return <AddTaskListModal closeModal={closeModal} />;
       case 'addTeamModal':
-        return <Modal isUpgradeModalOpen={false} />;
+        return <Modal isUpgradeModalOpen={false} closeModal={closeModal} />;
       case 'upgradeModal':
-        return <Modal isUpgradeModalOpen={true} />;
+        return <Modal isUpgradeModalOpen={true} closeModal={closeModal} />;
       case 'addProjectModal':
-        return <AddProjectModal userId={ctx.userDetails.id} />;
+        return (
+          <AddProjectModal userId={userDetails.id} closeModal={closeModal} />
+        );
       case 'linkModal':
-        return <AddLinkModal />;
+        return (
+          <AddLinkModal closeModal={closeModal} userDetails={userDetails} />
+        );
       case 'timeModal':
-        return <AddTimeModal />;
+        return <AddTimeModal closeModal={closeModal} />;
       default:
         return;
     }
@@ -40,7 +45,7 @@ const AllPages: React.FC = () => {
   return (
     <div>
       {handleModal()}
-      {ctx.userDetails && <ProjectsPage />}
+      {userDetails && <ProjectsPage />}
     </div>
   );
 };

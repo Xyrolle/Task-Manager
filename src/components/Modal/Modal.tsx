@@ -1,15 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import './Modal.css';
-import { AppContext } from 'context/AppContext';
 
 interface ModalProps {
   isUpgradeModalOpen: boolean;
+  closeModal: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
-  const ctx = useContext(AppContext);
-
+const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen, closeModal }) => {
   const params = !isUpgradeModalOpen
     ? [
         'Add your team',
@@ -18,9 +16,6 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
       ]
     : ['Upgrade', 'Upgrade today for free', 'Go'];
 
-  if (!ctx) {
-    throw new Error('You probably forgot to put <AppProvider>.');
-  }
   return (
     <div>
       <div className="modalContainer">
@@ -34,7 +29,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
                 type="email"
                 placeholder="Email"
                 //   onChange=
-              ></input>
+              />
 
               <label htmlFor="priorityList" className="secondModalLabel">
                 Add to a project
@@ -58,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
             <button
               type="button"
               className="cancelModalButton"
-              onClick={ctx.closeModal}
+              onClick={closeModal}
             >
               Cancel
             </button>
@@ -72,8 +67,14 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
           </div>
         </form>
       </div>
-
-      <div className="bg" onClick={ctx.closeModal} data-testid="background" />
+      <div
+        role="button"
+        tabIndex={0}
+        aria-label="Close modal"
+        className="bg"
+        onClick={closeModal}
+        data-testid="background"
+      />
     </div>
   );
 };

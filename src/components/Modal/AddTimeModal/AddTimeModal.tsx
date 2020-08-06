@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache } from 'react-query';
@@ -6,7 +6,6 @@ import TextField from '@material-ui/core/TextField';
 import { useParams } from 'react-router';
 
 import { axiosConfig } from 'utils/axiosConfig';
-import { AppContext } from 'context/AppContext';
 
 const createTimeGroup = async (projectId: number) => {
   const response = await axios.post(
@@ -73,17 +72,15 @@ const createTimePoints = async ({
   return response.data;
 };
 
-const AddTimeModal: React.FC = () => {
+interface AddTimeModalProps {
+  closeModal: () => void;
+}
+
+const AddTimeModal: React.FC<AddTimeModalProps> = ({ closeModal }) => {
   const [startTimeValue, setStartTimeValue] = useState(moment().toISOString());
   const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
   const { projectId } = useParams();
-
-  const ctx = useContext(AppContext);
-
-  if (!ctx) {
-    throw new Error('You probably forgot to put <AppProvider>.');
-  }
 
   const [mutate] = useMutation(createTimePoints, {
     onMutate: (newData: any) => {
@@ -138,7 +135,7 @@ const AddTimeModal: React.FC = () => {
             <button>submit</button>
           </div>
           <div className='modal-footer'>
-            <button onClick={ctx.closeModal} type='button' className='closeBtn'>
+            <button onClick={closeModal} type='button' className='closeBtn'>
               Close
             </button>
             <button
@@ -153,7 +150,7 @@ const AddTimeModal: React.FC = () => {
                   user: 5,
                   taskList: 108,
                 });
-                await ctx.closeModal;
+                await closeModal();
               }}
               type='button'
               className='addList-btn btn'
@@ -163,7 +160,7 @@ const AddTimeModal: React.FC = () => {
           </div>
         </form>
       </div>
-      <div className='bg' onClick={ctx.closeModal} />
+      <div className='bg' onClick={closeModal} />
     </div>
   );
 };

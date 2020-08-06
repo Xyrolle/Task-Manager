@@ -1,9 +1,8 @@
-import React, { useRef, useContext } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 
 import { axiosConfig } from 'utils/axiosConfig';
-import { AppContext } from 'context/AppContext';
 
 interface foo {
   name: string;
@@ -45,16 +44,15 @@ const createProject = ({
     });
 };
 
-const AddProjectModal: React.FC<{ userId: number }> = ({ userId }) => {
+interface AddProjectModalProps {
+  userId: number;
+  closeModal: () => void;
+}
+
+const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal }) => {
   const nameInput = useRef<HTMLInputElement>(null);
   const companyInput = useRef<HTMLInputElement>(null);
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
-
-  const ctx = useContext(AppContext);
-
-  if (!ctx) {
-    throw new Error('You probably forgot to put <AppProvider>.');
-  }
 
   const [mutate] = useMutation(createProject, {
     onMutate: (newData: any) => {
@@ -91,7 +89,7 @@ const AddProjectModal: React.FC<{ userId: number }> = ({ userId }) => {
             </div>
           </div>
           <div className='modal-footer'>
-            <button onClick={ctx.closeModal} type='button' className='closeBtn'>
+            <button onClick={closeModal} type='button' className='closeBtn'>
               Close
             </button>
             <button
@@ -102,7 +100,7 @@ const AddProjectModal: React.FC<{ userId: number }> = ({ userId }) => {
                   company: companyInput.current!.value,
                   userId: userId.toString(),
                 });
-                await ctx.closeModal;
+                await closeModal();
               }}
               type='button'
               className='addList-btn btn'
@@ -112,7 +110,7 @@ const AddProjectModal: React.FC<{ userId: number }> = ({ userId }) => {
           </div>
         </form>
       </div>
-      <div className='bg' onClick={ctx.closeModal} />
+      <div className='bg' onClick={closeModal} />
     </div>
   );
 };
