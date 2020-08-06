@@ -52,7 +52,7 @@ const Time: React.FC = () => {
     <div>
       <button
         onClick={() => ctx.setOpenModal('timeModal')}
-        className='addProjectButton'
+        className="addProjectButton"
       >
         + Add Time
       </button>
@@ -66,18 +66,18 @@ const Time: React.FC = () => {
             data.map((page: any, key: any) =>
               page.data.map((timeGroup: any, key: any) => (
                 <div key={key}>
-                  <div className='tableHeaderWrap'>
-                    <div className='tableHeader'>
-                      <div className='timeDescription'>
+                  <div className="tableHeaderWrap">
+                    <div className="tableHeader">
+                      <div className="timeDescription">
                         <p>Description</p>
                       </div>
-                      <div className='timeTaskList'>
+                      <div className="timeTaskList">
                         <p>Task list</p>
                       </div>
-                      <div className='timeStartDate'>
+                      <div className="timeStartDate">
                         <p>Start</p>
                       </div>
-                      <div className='timeEndDate'>
+                      <div className="timeEndDate">
                         <p>End</p>
                       </div>
                     </div>

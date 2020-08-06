@@ -10,7 +10,7 @@ import TagDropdown from '../TagDropdown/TagDropdown';
 
 const deleteTag = () => {};
 
-const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({
+const Agenda: React.FC<{ agenda: AgendaInterface, style?: string }> = ({
   agenda,
   style,
 }) => {
@@ -19,34 +19,34 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({
   const { agendaID } = useParams();
 
   return (
-    <div className='agendaContainer' data-testid='agenda-testid'>
-      <div className='agendaWrap changeColor'>
+    <div className="agendaContainer" data-testid="agenda-testid">
+      <div className="agendaWrap changeColor">
         <img src={Notebook} className={`notebook ${style}`} />
         <div>
           <h4>{agenda.title.charAt(0).toUpperCase()}.</h4>
-          <div className='agendaTitleWrap'>
+          <div className="agendaTitleWrap">
             <Link to={`agenda/${agenda.id}`}>
               <p>v{agenda.title}</p>
             </Link>
             {agenda.tags.map((tag: any, key: number) => (
-              <span className='tagAgenda' key={key}>
+              <span className="tagAgenda" key={key}>
                 {tag.title} <span>x</span>
               </span>
             ))}
           </div>
           {!agendaID && (
-            <div className='buttonsAgendaInfoWrap'>
+            <div className="buttonsAgendaInfoWrap">
               <div
                 onClick={() => setIsTagDropdownOpen(!isTagDropdownOpen)}
-                className='tagIconAgendaWrap'
+                className="tagIconAgendaWrap"
               >
-                <img src={tag} alt='tag icon' className='tagIcon' />
+                <img src={tag} alt="tag icon" className="tagIcon" />
                 Add tag
               </div>
               {isTagDropdownOpen && <TagDropdown agendaId={agenda.id} />}
             </div>
           )}
-          <p className='agendaInfo'>
+          <p className="agendaInfo">
             {/* <TagDropdown /> */}
             Last modified by:{agenda.user} at {agenda.last_update}
           </p>

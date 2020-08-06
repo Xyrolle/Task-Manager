@@ -7,7 +7,7 @@
   position: absolute;
   margin-top: 10px;
   /* top: 3.3rem;  */
-   /* left: 7.5rem; */
+  /* left: 7.5rem; */
 }
 
 .tagLinkDropdownContainer::before {
@@ -16,8 +16,8 @@
   height: 15px;
   background: #fff;
   position: absolute;
-   top: -0.54rem; 
-  left: 0.5rem; 
+  top: -0.54rem;
+  left: 0.5rem;
   border: 1px solid #dad0d0;
   transform: rotate(45deg);
   border-bottom-width: 0;

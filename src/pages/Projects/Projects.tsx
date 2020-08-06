@@ -66,11 +66,11 @@ const Projects: React.FC = () => {
   if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
   return (
-    <div className='test'>
+    <div className="test">
       <button
         onClick={() => ctx.setOpenModal('addProjectModal')}
         // setIsAddProjectModalOpen(!isAddProjectModalOpen)
-        className='addProjectButton'
+        className="addProjectButton"
       >
         + Add project
       </button>
@@ -80,20 +80,20 @@ const Projects: React.FC = () => {
           handleShowModal={handleShowModal}
         />
       )} */}
-      <div className='projectsContainer'>
+      <div className="projectsContainer">
         {console.log(data)}
         {data &&
           data.data.map(({ project }: any, key: number) => {
             return (
-              <div className='project' key={key}>
-                <div className='projectHeader'>
-                  <div className='projectNameWrap'>
+              <div className="project" key={key}>
+                <div className="projectHeader">
+                  <div className="projectNameWrap">
                     <Star userId={5} projectId={project.id} />
                     <Link to={`/projects/${project.id}/`}>
-                      <p className='projectName'>{project.name}</p>
+                      <p className="projectName">{project.name}</p>
                     </Link>
                   </div>
-                  <p className='projectCompany'>{project.company}</p>
+                  <p className="projectCompany">{project.company}</p>
                 </div>
                 <p>{project.description}</p>
                 <button onClick={() => mutateDeleteProject(project.id)}>

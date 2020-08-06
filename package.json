@@ -30,17 +30,17 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom-fourteen",
+    "test:pre-push": "npm t -- --watchAll=false",
+    "lint": "eslint --ext .js,.jsx,.ts,.tsx src --color --quiet",
+    "format": "prettier --write .js,.jsx,.ts,.tsx src --color'",
+    "isready": "npm run format && npm run lint && npm run build",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
@@ -54,7 +54,25 @@
     "@iconify/icons-vaadin": "^1.0.5",
     "@iconify/react": "^1.1.3",
     "@types/uuid": "^8.0.0",
-    "eslint-config-airbnb-standard": "^3.1.0",
-    "eslint-config-prettier": "^6.11.0"
+    "@typescript-eslint/eslint-plugin": "3.8.0",
+    "@typescript-eslint/parser": "3.8.0",
+    "babel-eslint": "10.1.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-config-airbnb-typescript": "9.0.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-config-react-app": "5.2.1",
+    "eslint-import-resolver-typescript": "2.2.0",
+    "eslint-loader": "4.0.2",
+    "eslint-plugin-flowtype": "5.2.0",
+    "eslint-plugin-import": "2.22.0",
+    "eslint-plugin-jsx-a11y": "6.3.1",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-react": "7.20.5",
+    "eslint-plugin-react-hooks": "4.0.8",
+    "eslint-plugin-testing-library": "^3.4.0",
+    "prettier": "2.0.5",
+    "prettier-eslint": "11.0.0",
+    "prettier-eslint-cli": "5.0.0"
   }
 }

@@ -5,8 +5,6 @@ import { render } from './tests/index';
 import App from './App';
 import AllPages from './pages/AllPages';
 
-
-
 it('renders App', () => {
   console.log('renders App');
 });

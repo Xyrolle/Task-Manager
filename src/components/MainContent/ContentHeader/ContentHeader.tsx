@@ -10,11 +10,11 @@ const ContentHeader: React.FC = () => {
   }
 
   return (
-    <div className='contentHeader'>
-      <h1 className='contentHeader-left'>Tasks</h1>
-      <div className='contentHeader-right'>
+    <div className="contentHeader">
+      <h1 className="contentHeader-left">Tasks</h1>
+      <div className="contentHeader-right">
         <button
-          className='btn'
+          className="btn"
           onClick={() => ctx.setOpenModal('taskListModal')}
         >
           <span>+</span> Add Task List

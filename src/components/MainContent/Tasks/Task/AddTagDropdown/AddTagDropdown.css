@@ -1,49 +1,49 @@
 .tagDropdownContainer-task {
-	background: #fff;
-	width: 14rem;
-	height: 5rem;
-	border: 1px solid #dad0d0;
-	border-radius: 4px;
-	z-index: 1500;
-	position: absolute;
-	top: 2rem;
-	right: -0.21rem;
-	padding: 0.4rem 0;
+  background: #fff;
+  width: 14rem;
+  height: 5rem;
+  border: 1px solid #dad0d0;
+  border-radius: 4px;
+  z-index: 1500;
+  position: absolute;
+  top: 2rem;
+  right: -0.21rem;
+  padding: 0.4rem 0;
 }
 
 .tagDropdownContainer-task::before {
-	content: '';
-	width: 15px;
-	height: 15px;
-	background: #fff;
-	position: absolute;
-	top: -0.5rem;
-	right: 0.3rem;
-	border: 1px solid #dad0d0;
-	transform: rotate(45deg);
-	border-bottom-width: 0;
-	border-right-width: 0;
+  content: '';
+  width: 15px;
+  height: 15px;
+  background: #fff;
+  position: absolute;
+  top: -0.5rem;
+  right: 0.3rem;
+  border: 1px solid #dad0d0;
+  transform: rotate(45deg);
+  border-bottom-width: 0;
+  border-right-width: 0;
 }
 
 .tagDropdownHeader {
-	border-bottom: 1px solid #dad0d0;
-	padding: 0.6rem;
-	font-size: 0.8rem;
-	font-weight: 500;
-	justify-content: space-between;
-	align-items: center;
+  border-bottom: 1px solid #dad0d0;
+  padding: 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .tagDropdownContent input {
 }
 
 .addTag-btn {
-	width: 60%;
-	font-size: 0.8rem;
-	margin: 0.4rem auto 1rem auto;
-	/* line-height: 5rem; */
-	font-size: 0.9rem;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+  width: 60%;
+  font-size: 0.8rem;
+  margin: 0.4rem auto 1rem auto;
+  /* line-height: 5rem; */
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
