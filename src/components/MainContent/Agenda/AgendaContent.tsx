@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery, } from 'react-query';
+
 import { getAgendasByProjectId } from './queries'
 import './Agenda.css';
 import Agenda from './AgendaComponent/Agenda';

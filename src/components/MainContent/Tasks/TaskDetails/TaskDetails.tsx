@@ -2,12 +2,10 @@ import React, { useRef, useState } from 'react';
 import { useQuery, useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
 import { useParams } from 'react-router-dom';
 
 import Task from '../Task/Task';
 import Comment from '../Comment/Comment';
-
 import './TaskDetails.css';
 
 let axiosConfig = {

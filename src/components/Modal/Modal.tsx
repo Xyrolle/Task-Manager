@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import './Modal.css';
-import { AppContext } from '../../context/AppContext';
+import { AppContext } from 'context/AppContext';
 
 interface ModalProps {
   isUpgradeModalOpen: boolean;
@@ -12,16 +12,15 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
 
   const params = !isUpgradeModalOpen
     ? [
-      'Add your team',
-      'Start collaborating today by adding your team',
-      'Invite',
-    ]
+        'Add your team',
+        'Start collaborating today by adding your team',
+        'Invite',
+      ]
     : ['Upgrade', 'Upgrade today for free', 'Go'];
 
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-  console.log('Projects:React.FC -> data', ctx);
   return (
     <div>
       <div className='modalContainer'>
@@ -34,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
                 id='email'
                 type='email'
                 placeholder='Email'
-              //   onChange=
+                //   onChange=
               ></input>
 
               <label htmlFor='priorityList' className='secondModalLabel'>
@@ -44,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
                 id='priorityList'
                 name='priorityList'
                 required
-              //   onChange=
+                //   onChange=
               >
                 {/* will use code below when we rearrange get data from API to query files. */}
                 {/* {ctx.data &&
@@ -66,7 +65,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
             <button
               type='button'
               className='inviteModalButton'
-            //   onClick=
+              //   onClick=
             >
               {params[2]}
             </button>

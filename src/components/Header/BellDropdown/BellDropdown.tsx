@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './BellDropdown.css';
-import Bell from '../../../assets/Bell.svg';
+import Bell from 'assets/Bell.svg';
 
 const BellDropdown: React.FC = () => {
   return (

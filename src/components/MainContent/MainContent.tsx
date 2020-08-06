@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
+
 import ContentHeader from './ContentHeader/ContentHeader';
-import TaskLists from '../../components/MainContent/Tasks/TaskLists/TaskLists';
+import TaskLists from 'components/MainContent/Tasks/TaskLists/TaskLists';
 import AgendaContent from './Agenda/AgendaContent';
-import AgendaCreate from '../../components/MainContent/Agenda/AgendaCreate/AgendaCreate';
+import AgendaCreate from 'components/MainContent/Agenda/AgendaCreate/AgendaCreate';
 import AgendaDetails from './Agenda/AgendaDetails/AgendaDetails';
 import TaskDetails from './Tasks/TaskDetails/TaskDetails';
 import Task from './Tasks/Task/Task'

@@ -1,28 +1,27 @@
 import React, { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import TimePoints from './TimePoints';
-import AddTimeModal from './AddTimeModal/AddTimeModal';
-import { useInfiniteQuery } from 'react-query'
+import { useInfiniteQuery } from 'react-query';
 import { axiosConfig } from '../../../utils/axiosConfig';
-import axios from 'axios'
-import './Time.css'
+import axios from 'axios';
+import './Time.css';
 import { useParams } from 'react-router';
+import { AppContext } from '../../../context/AppContext';
 
 const Time: React.FC = () => {
-    const [isAddTimeModalOpen, setIsAddTimeModalOpen] = useState(false)
-    const [pageId, setPageId] = useState(1)
+    const [pageId, setPageId] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const { projectId } = useParams();
 
     const getTimeGroups = async (key: string, param1: number, next = 1) => {
-        console.log('next', next)
-        const response = await axios.get(`http://46.101.172.171:8008/times/time_groups/${projectId}/${next}`,
+        console.log('next', next);
+        const response = await axios.get(
+            `http://46.101.172.171:8008/times/time_groups/${projectId}/${next}`,
             await axiosConfig
         );
         return response.data;
-    }
+    };
 
-    const handleShowModal = () => setIsAddTimeModalOpen(false);
     const {
         status,
         data,
@@ -30,61 +29,77 @@ const Time: React.FC = () => {
         isFetching,
         isFetchingMore,
         fetchMore,
-        canFetchMore
-    }: any = useInfiniteQuery(['getTimeGroups', 1],
-        getTimeGroups,
-        {
-            getFetchMore: (lastGroup: any, allPages: any) => {
-                if (lastGroup.page_current + 1 > lastGroup.page_total) {
-                    return false;
-                } else {
-                    return lastGroup.page_current + 1;
-                }
+        canFetchMore,
+    }: any = useInfiniteQuery(['getTimeGroups', 1], getTimeGroups, {
+        getFetchMore: (lastGroup: any, allPages: any) => {
+            if (lastGroup.page_current + 1 > lastGroup.page_total) {
+                return false;
+            } else {
+                return lastGroup.page_current + 1;
             }
-        })
+        },
+    });
+
+    const ctx = useContext(AppContext);
+
+    if (!ctx) {
+        throw new Error('You probably forgot to put <AppProvider>.');
+    }
 
     const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
     return (
         <div>
             <button
-                onClick={() =>
-                    setIsAddTimeModalOpen(!isAddTimeModalOpen)}
-                className="addProjectButton"
+                onClick={() => ctx.setOpenModal('timeModal')}
+                className='addProjectButton'
             >
                 + Add Time
-            </button>
-
-            {isAddTimeModalOpen && <AddTimeModal handleShowModal={handleShowModal} />}
+      </button>
             {status === 'loading' ? (
                 <p>Loading...</p>
             ) : status === 'error' ? (
                 <span>Error: {error.message}</span>
             ) : (
                         <>
-                            {data && data.map((page: any, key: any) => (
-                                page.data.map((timeGroup: any, key: any) => (
-                                    <div key={key}>
-                                        <div className="tableHeaderWrap" >
-                                            <div className="tableHeader">
-                                                <div className="timeDescription">
-                                                    <p>Description</p>
+                            {data &&
+                                data.map((page: any, key: any) =>
+                                    page.data.map((timeGroup: any, key: any) => (
+                                        <div key={key}>
+                                            <div className='tableHeaderWrap'>
+                                                <div className='tableHeader'>
+                                                    <div className='timeDescription'>
+                                                        <p>Description</p>
+                                                    </div>
+                                                    <div className='timeTaskList'>
+                                                        <p>Task list</p>
+                                                    </div>
+                                                    <div className='timeStartDate'>
+                                                        <p>Start</p>
+                                                    </div>
+                                                    <div className='timeEndDate'>
+                                                        <p>End</p>
+                                                    </div>
                                                 </div>
-                                                <div className="timeTaskList">
-                                                    <p>Task list</p>
-                                                </div>
-                                                <div className="timeStartDate">
-                                                    <p>Start</p>
-                                                </div>
-                                                <div className="timeEndDate">
-                                                    <p>End</p>
-                                                </div>
-                                            </div >
+                                            </div>
+                                            <TimePoints id={timeGroup.id} />
                                         </div>
-                                        <TimePoints id={timeGroup.id} />
-                                    </div>
-                                ))
-                            ))}
+                                    ))
+                                )}
                             <div>
+                                {console.log('hasmore', hasMore)}
+
+                                {/* <button
+                                ref={loadMoreButtonRef}
+                                onClick={() => fetchMore()}
+                                disabled={!hasMore || isFetchingMore}
+                            >
+                                {isFetchingMore
+                                    ? 'Loading more...'
+                                    : hasMore
+                                        ? 'Load More'
+                                        : 'Nothing more to load'}
+                            </button> */}
+                                {console.log('canfetchmore', canFetchMore)}
                                 <button
                                     ref={loadMoreButtonRef}
                                     onClick={() => fetchMore()}
@@ -102,7 +117,6 @@ const Time: React.FC = () => {
                             </div>
                         </>
                     )}
-
         </div>
     );
 };
