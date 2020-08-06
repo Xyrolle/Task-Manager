@@ -9,7 +9,7 @@ const FolderDropdown: React.FC = () => {
         <div>Latest | All</div>
         <input type="search" autoComplete="off" placeholder="Search" />
       </header>
-      <div className="folderDropdownContent" role="contentinfo"></div>
+      <div className="folderDropdownContent" role="contentinfo" />
     </div>
   );
 };

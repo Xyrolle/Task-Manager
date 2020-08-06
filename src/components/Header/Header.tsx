@@ -1,5 +1,6 @@
 import React, { useContext, useState, Fragment } from 'react';
 
+import { AppContext } from 'context/AppContext';
 import './Header.css';
 import Vector from 'assets/Vector.svg';
 import SearchIcon from 'assets/SearchIcon.svg';
@@ -9,7 +10,6 @@ import Logo from 'assets/Logo.png';
 import PlusDropdown from './PlusDropdown/PlusDropdown';
 import FolderDropdown from './FolderDropdown/FolderDropdown';
 import BellDropdown from './BellDropdown/BellDropdown';
-import { AppContext } from 'context/AppContext';
 
 const Header: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string>('');
@@ -38,7 +38,7 @@ const Header: React.FC = () => {
           <div className="burgerMenuWrap">
             <input type="checkbox" className="burgerToggler" />
             <div className="hamburger">
-              <div></div>
+              <div />
             </div>
             <div className="burgerMenu">
               <div>
@@ -78,6 +78,8 @@ const Header: React.FC = () => {
                 Upgrade Now
               </button>
               <span
+                role="button"
+                tabIndex={0}
                 className="searchCircle"
                 onClick={() => setSearchInputIsOpen(true)}
               >
@@ -95,6 +97,7 @@ const Header: React.FC = () => {
                 placeholder="Search"
               />
               <img
+                role="presentation"
                 src={CancelSearch}
                 alt="cancel search"
                 className="cancelSearchInInput"
@@ -104,17 +107,26 @@ const Header: React.FC = () => {
           )}
           <div className="plusContainer">
             <div
+              role="button"
+              tabIndex={0}
+              aria-label="Show dropdown"
               className={openDropdown !== 'plusDropdown' ? 'plus' : 'whitePlus'}
               onClick={() => handleDropdown('plusDropdown')}
             />
             {openDropdown === 'plusDropdown' && <PlusDropdown />}
           </div>
           <div
+            role="button"
+            tabIndex={0}
+            aria-label="Show dropdown"
             className="folder"
             onClick={() => handleDropdown('folderDropdown')}
           />
           {openDropdown === 'folderDropdown' && <FolderDropdown />}
           <span
+            role="button"
+            tabIndex={0}
+            aria-label="Show dropdown"
             className="bellContainer"
             onClick={() => handleDropdown('bellDropdown')}
           >
