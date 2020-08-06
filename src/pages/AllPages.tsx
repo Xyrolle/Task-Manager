@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 
 import { AppContext } from 'context/AppContext';
-import ProjectsPage from './ProjectsPage/ProjectsPage';
 import Modal from 'components/Modal/Modal';
 import AddTaskListModal from 'components/Modal/AddTaskListModal/AddTaskListModal';
 import AddProjectModal from 'components/Modal/AddProjectModal/AddProjectModal';
 import AddLinkModal from 'components/Modal/AddLinkModal/AddLinkModal';
 import AddTimeModal from 'components/Modal/AddTimeModal/AddTimeModal';
+import ProjectsPage from './ProjectsPage/ProjectsPage';
 
 const AllPages: React.FC = () => {
   const ctx = useContext(AppContext);
