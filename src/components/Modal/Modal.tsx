@@ -23,25 +23,25 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
   }
   return (
     <div>
-      <div className='modalContainer'>
-        <form className='modalForm' id='modalForm' aria-label='some-form-name'>
+      <div className="modalContainer">
+        <form className="modalForm" id="modalForm" aria-label="some-form-name">
           <h3>{params[0]}</h3>
-          <label htmlFor='email'>{params[1]}</label>
+          <label htmlFor="email">{params[1]}</label>
           {!isUpgradeModalOpen && (
-            <div className='modalInputContainer'>
+            <div className="modalInputContainer">
               <input
-                id='email'
-                type='email'
-                placeholder='Email'
+                id="email"
+                type="email"
+                placeholder="Email"
                 //   onChange=
               ></input>
 
-              <label htmlFor='priorityList' className='secondModalLabel'>
+              <label htmlFor="priorityList" className="secondModalLabel">
                 Add to a project
               </label>
               <select
-                id='priorityList'
-                name='priorityList'
+                id="priorityList"
+                name="priorityList"
                 required
                 //   onChange=
               >
@@ -54,17 +54,17 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
             </div>
           )}
 
-          <div className='modalBtns'>
+          <div className="modalBtns">
             <button
-              type='button'
-              className='cancelModalButton'
+              type="button"
+              className="cancelModalButton"
               onClick={ctx.closeModal}
             >
               Cancel
             </button>
             <button
-              type='button'
-              className='inviteModalButton'
+              type="button"
+              className="inviteModalButton"
               //   onClick=
             >
               {params[2]}
@@ -73,7 +73,7 @@ const Modal: React.FC<ModalProps> = ({ isUpgradeModalOpen }) => {
         </form>
       </div>
 
-      <div className='bg' onClick={ctx.closeModal} data-testid='background' />
+      <div className="bg" onClick={ctx.closeModal} data-testid="background" />
     </div>
   );
 };

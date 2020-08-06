@@ -1,0 +1,8 @@
+src/generated
+flow-typed/
+src/serviceWorker.ts
+node_modules/
+deploy.ts
+build/*
+public/*
+src/react-app-env.d.ts
