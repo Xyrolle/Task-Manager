@@ -3,7 +3,6 @@
     "airbnb",
     "airbnb-typescript",
     "react-app",
-    "prettier",
     "plugin:flowtype/recommended",
     "prettier",
     "prettier/flowtype",
@@ -25,14 +24,7 @@
     "ecmaVersion": 2016,
     "sourceType": "module",
     "ecmaFeatures": {
-      "tsx": true
-    }
-  },
-  "settings": {
-    "import/resolver": {
-      "typescript": {
-        "alwaysTryTypes": true
-      }
+      "jsx": true
     }
   },
   "env": {
@@ -63,7 +55,7 @@
     "import/prefer-default-export": "off",
     "import/no-cycle": "off",
     "import/no-extraneous-dependencies": [
-      "error",
+      "warn",
       {
         "devDependencies": [
           "**/*.test.js",
@@ -81,8 +73,7 @@
         "groups": [
           ["builtin", "external", "internal"],
           ["parent", "index", "sibling"]
-        ],
-        "newlines-between": "always"
+        ]
       }
     ],
     "jsx-a11y/click-events-have-key-events": "off",
