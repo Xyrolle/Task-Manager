@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router-dom';
 
 import TaskLists from 'components/MainContent/Tasks/TaskLists/TaskLists';
+import UnderConstruction from 'pages/UnderConstruction/UnderConstruction';
 import AgendaCreate from 'components/MainContent/Agenda/AgendaCreate/AgendaCreate';
 import Projects from 'pages/Projects/Projects';
 import AgendaContent from './Agenda/AgendaContent';
@@ -16,10 +17,14 @@ import FilesContent from './Files/FilesContent';
 import FileDetails from './Files/FileDetails/FileDetails';
 import './MainContent.css';
 
-const MainContent: React.FC = () => {
+interface MainContentProps {
+  isLayoutActive: boolean;
+}
+
+const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
   return (
     <div>
-      <ContentHeader />
+      {isLayoutActive && <ContentHeader />}
       <div className="contentContainer">
         <Route exact path="/" component={Projects} />
         <Route exact path="/projects" component={Projects} />
@@ -60,6 +65,11 @@ const MainContent: React.FC = () => {
           component={AgendaDetails}
         />
         <Route exact path="/tasks/:projectID" component={TaskLists} />
+        <Route exact path="/planning" component={UnderConstruction} />
+
+        <Route exact path="/Calendar" component={UnderConstruction} />
+
+        <Route exact path="/people" component={UnderConstruction} />
       </div>
       <footer style={{ height: '10rem' }} />
     </div>
