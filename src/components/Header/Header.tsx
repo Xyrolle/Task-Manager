@@ -1,4 +1,5 @@
 import React, { useContext, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import { AppContext } from 'context/AppContext';
 import './Header.css';
@@ -31,9 +32,11 @@ const Header: React.FC = () => {
     <header className="mainHeader" data-testid="mainHeader">
       <nav className="nav">
         <div className="mainHeadList">
-          <div className="logo">
-            <img src={Logo} alt="logo" />
-          </div>
+          <Link to="/">
+            <div className="logo">
+              <img src={Logo} alt="logo" />
+            </div>
+          </Link>
           <div className="burgerMenuWrap">
             <input type="checkbox" className="burgerToggler" />
             <div className="hamburger">
@@ -43,8 +46,12 @@ const Header: React.FC = () => {
               <div>
                 <div>
                   <ul>
-                    <li>Home</li>
-                    <li>Projects</li>
+                    <li>
+                      <Link to="/">Home</Link>
+                    </li>
+                    <li>
+                      <Link to="/projects">Projects</Link>
+                    </li>
                     <li>Planning</li>
                     <li>Everything</li>
                     <li>Calendar</li>
@@ -86,24 +93,24 @@ const Header: React.FC = () => {
               </span>
             </Fragment>
           ) : (
-              <div className="searchInputContainer">
-                <img src={SearchIcon} alt="search" className="searchInInput" />
-                <input
-                  id="search"
-                  className="searchInput"
-                  type="search"
-                  autoComplete="off"
-                  placeholder="Search"
-                />
-                <img
-                  role="presentation"
-                  src={CancelSearch}
-                  alt="cancel search"
-                  className="cancelSearchInInput"
-                  onClick={() => setSearchInputIsOpen(false)}
-                />
-              </div>
-            )}
+            <div className="searchInputContainer">
+              <img src={SearchIcon} alt="search" className="searchInInput" />
+              <input
+                id="search"
+                className="searchInput"
+                type="search"
+                autoComplete="off"
+                placeholder="Search"
+              />
+              <img
+                role="presentation"
+                src={CancelSearch}
+                alt="cancel search"
+                className="cancelSearchInInput"
+                onClick={() => setSearchInputIsOpen(false)}
+              />
+            </div>
+          )}
           <div className="plusContainer">
             <div
               role="button"

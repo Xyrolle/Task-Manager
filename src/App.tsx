@@ -8,7 +8,7 @@ import {
 import { ReactQueryDevtools } from 'react-query-devtools';
 import { ReactQueryConfigProvider } from 'react-query';
 import './App.css';
-import ProjectsPage from './pages/ProjectsPage/ProjectsPage';
+
 import AllPages from './pages/AllPages';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
@@ -33,8 +33,8 @@ const App: React.FC = () => {
               </Switch>
             </div>
           ) : (
-              <AllPages />
-            )}
+            <AllPages />
+          )}
         </Router>
       </AppProvider>
     </ReactQueryConfigProvider>

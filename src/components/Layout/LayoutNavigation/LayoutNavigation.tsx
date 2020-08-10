@@ -4,58 +4,70 @@ import { Link } from 'react-router-dom';
 import './LayoutNavigation.css';
 
 const LayoutNavigation: React.FC = () => {
-	const [activeLink, setActive] = useState('overview');
-	return (
-		<div className="layoutNavigation">
-			<ul>
-				<li className={activeLink === 'overview' ? 'active-link' : ''}>
-					<Link to="/overview" onClick={() => setActive('overview')}>
-						Overview
+  const [activeLink, setActive] = useState('overview');
+  return (
+    <div className="layoutNavigation">
+      <ul>
+        <li className={activeLink === 'overview' ? 'active-link' : ''}>
+          <Link to="/overview" onClick={() => setActive('overview')}>
+            Overview
           </Link>
-				</li>
-				<li className={activeLink === 'tasks' ? 'active-link' : ''}>
-					<Link to="/tasks/1" onClick={() => setActive('tasks')}>
-						Tasks
+        </li>
+        <li className={activeLink === 'tasks' ? 'active-link' : ''}>
+          <Link to="/tasks/1" onClick={() => setActive('tasks')}>
+            Tasks
           </Link>
-				</li>
-				<li className={activeLink === 'milestones' ? 'active-link' : ''}>
-					<Link to="/milestones" onClick={() => setActive('milestones')}>
-						Milestones
+        </li>
+        <li className={activeLink === 'milestones' ? 'active-link' : ''}>
+          <Link to="/milestones" onClick={() => setActive('milestones')}>
+            Milestones
           </Link>
-				</li>
-				<li className={activeLink === 'messages' ? 'active-link' : ''}>
-					<Link to="/messages" onClick={() => setActive('messages')}>
-						Messages
+        </li>
+        <li className={activeLink === 'messages' ? 'active-link' : ''}>
+          <Link to="/messages" onClick={() => setActive('messages')}>
+            Messages
           </Link>
-				</li>
-				<li className={activeLink === 'files' ? 'active-link' : ''}>
-					<Link to="files" onClick={() => setActive('files')}>
-						Files
+        </li>
+        <li className={activeLink === 'files' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/files"
+            onClick={() => setActive('files')}
+          >
+            Files
           </Link>
-				</li>
-				<li className={activeLink === 'time' ? 'active-link' : ''}>
-					<Link to="time" onClick={() => setActive('time')}>
-						Time
+        </li>
+        <li className={activeLink === 'time' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/time"
+            onClick={() => setActive('time')}
+          >
+            Time
           </Link>
-				</li>
-				<li className={activeLink === 'notebooks' ? 'active-link' : ''}>
-					<Link to="agenda" onClick={() => setActive('notebooks')}>
-						Notebooks
+        </li>
+        <li className={activeLink === 'notebooks' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/agenda/:agendaID"
+            onClick={() => setActive('notebooks')}
+          >
+            Notebooks
           </Link>
-				</li>
-				<li className={activeLink === 'people' ? 'active-link' : ''}>
-					<Link to="links" onClick={() => setActive('links')}>
-						Links
+        </li>
+        <li className={activeLink === 'people' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/links"
+            onClick={() => setActive('links')}
+          >
+            Links
           </Link>
-				</li>
-				<li className={activeLink === 'settings' ? 'active-link' : ''}>
-					<Link to="/settings" onClick={() => setActive('settings')}>
-						Settings
+        </li>
+        <li className={activeLink === 'settings' ? 'active-link' : ''}>
+          <Link to="/settings" onClick={() => setActive('settings')}>
+            Settings
           </Link>
-				</li>
-			</ul>
-		</div>
-	);
+        </li>
+      </ul>
+    </div>
+  );
 };
 
 export default LayoutNavigation;

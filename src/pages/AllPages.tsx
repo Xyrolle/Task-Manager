@@ -1,12 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 
 import { AppContext } from 'context/AppContext';
+import Header from 'components/Header/Header';
+import Layout from 'components/Layout/Layout';
 import Modal from 'components/Modal/Modal';
 import AddTaskListModal from 'components/Modal/AddTaskListModal/AddTaskListModal';
 import AddProjectModal from 'components/Modal/AddProjectModal/AddProjectModal';
 import AddLinkModal from 'components/Modal/AddLinkModal/AddLinkModal';
 import AddTimeModal from 'components/Modal/AddTimeModal/AddTimeModal';
-import ProjectsPage from './ProjectsPage/ProjectsPage';
+import MainContent from 'components/MainContent/MainContent';
 
 const AllPages: React.FC = () => {
   const ctx = useContext(AppContext);
@@ -44,8 +46,10 @@ const AllPages: React.FC = () => {
 
   return (
     <div>
+      <Header />
+      <Layout />
       {handleModal()}
-      {userDetails && <ProjectsPage />}
+      {userDetails && <MainContent />}
     </div>
   );
 };
