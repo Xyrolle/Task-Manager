@@ -2,7 +2,7 @@ import React, { useState, createContext } from 'react';
 import { getUserInfo } from './queries';
 
 type Props = {
-  children: React.ReactNode;
+  children: React.ReactNode,
 };
 
 export const AppContext = createContext<ContextProps | null>(null);
@@ -11,6 +11,8 @@ export const AppProvider = ({ children }: Props) => {
   const [openModal, setOpenModal] = useState<string>('');
 
   const [userDetails, setUserDetails] = useState();
+  const [activeLink, setActive] = useState('Overview');
+  const [isLayoutActive, setIsLayoutActive] = useState(false);
 
   const closeModal = (): void => {
     setOpenModal('');
@@ -28,6 +30,10 @@ export const AppProvider = ({ children }: Props) => {
         closeModal,
         setUserInfo,
         userDetails,
+        activeLink,
+        setActive,
+        isLayoutActive,
+        setIsLayoutActive,
       }}
     >
       {children}

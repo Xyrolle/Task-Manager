@@ -1,61 +1,80 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AppContext } from 'context/AppContext';
 import './LayoutNavigation.css';
 
 const LayoutNavigation: React.FC = () => {
-	const [activeLink, setActive] = useState('overview');
-	return (
-		<div className="layoutNavigation">
-			<ul>
-				<li className={activeLink === 'overview' ? 'active-link' : ''}>
-					<Link to="/overview" onClick={() => setActive('overview')}>
-						Overview
+  const ctx = useContext(AppContext);
+
+  if (!ctx) {
+    throw new Error('You probably forgot to put <AppProvider>.');
+  }
+  const { activeLink, setActive } = ctx;
+
+  return (
+    <div className="layoutNavigation">
+      <ul>
+        <li className={activeLink === 'Overview' ? 'active-link' : ''}>
+          <Link to="/overview" onClick={() => setActive('Overview')}>
+            Overview
           </Link>
-				</li>
-				<li className={activeLink === 'tasks' ? 'active-link' : ''}>
-					<Link to="/tasks/1" onClick={() => setActive('tasks')}>
-						Tasks
+        </li>
+        <li className={activeLink === 'Tasks' ? 'active-link' : ''}>
+          <Link to="/tasks/1" onClick={() => setActive('Tasks')}>
+            Tasks
           </Link>
-				</li>
-				<li className={activeLink === 'milestones' ? 'active-link' : ''}>
-					<Link to="/milestones" onClick={() => setActive('milestones')}>
-						Milestones
+        </li>
+        <li className={activeLink === 'Milestones' ? 'active-link' : ''}>
+          <Link to="/milestones" onClick={() => setActive('Milestones')}>
+            Milestones
           </Link>
-				</li>
-				<li className={activeLink === 'messages' ? 'active-link' : ''}>
-					<Link to="/messages" onClick={() => setActive('messages')}>
-						Messages
+        </li>
+        <li className={activeLink === 'Messages' ? 'active-link' : ''}>
+          <Link to="/messages" onClick={() => setActive('Messages')}>
+            Messages
           </Link>
-				</li>
-				<li className={activeLink === 'files' ? 'active-link' : ''}>
-					<Link to="files" onClick={() => setActive('files')}>
-						Files
+        </li>
+        <li className={activeLink === 'Files' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/files"
+            onClick={() => setActive('Files')}
+          >
+            Files
           </Link>
-				</li>
-				<li className={activeLink === 'time' ? 'active-link' : ''}>
-					<Link to="time" onClick={() => setActive('time')}>
-						Time
+        </li>
+        <li className={activeLink === 'Time' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/time"
+            onClick={() => setActive('Time')}
+          >
+            Time
           </Link>
-				</li>
-				<li className={activeLink === 'notebooks' ? 'active-link' : ''}>
-					<Link to="agenda" onClick={() => setActive('notebooks')}>
-						Notebooks
+        </li>
+        <li className={activeLink === 'Notebooks' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/agenda/:agendaID"
+            onClick={() => setActive('Notebooks')}
+          >
+            Notebooks
           </Link>
-				</li>
-				<li className={activeLink === 'people' ? 'active-link' : ''}>
-					<Link to="links" onClick={() => setActive('links')}>
-						Links
+        </li>
+        <li className={activeLink === 'Links' ? 'active-link' : ''}>
+          <Link
+            to="/projects/:projectId/links"
+            onClick={() => setActive('Links')}
+          >
+            Links
           </Link>
-				</li>
-				<li className={activeLink === 'settings' ? 'active-link' : ''}>
-					<Link to="/settings" onClick={() => setActive('settings')}>
-						Settings
+        </li>
+        <li className={activeLink === 'Settings' ? 'active-link' : ''}>
+          <Link to="/settings" onClick={() => setActive('Settings')}>
+            Settings
           </Link>
-				</li>
-			</ul>
-		</div>
-	);
+        </li>
+      </ul>
+    </div>
+  );
 };
 
 export default LayoutNavigation;

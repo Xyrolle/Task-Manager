@@ -1,4 +1,5 @@
 import React, { useContext, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import { AppContext } from 'context/AppContext';
 import './Header.css';
@@ -26,14 +27,17 @@ const Header: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+  const { setOpenModal, setIsLayoutActive } = ctx;
 
   return (
     <header className="mainHeader" data-testid="mainHeader">
       <nav className="nav">
         <div className="mainHeadList">
-          <div className="logo">
-            <img src={Logo} alt="logo" />
-          </div>
+          <Link to="/">
+            <div className="logo">
+              <img src={Logo} alt="logo" />
+            </div>
+          </Link>
           <div className="burgerMenuWrap">
             <input type="checkbox" className="burgerToggler" />
             <div className="hamburger">
@@ -43,12 +47,51 @@ const Header: React.FC = () => {
               <div>
                 <div>
                   <ul>
-                    <li>Home</li>
-                    <li>Projects</li>
-                    <li>Planning</li>
-                    <li>Everything</li>
-                    <li>Calendar</li>
-                    <li>People</li>
+                    <li>
+                      <Link to="/" onClick={() => setIsLayoutActive(false)}>
+                        Home
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/projects"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Projects
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/planning"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Planning
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/everything"
+                        onClick={() => setIsLayoutActive(true)}
+                      >
+                        Everything
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/calendar"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Calendar
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/people"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        People
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -61,7 +104,7 @@ const Header: React.FC = () => {
               <button
                 type="button"
                 className="addTeamBtn"
-                onClick={() => ctx.setOpenModal('addTeamModal')}
+                onClick={() => setOpenModal('addTeamModal')}
               >
                 <img
                   src="//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg"
@@ -72,7 +115,7 @@ const Header: React.FC = () => {
               <button
                 type="button"
                 className="upgradeBtn"
-                onClick={() => ctx.setOpenModal('upgradeModal')}
+                onClick={() => setOpenModal('upgradeModal')}
               >
                 Upgrade Now
               </button>
@@ -86,24 +129,24 @@ const Header: React.FC = () => {
               </span>
             </Fragment>
           ) : (
-              <div className="searchInputContainer">
-                <img src={SearchIcon} alt="search" className="searchInInput" />
-                <input
-                  id="search"
-                  className="searchInput"
-                  type="search"
-                  autoComplete="off"
-                  placeholder="Search"
-                />
-                <img
-                  role="presentation"
-                  src={CancelSearch}
-                  alt="cancel search"
-                  className="cancelSearchInInput"
-                  onClick={() => setSearchInputIsOpen(false)}
-                />
-              </div>
-            )}
+            <div className="searchInputContainer">
+              <img src={SearchIcon} alt="search" className="searchInInput" />
+              <input
+                id="search"
+                className="searchInput"
+                type="search"
+                autoComplete="off"
+                placeholder="Search"
+              />
+              <img
+                role="presentation"
+                src={CancelSearch}
+                alt="cancel search"
+                className="cancelSearchInInput"
+                onClick={() => setSearchInputIsOpen(false)}
+              />
+            </div>
+          )}
           <div className="plusContainer">
             <div
               role="button"
