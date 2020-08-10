@@ -1,6 +1,5 @@
 import React, { useRef, useContext } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
 import './../Agenda.css';
 import { addAgenda } from '../queries'
 import { AppContext } from 'context/AppContext';

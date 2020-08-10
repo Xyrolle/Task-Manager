@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import { useQuery } from 'react-query';
 import TimePoints from './TimePoints';
 import { useInfiniteQuery } from 'react-query';
 import { axiosConfig } from '../../../utils/axiosConfig';

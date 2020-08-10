@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
-
 import { axiosConfig } from 'utils/axiosConfig'
 import './Login.css'
 
@@ -43,13 +42,6 @@ const Login: React.FC = () => {
     const password = useRef<HTMLInputElement>(null)
     const history = useHistory();
     return (
-        // <form onSubmit={
-        //     async () => {
-        //         await auth(
-        //             username.current!.value,
-        //             password.current!.value)
-        //         await history.push('/')
-        //     }}>
         <div className="loginWrap">
             <input ref={username} type="text" className="usernameInput" placeholder="Username" />
             <input ref={password} type="password" className="passwordInput" placeholder="Password" />
@@ -61,8 +53,7 @@ const Login: React.FC = () => {
                         username.current!.value,
                         password.current!.value,
                         setErrorMessage)
-                    status === 200 && history.push('/')
-
+                    await status === 200 && history.push('/')
                 }}
                 className="loginButton"
             >
@@ -70,7 +61,6 @@ const Login: React.FC = () => {
             </button>
 
         </div >
-        // </form>
     )
 }
 export default Login;

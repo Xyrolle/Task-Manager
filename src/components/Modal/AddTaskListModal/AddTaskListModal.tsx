@@ -1,6 +1,5 @@
 import React, { useContext, useRef } from 'react';
 import axios from 'axios';
-
 import { AppContext } from 'context/AppContext';
 import './AddTaskListModal.css';
 

@@ -1,8 +1,7 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useRef, useContext } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import { useParams, Router } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from 'context/AppContext';
 

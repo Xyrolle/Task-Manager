@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AgendaInterface } from '../interfaces';
-
 import './../Agenda.css';
 import '../TagDropdown/TagDropdown.css';
 import Notebook from '../../../../assets/Notebook.png';

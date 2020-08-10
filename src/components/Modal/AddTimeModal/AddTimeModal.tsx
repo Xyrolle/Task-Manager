@@ -3,8 +3,6 @@ import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache } from 'react-query';
 import TextField from '@material-ui/core/TextField';
-import { useParams } from 'react-router-dom';
-
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from 'context/AppContext';
 

@@ -1,6 +1,6 @@
 import React, { useRef, useContext } from 'react';
 import axios from 'axios';
-import { useMutation, queryCache, useQuery } from 'react-query';
+import { useMutation, queryCache } from 'react-query';
 import useHook from '../useHook'
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from 'context/AppContext';

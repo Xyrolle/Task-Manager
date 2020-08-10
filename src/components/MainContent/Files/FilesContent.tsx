@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { axiosConfig } from '../../../utils/axiosConfig'
 import { useParams } from 'react-router-dom'
-import { useQuery, useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import AddFileModal from './AddFileModal/AddFileModal';
 import './FilesContent.css'
 import FileComponent from './FileComponent/FileComponent'

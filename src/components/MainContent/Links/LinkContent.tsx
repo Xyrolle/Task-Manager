@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { Route, useParams, Link } from 'react-router-dom';
-import { useQuery, useInfiniteQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import { useInfiniteQuery } from 'react-query';
 import { getLinks } from './queries';
 import './LinkContent.css';
 import LinkComponent from './LinkComponent/LinkComponent';

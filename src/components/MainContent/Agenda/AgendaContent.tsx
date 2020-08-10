@@ -1,13 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery, useInfiniteQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { getAgendasByProjectId } from './queries';
 import './Agenda.css';
 import Agenda from './AgendaComponent/Agenda';
 
 const AgendaContent: React.FC = ({ }) => {
   const { projectId } = useParams();
-  // const { status, data, error } = useQuery(['getAllAgendas', projectId], getAgendasByProjectId);
 
   const {
     status,
