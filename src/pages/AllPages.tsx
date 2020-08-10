@@ -55,7 +55,7 @@ const AllPages: React.FC = () => {
       <Header />
       {isLayoutActive && <Layout />}
       {handleModal()}
-      {userDetails && <MainContent />}
+      {userDetails && <MainContent isLayoutActive={isLayoutActive} />}
     </div>
   );
 };
