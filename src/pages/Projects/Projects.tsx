@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
@@ -17,7 +17,8 @@ const deleteProject = async (id: number) => {
 };
 
 const getProjects = async (key: string, userId: string) => {
-  const response = await axios.get(`http://46.101.172.171:8008/project/project_view_by_user/${userId}/1/`,
+  const response = await axios.get(
+    `http://46.101.172.171:8008/project/project_view_by_user/${userId}/1/`,
     axiosConfig
   );
   return response.data;
@@ -35,6 +36,10 @@ const Projects: React.FC = () => {
     ['getProjects', ctx.userDetails && ctx.userDetails.id],
     getProjects
   );
+
+  useEffect(() => {
+    ctx.setGlobalData(data);
+  }, [data]);
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
     onMutate: (newData: any) => {
@@ -66,7 +71,11 @@ const Projects: React.FC = () => {
   return (
     <div className="test">
       <button
-        onClick={() => ctx.setOpenModal('addProjectModal')}
+        onClick={() => [
+          ctx.setOpenModal('addProjectModal'),
+          console.log('Projects:React.FC -> globalData', ctx.globalData),
+          console.log('Projects:React.FC -> data', data),
+        ]}
         // setIsAddProjectModalOpen(!isAddProjectModalOpen)
         className="addProjectButton"
       >

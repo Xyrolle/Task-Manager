@@ -15,6 +15,7 @@ import LinkContent from './Links/LinkContent';
 import LinkDetails from './Links/LinkDetails/LinkDetails';
 import FilesContent from './Files/FilesContent';
 import FileDetails from './Files/FileDetails/FileDetails';
+import Messages from './Messages/Messages';
 import './MainContent.css';
 
 interface MainContentProps {
@@ -66,10 +67,9 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
         />
         <Route exact path="/tasks/:projectID" component={TaskLists} />
         <Route exact path="/planning" component={UnderConstruction} />
-
-        <Route exact path="/Calendar" component={UnderConstruction} />
-
+        <Route exact path="/calendar" component={UnderConstruction} />
         <Route exact path="/people" component={UnderConstruction} />
+        <Route exact path="/messages" component={Messages} />
       </div>
       <footer style={{ height: '10rem' }} />
     </div>
