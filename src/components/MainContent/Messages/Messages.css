@@ -1,0 +1,13 @@
+.messagesContainer button {
+  margin: 2rem;
+  font-size: 0.8rem;
+  height: 2rem;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  width: max-content;
+  background-color: #59c894;
+  border: 1px solid #59c894;
+  padding: 0 10px;
+}

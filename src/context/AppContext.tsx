@@ -8,6 +8,7 @@ type Props = {
 export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppProvider = ({ children }: Props) => {
+  const [globalData, setGlobalData] = useState({});
   const [openModal, setOpenModal] = useState<string>('');
 
   const [userDetails, setUserDetails] = useState();
@@ -34,6 +35,8 @@ export const AppProvider = ({ children }: Props) => {
         setActive,
         isLayoutActive,
         setIsLayoutActive,
+        globalData,
+        setGlobalData,
       }}
     >
       {children}
