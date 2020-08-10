@@ -13,12 +13,13 @@ const Time: React.FC = () => {
   const [hasMore, setHasMore] = useState(true);
   const { projectId } = useParams();
 
-  const getTimeGroups = async (key: string, param1: number, next = 1) => {
+  const getTimeGroups = async (key: string, projectId: string, next = 1) => {
     console.log('next', next);
     const response = await axios.get(
       `http://46.101.172.171:8008/times/time_groups/${projectId}/${next}`,
       await axiosConfig
     );
+    console.log(response)
     return response.data;
   };
 
@@ -30,7 +31,7 @@ const Time: React.FC = () => {
     isFetchingMore,
     fetchMore,
     canFetchMore,
-  }: any = useInfiniteQuery(['getTimeGroups', 1], getTimeGroups, {
+  }: any = useInfiniteQuery(['getTimeGroups', `${projectId}`], getTimeGroups, {
     getFetchMore: (lastGroup: any, allPages: any) => {
       if (lastGroup.page_current + 1 > lastGroup.page_total) {
         return false;
@@ -58,7 +59,11 @@ const Time: React.FC = () => {
       {status === 'loading' ? (
         <p>Loading...</p>
       ) : status === 'error' ? (
-        <span>Error: {error.message}</span>
+        <span> {error.message.includes("500")
+          ? <div>
+            Times are empty.
+        </div>
+          : <span>{error.message}</span>} </span>
       ) : (
             <>
               {data &&
@@ -88,17 +93,6 @@ const Time: React.FC = () => {
               <div>
                 {console.log('hasmore', hasMore)}
 
-                {/* <button
-                                ref={loadMoreButtonRef}
-                                onClick={() => fetchMore()}
-                                disabled={!hasMore || isFetchingMore}
-                            >
-                                {isFetchingMore
-                                    ? 'Loading more...'
-                                    : hasMore
-                                        ? 'Load More'
-                                        : 'Nothing more to load'}
-                            </button> */}
                 {console.log('canfetchmore', canFetchMore)}
                 <button
                   ref={loadMoreButtonRef}

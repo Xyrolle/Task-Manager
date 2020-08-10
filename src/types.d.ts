@@ -4,6 +4,8 @@ type ContextProps = {
   userDetails: any;
   closeModal: () => void;
   setUserInfo: () => void;
+  setProjectIdInContext: (projectId: string) => any;
+  projectId: any;
 };
 interface userDetailsInterface {
   date_joined: string;

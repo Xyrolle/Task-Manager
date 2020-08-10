@@ -26,14 +26,14 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
       <div className='agendaWrap changeColor'>
         <img src={Notebook} className={`notebook ${style}`} />
         <div>
-          <h4>{agenda.title.charAt(0).toUpperCase()}.</h4>
+          <h4 className="">{agenda.title.charAt(0).toUpperCase()}.</h4>
           <div className="agendaTitleWrap" >
             <Link to={`agenda/${agenda.id}`}>
-              <p >v{agenda.title}</p>
+              <p >{agenda.title}</p>
             </Link>
             {console.log('agenda tags', agenda.tags)}
-            {agenda.tags.map((tag: any, key: number) => console.log('agenda tag', agenda.tags))
-              // <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
+            {agenda.tags.map((tag: any, key: number) =>
+              <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
             }
           </div>
           {!agendaID &&
@@ -49,7 +49,6 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
             </div>
           }
           <p className="agendaInfo">
-            {/* <TagDropdown /> */}
             Last modified by:{agenda.user} at {agenda.last_update}
           </p>
         </div>

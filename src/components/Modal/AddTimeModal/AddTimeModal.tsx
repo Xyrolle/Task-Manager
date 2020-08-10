@@ -40,47 +40,45 @@ const createTimePoints = async ({
     `http://46.101.172.171:8008/times/time_point/add/${groupId}`,
     {
       description,
-      time_start: startTimeValue,
-      time_end: endTimeValue,
+      time_start: startTimeValue.toString(),
+      time_end: endTimeValue.toString(),
       user,
       task_list: taskList,
     },
     await axiosConfig
   );
-  queryCache.setQueryData(['getTimeGroups', 1], (prev: any) => {
-    const index = prev[0].page_total;
+  // queryCache.setQueryData(['getTimeGroups', projectId], (prev: any) => {
+  //   const index = prev[0].page_total;
 
-    prev[index - 1] &&
-      prev[index - 1].data.push({
-        id: groupId,
-        project: projectId,
-        date: new Date(),
-        times_points: [response.data.id],
-      });
-    return prev;
-  });
-  queryCache.setQueryData(groupId.toString(), (prev: any) => {
-    return [
-      {
-        id: response.data.id,
-        description: response.data.description,
-        time_start: response.data.time_start,
-        time_end: response.data.time_end,
-        user: response.data.user,
-        task_list: response.data.task_list,
-      },
-    ];
-  });
+  //   prev[index - 1] &&
+  //     prev[index - 1].data.push({
+  //       id: groupId,
+  //       project: projectId,
+  //       date: new Date(),
+  //       times_points: [response.data.id],
+  //     });
+
+  //   return prev;
+  // });
+  // queryCache.setQueryData(groupId.toString(), (prev: any) => {
+  //   return [
+  //     {
+  //       id: response.data.id,
+  //       description: response.data.description,
+  //       time_start: response.data.time_start,
+  //       time_end: response.data.time_end,
+  //       user: response.data.user,
+  //       task_list: response.data.task_list,
+  //     },
+  //   ];
+  // });
   return response.data;
 };
 
 const AddTimeModal: React.FC = () => {
-  const [startTimeValue, setStartTimeValue] = useState(moment().toISOString());
+  const [startTimeValue, setStartTimeValue] = useState(moment().format());
   const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
-  const { projectId } = useParams();
-  console.log('projectID', projectId)
-
   const ctx = useContext(AppContext);
 
   if (!ctx) {
@@ -89,13 +87,22 @@ const AddTimeModal: React.FC = () => {
 
   const [mutate] = useMutation(createTimePoints, {
     onMutate: (newData: any) => {
-      queryCache.cancelQueries('getTimeGroups');
-      const snapshot = queryCache.getQueryData('getTimeGroups');
+      queryCache.cancelQueries(['getTimeGroups', ctx.projectId]);
+      queryCache.setQueryData(['getTimeGroups', ctx.projectId], (prev: any) => {
+        const index = prev[0].page_total;
 
-      return () => queryCache.setQueryData('getTimeGroups', snapshot);
+        prev[index - 1] &&
+          prev[index - 1].data.push({
+            id: newData.groupId,
+            project: newData.projectId,
+            date: new Date(),
+            times_points: [],
+          });
+        return prev;
+      });
     },
     onError: (error: any, newData: any, rollback: any) => rollback(),
-    // onSettled: () => queryCache.prefetchQuery('getTimeGroups')
+    onSettled: () => queryCache.invalidateQueries(['getTimeGroups', ctx.projectId])
   });
 
   return (
@@ -118,7 +125,6 @@ const AddTimeModal: React.FC = () => {
             <h6>Start Date</h6>
             <TextField
               id='datetime-local'
-              label='Next appointment'
               type='datetime-local'
               defaultValue='2017-05-24T10:30'
               InputLabelProps={{
@@ -129,7 +135,6 @@ const AddTimeModal: React.FC = () => {
             <h6>End Date</h6>
             <TextField
               id='datetime-local'
-              label='Next appointment'
               type='datetime-local'
               defaultValue='2017-05-24T10:30'
               InputLabelProps={{
@@ -137,7 +142,6 @@ const AddTimeModal: React.FC = () => {
               }}
               onChange={(e) => setEndTimeValue(e.target.value)}
             />
-            <button>submit</button>
           </div>
           <div className='modal-footer'>
             <button onClick={ctx.closeModal} type='button' className='closeBtn'>
@@ -145,17 +149,17 @@ const AddTimeModal: React.FC = () => {
             </button>
             <button
               onClick={async () => {
-                const groupId = await createTimeGroup(projectId);
+                const groupId = await createTimeGroup(ctx.projectId);
                 await mutate({
-                  projectId,
+                  projectId: ctx.projectId,
                   groupId,
                   description: descriptionInput.current!.value,
                   startTimeValue,
                   endTimeValue,
                   user: 5,
-                  taskList: 108,
+                  taskList: 185,
                 });
-                await ctx.closeModal;
+                await ctx.closeModal();
               }}
               type='button'
               className='addList-btn btn'

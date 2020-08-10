@@ -8,7 +8,7 @@ import { AppContext } from 'context/AppContext';
 
 interface foo {
   projectId: string;
-  userId: string;
+  userId: number;
   title: string;
   content: string;
 }
