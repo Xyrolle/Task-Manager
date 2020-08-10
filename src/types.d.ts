@@ -6,6 +6,8 @@ type ContextProps = {
   setUserInfo: () => void,
   activeLink: string,
   setActive: (link: string) => void,
+  isLayoutActive: boolean,
+  setIsLayoutActive: (layout: boolean) => void,
 };
 interface userDetailsInterface {
   date_joined: string;

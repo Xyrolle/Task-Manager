@@ -27,6 +27,7 @@ const Header: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+  const { setOpenModal, setIsLayoutActive } = ctx;
 
   return (
     <header className="mainHeader" data-testid="mainHeader">
@@ -47,15 +48,50 @@ const Header: React.FC = () => {
                 <div>
                   <ul>
                     <li>
-                      <Link to="/">Home</Link>
+                      <Link to="/" onClick={() => setIsLayoutActive(false)}>
+                        Home
+                      </Link>
                     </li>
                     <li>
-                      <Link to="/projects">Projects</Link>
+                      <Link
+                        to="/projects"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Projects
+                      </Link>
                     </li>
-                    <li>Planning</li>
-                    <li>Everything</li>
-                    <li>Calendar</li>
-                    <li>People</li>
+                    <li>
+                      <Link
+                        to="/planning"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Planning
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/everything"
+                        onClick={() => setIsLayoutActive(true)}
+                      >
+                        Everything
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/calendar"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Calendar
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/people"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        People
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -68,7 +104,7 @@ const Header: React.FC = () => {
               <button
                 type="button"
                 className="addTeamBtn"
-                onClick={() => ctx.setOpenModal('addTeamModal')}
+                onClick={() => setOpenModal('addTeamModal')}
               >
                 <img
                   src="//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg"
@@ -79,7 +115,7 @@ const Header: React.FC = () => {
               <button
                 type="button"
                 className="upgradeBtn"
-                onClick={() => ctx.setOpenModal('upgradeModal')}
+                onClick={() => setOpenModal('upgradeModal')}
               >
                 Upgrade Now
               </button>

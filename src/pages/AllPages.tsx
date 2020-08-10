@@ -16,7 +16,13 @@ const AllPages: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-  const { setUserInfo, openModal, userDetails, closeModal } = ctx;
+  const {
+    setUserInfo,
+    openModal,
+    userDetails,
+    closeModal,
+    isLayoutActive,
+  } = ctx;
   useEffect(() => {
     setUserInfo();
   }, []);
@@ -47,7 +53,7 @@ const AllPages: React.FC = () => {
   return (
     <div>
       <Header />
-      <Layout />
+      {isLayoutActive && <Layout />}
       {handleModal()}
       {userDetails && <MainContent />}
     </div>

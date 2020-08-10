@@ -12,6 +12,7 @@ export const AppProvider = ({ children }: Props) => {
 
   const [userDetails, setUserDetails] = useState();
   const [activeLink, setActive] = useState('Overview');
+  const [isLayoutActive, setIsLayoutActive] = useState(false);
 
   const closeModal = (): void => {
     setOpenModal('');
@@ -31,6 +32,8 @@ export const AppProvider = ({ children }: Props) => {
         userDetails,
         activeLink,
         setActive,
+        isLayoutActive,
+        setIsLayoutActive,
       }}
     >
       {children}
