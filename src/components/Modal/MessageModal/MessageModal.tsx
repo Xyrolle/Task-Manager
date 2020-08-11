@@ -84,7 +84,10 @@ const MessageModal: React.FC<MessageModalProps> = ({ closeModal, data }) => {
             <button
               type="button"
               className="addModalButton"
-              onClick={createMessage}
+              onClick={async () => {
+                await createMessage();
+                closeModal();
+              }}
             >
               Add message
             </button>

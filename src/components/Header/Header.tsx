@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-  const { setOpenModal, setIsLayoutActive } = ctx;
+  const { setOpenModal } = ctx;
 
   return (
     <header className="mainHeader" data-testid="mainHeader">
@@ -48,49 +48,22 @@ const Header: React.FC = () => {
                 <div>
                   <ul>
                     <li>
-                      <Link to="/" onClick={() => setIsLayoutActive(false)}>
-                        Home
-                      </Link>
+                      <Link to="/">Home</Link>
                     </li>
                     <li>
-                      <Link
-                        to="/projects"
-                        onClick={() => setIsLayoutActive(false)}
-                      >
-                        Projects
-                      </Link>
+                      <Link to="/projects">Projects</Link>
                     </li>
                     <li>
-                      <Link
-                        to="/planning"
-                        onClick={() => setIsLayoutActive(false)}
-                      >
-                        Planning
-                      </Link>
+                      <Link to="/planning">Planning</Link>
                     </li>
                     <li>
-                      <Link
-                        to="/everything"
-                        onClick={() => setIsLayoutActive(true)}
-                      >
-                        Everything
-                      </Link>
+                      <Link to="/everything">Everything</Link>
                     </li>
                     <li>
-                      <Link
-                        to="/calendar"
-                        onClick={() => setIsLayoutActive(false)}
-                      >
-                        Calendar
-                      </Link>
+                      <Link to="/calendar">Calendar</Link>
                     </li>
                     <li>
-                      <Link
-                        to="/people"
-                        onClick={() => setIsLayoutActive(false)}
-                      >
-                        People
-                      </Link>
+                      <Link to="/people">People</Link>
                     </li>
                   </ul>
                 </div>

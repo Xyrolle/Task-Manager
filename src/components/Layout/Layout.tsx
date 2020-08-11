@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import './Layout.css';
 import LayoutHeader from './LayoutHeader/LayoutHeader';
 import LayoutNavigation from './LayoutNavigation/LayoutNavigation';
-import { AppContext } from '../../context/AppContext'
+import { AppContext } from '../../context/AppContext';
 
 const Layout: React.FC = () => {
   const { projectId } = useParams();
@@ -15,8 +15,8 @@ const Layout: React.FC = () => {
   }
 
   useEffect(() => {
-    ctx.setProjectIdInContext(projectId)
-  }, [])
+    ctx.setProjectIdInContext(projectId);
+  }, []);
 
   return (
     <div>
