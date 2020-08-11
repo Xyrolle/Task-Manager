@@ -66,9 +66,22 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           component={AgendaDetails}
         />
         <Route exact path="/tasks/:projectID" component={TaskLists} />
-        <Route exact path="/planning" component={UnderConstruction} />
-        <Route exact path="/calendar" component={UnderConstruction} />
-        <Route exact path="/people" component={UnderConstruction} />
+        <Route
+          exact
+          path="/planning"
+          component={() => <UnderConstruction title="Planning" />}
+        />
+        <Route
+          exact
+          path="/calendar"
+          component={() => <UnderConstruction title="Calendar" />}
+        />
+        <Route
+          exact
+          path="/people"
+          component={() => <UnderConstruction title="People" />}
+        />
+
         <Route exact path="/messages" component={Messages} />
       </div>
       <footer style={{ height: '10rem' }} />
