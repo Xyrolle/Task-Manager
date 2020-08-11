@@ -22,9 +22,6 @@ export const AppProvider = ({ children }: Props) => {
   const setUserInfo = async () => {
     await setUserDetails(await getUserInfo());
   };
-  const setProjectIdInContext = (projectId: string) => {
-    setProjectId(projectId);
-  };
 
   return (
     <AppContext.Provider
@@ -38,7 +35,7 @@ export const AppProvider = ({ children }: Props) => {
         setActive,
         isLayoutActive,
         setIsLayoutActive,
-        setProjectIdInContext,
+        setProjectId,
         projectId,
       }}
     >

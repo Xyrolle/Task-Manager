@@ -8,7 +8,7 @@ type ContextProps = {
   setActive: (link: string) => void,
   isLayoutActive: boolean,
   setIsLayoutActive: (layout: boolean) => void,
-  setProjectIdInContext: (projectId: string) => any,
+  setProjectId: (projectId: string) => any,
   projectId: any,
 };
 interface userDetailsInterface {
