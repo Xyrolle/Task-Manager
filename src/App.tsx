@@ -3,11 +3,11 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import { ReactQueryDevtools } from 'react-query-devtools';
 import { ReactQueryConfigProvider } from 'react-query';
 import './App.css';
-
 import AllPages from './pages/AllPages';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
 import { AppProvider } from './context/AppContext';
+import Projects from './pages/Projects/Projects';
 
 const App: React.FC = () => {
 	const [ isAuth, setisAuth ] = useState(false);
@@ -24,6 +24,7 @@ const App: React.FC = () => {
 							<Switch>
 								<Route path='/login' component={Login} />
 								<Route path='/register' component={Registration} />
+								<Route path='/projects' component={Projects} />
 								<AllPages />
 							</Switch>
 						</div> :

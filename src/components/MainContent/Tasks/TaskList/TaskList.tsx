@@ -256,7 +256,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 										!canFetchMore || isFetching ? ' disabledBtn' :
 										'')
 								}
-								disabled={canFetchMore || isFetching}
+								disabled={!canFetchMore || isFetching}
 								onClick={() => fetchMore()}
 							>
 								Load More

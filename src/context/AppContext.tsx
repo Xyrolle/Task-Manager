@@ -14,13 +14,17 @@ export const AppProvider = ({ children }: Props) => {
 	const [ userDetails, setUserDetails ] = useState();
 	const [ activeLink, setActive ] = useState('Overview');
 	const [ isLayoutActive, setIsLayoutActive ] = useState(false);
+	const [ projectId, setProjectId ] = useState<string>('');
 
 	const closeModal = (): void => {
 		setOpenModal('');
 	};
 
 	const setUserInfo = async () => {
-		setUserDetails(await getUserInfo());
+		await setUserDetails(await getUserInfo());
+	};
+	const setProjectIdInContext = (projectId: string) => {
+		setProjectId(projectId);
 	};
 
 	return (
@@ -35,6 +39,8 @@ export const AppProvider = ({ children }: Props) => {
 				setActive,
 				isLayoutActive,
 				setIsLayoutActive,
+				setProjectIdInContext,
+				projectId,
 				globalData,
 				setGlobalData
 			}}

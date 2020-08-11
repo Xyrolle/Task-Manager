@@ -12,5 +12,10 @@
   background-color: #469e75;
 }
 .linkComponentContainer {
-  margin-left: 200px;
+  margin-left: 20%;
+}
+@media screen and (max-width: 768px) {
+  .linkComponentContainer {
+    margin-left: 5%;
+  }
 }

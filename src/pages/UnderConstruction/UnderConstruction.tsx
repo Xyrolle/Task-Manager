@@ -3,10 +3,14 @@ import React from 'react';
 import underConstruction from 'assets/under-construction.jpg';
 import './UnderConstruction.css';
 
-const UnderConstruction: React.FC = () => {
+interface UnderConstructionProps {
+  title: string;
+}
+
+const UnderConstruction: React.FC<UnderConstructionProps> = ({ title }) => {
   return (
     <div className="underConstruction">
-      <h2>Page is Under Construction...</h2>
+      <h2>{`${title} Page is Under Construction...`}</h2>
       <img src={underConstruction} alt="underConstruction" />
     </div>
   );

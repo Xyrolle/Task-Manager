@@ -32,15 +32,7 @@ const createTag = async ({
     axiosConfig
   );
   if (response.status === 200) {
-    queryCache.setQueryData(['getAllAgendas', projectId], (prev: any) => {
-      const index = prev.data.findIndex((e: any) => e.id === agendaId);
 
-      prev.data[index].tags.push({
-        id: response.data.id,
-        title: response.data.title,
-      });
-      return prev;
-    });
     await setTagToAgenda(agendaId, response.data.id);
   }
   return response.data;
@@ -52,9 +44,18 @@ const TagDropdown: React.FC<{ agendaId: number }> = ({ agendaId }) => {
   const [mutate] = useMutation(createTag, {
     onMutate: (newData: any) => {
       queryCache.cancelQueries(['getAllAgendas', projectId]);
+      queryCache.setQueryData(['getAllAgendas', projectId], (prev: any) => {
+        console.log('prev', prev)
+        const index = prev[0].data.findIndex((e: any) => e.id === agendaId);
+        prev[0].data[index].tags.push({
+          id: new Date(),
+          title: newData.title
+        });
+        return prev;
+      });
     },
     onError: (error: any, newData: any, rollback: any) => rollback(),
-    // onSettled: () => queryCache.prefetchQuery('getProjects)
+    onSettled: () => queryCache.invalidateQueries(['getAllAgendas', projectId])
   });
 
   return (
