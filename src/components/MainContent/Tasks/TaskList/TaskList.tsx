@@ -10,6 +10,8 @@ import addTaskPlus from '../../../../assets/addTaskPlus.svg';
 import { Icon, InlineIcon } from '@iconify/react';
 import ellipsisDotsH from '@iconify/icons-vaadin/ellipsis-dots-h';
 
+import { axiosConfig } from '../../../../utils/axiosConfig';
+
 import Task from '../Task/Task';
 
 import './TaksList.css';
@@ -27,16 +29,9 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	});
 	const [ isEditing, setIsEditing ] = useState(false);
 	let { projectID } = useParams();
-	const taskInput = useRef<HTMLInputElement>(null);
 	const [ listEditingName, setListEditingName ] = useState(name);
+	const taskInput = useRef<HTMLInputElement>(null);
 	const taskDescription = useRef<HTMLTextAreaElement>(null);
-
-	let axiosConfig = {
-		headers:
-			{
-				Authorization: `Basic YWRtaW46cXdlMTIz`
-			}
-	};
 
 	const addTask: any = async ({ title, description }: AddTaskParams) => {
 		taskInput.current!.value = '';
@@ -82,7 +77,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ mutate ]: any = useMutation(addTask, {
 		onMutate:
 			(newData: any) => {
-				console.log(newData, 'isdg new data');
 				queryCache.cancelQueries(id);
 				if (newData.title.length > 1) {
 					queryCache.setQueryData(id, (prev: any) => {
@@ -176,6 +170,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 								tags={task.tags}
 								id={task.id}
 								task_list={id}
+								parent={task.parent}
 								key={uuidv4()}
 							/>
 						))}

@@ -12,24 +12,21 @@ const AllPages: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 	useEffect(() => {
-		ctx.setUserInfo()
-	}, [])
+		ctx.setUserInfo();
+	}, []);
 
 	return (
 		<div>
-			{ctx.addTaskListModal ? (
-				<Fragment>
+			{
+				ctx.addTaskListModal ? <Fragment>
 					<AddTaskListModal />
 					<ProjectsPage />
-				</Fragment>
-			) : ctx.modalVisible ? (
-				<Fragment>
+				</Fragment> :
+				ctx.modalVisible ? <Fragment>
 					<Modal isUpgradeModalOpen={ctx.isUpgradeModalOpen} />
 					<ProjectsPage />
-				</Fragment>
-			) : ctx.userDetails && (
-				<ProjectsPage />
-			)}
+				</Fragment> :
+				ctx.userDetails && <ProjectsPage />}
 		</div>
 	);
 };

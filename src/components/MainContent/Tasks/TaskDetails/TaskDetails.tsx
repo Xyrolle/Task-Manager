@@ -47,7 +47,6 @@ const TaskDetails: React.FC = () => {
 				`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
 				axiosConfig
 			);
-			console.log(res.data, 'is data');
 			return res.data;
 		},
 		{
@@ -72,10 +71,8 @@ const TaskDetails: React.FC = () => {
 	const [ addCommentMutate ] = useMutation(addComment, {
 		onMutate:
 			(newData: any) => {
-				console.log(newData, 'sifsdfasd');
 				queryCache.cancelQueries([ `comments`, task_id ]);
 				queryCache.setQueryData([ `comments`, task_id ], (prev: any) => {
-					console.log(prev, 'isadfsd a prev data');
 					prev[0].data = prev[0].data.concat({ ...newData, date: '0', author: 'You' });
 					return prev;
 				});
@@ -92,7 +89,6 @@ const TaskDetails: React.FC = () => {
 		try {
 			const res = await axios.post(`http://46.101.172.171:8008/tags/create`, { title }, axiosConfig);
 			assignTagToTask(res.data.id);
-			return res.data.id;
 		} catch (err) {
 			setTagExist(true);
 			setTimeout(() => {
@@ -131,6 +127,7 @@ const TaskDetails: React.FC = () => {
 					task_list={taskInfo.task_list}
 					parent={taskInfo.parent}
 					contributors={taskInfo.contributors}
+					parent_id={taskInfo.parent_id}
 					key={task_id}
 				/>
 			)}

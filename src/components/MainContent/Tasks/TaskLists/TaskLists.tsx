@@ -30,7 +30,7 @@ const TaskLists = () => {
 		page_total: number;
 	}
 
-	const fetchTaskLists = async (key: any, page_id = 1) => {
+	const fetchTaskLists = async (key: string, page_id: number = 1) => {
 		const res = await axios.get(
 			`http://46.101.172.171:8008/project/task_list_view_by_project/115/${page_id}/`,
 			axiosConfig

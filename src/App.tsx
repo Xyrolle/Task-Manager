@@ -10,9 +10,9 @@ import { AppProvider } from './context/AppContext';
 import { ReactQueryConfigProvider } from 'react-query';
 
 const App: React.FC = () => {
-	const [isAuth, setisAuth] = useState(false);
+	const [ isAuth, setisAuth ] = useState(false);
 	const queryConfig = { queries: { refetchOnWindowFocus: false } };
-	console.log('APp')
+	console.log('APp');
 	return (
 		<ReactQueryConfigProvider config={queryConfig}>
 			<AppProvider>
@@ -27,7 +27,7 @@ const App: React.FC = () => {
 								<AllPages />
 							</Switch>
 						</div> :
-							<AllPages />}
+						<AllPages />}
 				</Router>
 			</AppProvider>
 		</ReactQueryConfigProvider>

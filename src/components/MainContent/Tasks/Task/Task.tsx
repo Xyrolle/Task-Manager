@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, Fragment, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -18,20 +18,14 @@ import checkCircle from '@iconify/icons-mdi/check-circle';
 import bellIcon from '@iconify/icons-mdi/bell';
 import clockTimeFourOutline from '@iconify/icons-mdi/clock-time-four-outline';
 
+import { axiosConfig } from '../../../../utils/axiosConfig';
+
 import { ITask, ITag } from './ITask';
 
 import AddTagDropdown from './AddTagDropdown/AddTagDropdown';
+import addTaskPlus from '../../../../assets/addTaskPlus.svg';
 
 import './Task.css';
-
-// add task info popup
-
-let axiosConfig = {
-	headers:
-		{
-			Authorization: `Basic YWRtaW46cXdlMTIz`
-		}
-};
 
 const Task: React.FC<ITask> = ({
 	description,
@@ -41,11 +35,16 @@ const Task: React.FC<ITask> = ({
 	id,
 	task_list,
 	parent,
-	contributors
+	contributors,
+	parent_id
 }: ITask) => {
 	const [ isCompleted, setIsCompleted ] = useState(false);
 	const [ showDescription, setShowDescription ] = useState(false);
 	const [ openSubtasks, setOpenSubtasks ] = useState(false);
+	const [ isAddingSubtask, setIsAddingSubtask ] = useState(false);
+
+	const addSubtaskTitle = useRef<HTMLInputElement>(null);
+	const addSubtaskDescription = useRef<HTMLTextAreaElement>(null);
 
 	const showHideDescription = () => {
 		let setTo =
@@ -55,6 +54,7 @@ const Task: React.FC<ITask> = ({
 	};
 
 	const getSubtasks = async (key: any) => {
+		console.log('parent is', parent, 'title is', title);
 		if (parent) {
 			let subtasks: any = [];
 			await Promise.all(
@@ -70,9 +70,7 @@ const Task: React.FC<ITask> = ({
 		}
 	};
 
-	console.log(id, 'is an id');
-
-	const { data: subtasks } = useQuery<any, any>([ 'subtasks', id ], getSubtasks);
+	const { data: subtasks } = useQuery<any, any>([ 'subtasks', id ], getSubtasks, { enabled: openSubtasks });
 
 	const deleteTask: any = ({ task_id }: any) => {
 		axios
@@ -86,8 +84,14 @@ const Task: React.FC<ITask> = ({
 
 	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
 		onMutate:
-			(newData) => {
-				if (task_list) {
+			(newData: any) => {
+				if (parent_id) {
+					queryCache.setQueryData([ 'subtasks', parent_id ], (prev: any) => {
+						if (prev) {
+							return prev.filter((task: ITask) => task.id !== newData.task_id);
+						}
+					});
+				} else {
 					queryCache.cancelQueries(task_list);
 					queryCache.setQueryData(task_list, (prev: any) => {
 						if (prev) {
@@ -98,8 +102,13 @@ const Task: React.FC<ITask> = ({
 							return prev;
 						}
 					});
-				} else {
-					queryCache.setQueryData(id, null);
+				}
+			},
+		onSettled:
+			() => {
+				if (parent_id) {
+					queryCache.invalidateQueries([ 'subtasks', id ]);
+					queryCache.invalidateQueries([ 'subtasks', parent_id ]);
 				}
 			}
 	});
@@ -107,15 +116,22 @@ const Task: React.FC<ITask> = ({
 	const [ deleteTagMutate ]: any = useMutation(deleteTag, {
 		onMutate:
 			(newData: any) => {
-				// queryCache.invalidateQueries([ 'subtasks', task_list ]);
-				// queryCache.invalidateQueries(`details-for-task-${id}`);
-				// in task details or on task lists page
 				if (contributors) {
-					console.log(tags.filter((tag: ITag) => tag.id !== newData.tag_id));
+					queryCache.cancelQueries(`details-for-task-${newData.task_id}`);
 					queryCache.setQueryData(`details-for-task-${newData.task_id}`, (prev: any) => {
-						console.log(prev, 'is prev data');
 						prev.tags = prev.tags.filter((tag: ITag) => tag.id !== newData.tag_id);
 						return prev;
+					});
+				} else if (parent_id) {
+					queryCache.cancelQueries([ 'subtasks', parent_id ]);
+					queryCache.setQueryData([ 'subtasks', parent_id ], (prev: any) => {
+						if (prev) {
+							let subtask_to_change = prev.find((subtask: ITask) => subtask.id === newData.task_id);
+							subtask_to_change.tags = subtask_to_change.tags.filter(
+								(tag: ITag) => tag.id !== newData.tag_id
+							);
+							return prev;
+						}
 					});
 				} else {
 					queryCache.cancelQueries(task_list);
@@ -126,39 +142,61 @@ const Task: React.FC<ITask> = ({
 						});
 						return prev;
 					});
-					tags = tags.filter((tag: any) => tag.id !== newData.tag_id);
-					return tags;
 				}
-				console.log(newData);
-				// console.log(newData, 'is new data', tags);
-				// if (tags.length && task_list) {
-				// 	console.log('tags and task_list', tags, task_list);
-				// } else {
-				// 	console.log('tags are', tags, newData);
-				// 	//queryCache.cancelQueries(`details-for-task-${newData.task_id}`);
-				// 	queryCache.invalidateQueries(`details-for-task-${newData.task_id}`);
-				// }
 			}
 	});
 
-	// const [addSubtaskMutate]
-
-	const addSubtask = async (parent: string) => {
-		console.log(task_list, 'dfgdsf is task_list');
+	const addSubtask = async ({ parent, title, description }: any) => {
+		addSubtaskTitle.current!.value = '';
+		addSubtaskDescription.current!.value = '';
 		const res = await axios.post(
 			'http://46.101.172.171:8008/tasks/add_subtask_to',
 			{
 				child:
 					{
-						title: 'title',
-						description: 'description'
+						title,
+						description
 					},
 				parent
 			},
 			axiosConfig
 		);
-		console.log(res, 'gdfgd is response from add subtask');
 	};
+
+	const [ addSubtaskMutate ] = useMutation(addSubtask, {
+		onMutate:
+			(newData: any) => {
+				const { title, description, parent_id } = newData;
+				queryCache.cancelQueries([ 'subtasks', id ]);
+				queryCache.cancelQueries([ 'subtasks', parent_id ]);
+				queryCache.setQueryData([ 'subtasks', id ], (prev: any) => {
+					return [ ...prev, { title, description, parent_id, id: new Date().toISOString() } ];
+				});
+				queryCache.setQueryData([ 'subtasks', parent_id ], (prev: any) => {
+					if (prev) {
+						return prev;
+					}
+				});
+			},
+		onSettled:
+			() => {
+				if (parent_id) {
+					// queryCache.invalidateQueries([ 'subtasks', parent_id ]);
+					queryCache.invalidateQueries([ 'subtasks', parent_id ]);
+					queryCache.invalidateQueries(`details-for-task-${parent_id}`);
+					queryCache.invalidateQueries(`details-for-task-${id}`);
+					setTimeout(() => {
+						queryCache.invalidateQueries([ 'subtasks', id ]);
+						// queryCache.invalidateQueries([ 'subtasks', id ]);
+						// queryCache.invalidateQueries([ 'subtasks', parent_id ]);
+					}, 500);
+				} else {
+					queryCache.invalidateQueries(task_list);
+					// queryCache.invalidateQueries([ 'subtasks', id ]);
+					// queryCache.invalidateQueries([ 'subtasks', parent_id ]);
+				}
+			}
+	});
 
 	const completeTask = () => {
 		setIsCompleted((isCompleted) => !isCompleted);
@@ -199,7 +237,7 @@ const Task: React.FC<ITask> = ({
 						}
 					>
 						{
-							title.length > 5 ? title.slice(0, 3) + '...' :
+							title.length > 4 ? title.slice(0, 3) + '...' :
 							title}
 					</span>
 				</Link>
@@ -231,7 +269,10 @@ const Task: React.FC<ITask> = ({
 			<img
 				src={subtask}
 				alt='add subtask'
-				onClick={() => setOpenSubtasks((old) => !old)}
+				onClick={() => {
+					setOpenSubtasks((old) => !old);
+					setIsAddingSubtask(false);
+				}}
 				className='subtask icon pd-left-10'
 			/>
 			<Icon icon={clockTimeFourOutline} className='clock icon pd-left-10' />
@@ -263,7 +304,6 @@ const Task: React.FC<ITask> = ({
 					<p>{description}</p>
 				</div>
 			)}
-			{/* {openSubtasks && parent && !parent.length && <div className='no-subtasks'>No Subtasks</div>} */}
 			{openSubtasks &&
 				subtasks &&
 				subtasks.map((subtask: ITask) => (
@@ -275,14 +315,51 @@ const Task: React.FC<ITask> = ({
 						creationDate={subtask.creationDate}
 						tags={subtask.tags}
 						parent={subtask.parent}
+						parent_id={id}
 						key={subtask.id}
 					/>
 				))}
-			{openSubtasks && (
+			{openSubtasks &&
+			!isAddingSubtask && (
 				<div className='add-subtask-container'>
-					<button className='add-subtask' onClick={() => addSubtask(id)}>
-						Add Subtask <span>&#43;</span>
+					<button className='add-subtask' onClick={() => setIsAddingSubtask(true)}>
+						<span>&#43;</span> Add Subtask
 					</button>
+				</div>
+			)}
+			{isAddingSubtask && (
+				<div className='add-subtask-container'>
+					<div className='add-task-container'>
+						<img src={addTaskPlus} alt='add task plus' className='add-task-plus' />
+						<input
+							type='text'
+							placeholder='What needs to be done?'
+							ref={addSubtaskTitle}
+							className='add-task-input'
+						/>
+					</div>
+					<div className='task-description'>
+						<label>
+							Provide a detailed description <small>(Optional)</small>
+						</label>
+						<textarea rows={10} cols={60} ref={addSubtaskDescription} className='description-area' />
+					</div>
+					<button
+						className='btn'
+						onClick={() =>
+							addSubtaskMutate({
+								parent: id,
+								parent_id,
+								title: addSubtaskTitle.current!.value,
+								description: addSubtaskDescription.current!.value
+							})}
+					>
+						Save changes
+					</button>
+					<span className='divider'>or</span>
+					<span className='cancel' onClick={() => setIsAddingSubtask(false)}>
+						Cancel
+					</span>
 				</div>
 			)}
 		</div>
