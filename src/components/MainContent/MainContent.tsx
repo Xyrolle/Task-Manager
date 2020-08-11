@@ -57,6 +57,7 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           component={FilesContent}
         />
         <Route
+          exact
           path="/projects/:projectId/agenda/:agendaID"
           component={AgendaDetails}
         />

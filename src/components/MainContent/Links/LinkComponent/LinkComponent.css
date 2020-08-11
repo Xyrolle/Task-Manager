@@ -33,6 +33,10 @@
   color: #fff;
   margin-right: 5px;
 }
+.linkFirstChar{
+  margin-bottom: 20px;
+  font-weight: 300;
+}
 .tagWrap {
   margin-top: 5px;
 }
@@ -68,4 +72,7 @@
   font-size: 13px;
   color: #999;
   font-weight: 350;
+}
+.deleteLinkTag{
+  cursor: pointer;
 }

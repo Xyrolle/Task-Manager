@@ -1,4 +1,10 @@
-
+.fileContentHeader{
+    display: flex;
+    justify-content: space-between;
+    margin-right: 10%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
 .addFileButton{
     padding: 7px;
     background-color: #59c894;

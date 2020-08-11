@@ -6,6 +6,7 @@ import './LinkContent.css';
 import LinkComponent from './LinkComponent/LinkComponent';
 import { AppContext } from 'context/AppContext';
 
+
 const LinkContent: React.FC = () => {
   const { projectId } = useParams();
   // const { status, data, error } = useQuery(['getLinks', projectId], getLinks);
@@ -39,30 +40,31 @@ const LinkContent: React.FC = () => {
   const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
   return (
     <div>
-      <button
-        onClick={() => ctx.setOpenModal('linkModal')}
-        className="addLinkButton"
-      >
-        + Add Link
-      </button>
       {status === 'loading' ? (
         <p>Loading...</p>
       ) : status === 'error' ? (
         <span>Error: {error.message}</span>
       ) : (
             <div className="linkComponentContainer">
+              <div className="linkContentHeader">
+                <h3 role="heading">Links</h3>
+                <button
+                  onClick={() => ctx.setOpenModal('linkModal')}
+                  className="addLinkButton"
+                >
+                  + Add Link
+                </button>
+              </div>
               {data && data.map((data: any, key: number) => (
                 data.data.map((link: any, key: number) => (
-
                   <div key={key}>
                     <LinkComponent data={link} />
                   </div>
-
                 ))
               ))}
-
             </div>
-          )}
+          )
+      }
       <div>
         <button
           ref={loadMoreButtonRef}
@@ -79,7 +81,7 @@ const LinkContent: React.FC = () => {
       <div>
         {isFetching && !isFetchingMore ? 'Background Updating...' : null}
       </div>
-    </div>
+    </div >
   );
 };
 
