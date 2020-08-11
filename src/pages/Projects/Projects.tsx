@@ -3,10 +3,10 @@ import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 
+import { AppContext } from 'context/AppContext';
 import { axiosConfig } from 'utils/axiosConfig';
 import Star from './Star';
 import './Projects.css';
-import { AppContext } from 'context/AppContext';
 
 const deleteProject = async (id: number) => {
   const response = await axios.delete(
@@ -39,7 +39,7 @@ const Projects: React.FC = () => {
 
   useEffect(() => {
     ctx.setGlobalData(data);
-  }, [data]);
+  }, [data, ctx]);
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
     onMutate: (newData: any) => {
@@ -71,11 +71,7 @@ const Projects: React.FC = () => {
   return (
     <div className="test">
       <button
-        onClick={() => [
-          ctx.setOpenModal('addProjectModal'),
-          console.log('Projects:React.FC -> globalData', ctx.globalData),
-          console.log('Projects:React.FC -> data', data),
-        ]}
+        onClick={() => ctx.setOpenModal('addProjectModal')}
         // setIsAddProjectModalOpen(!isAddProjectModalOpen)
         className="addProjectButton"
       >
