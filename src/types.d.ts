@@ -8,10 +8,8 @@ type ContextProps = {
   setActive: (link: string) => void,
   isLayoutActive: boolean,
   setIsLayoutActive: (layout: boolean) => void,
-  setProjectIdInContext: (projectId: string) => any;
-  projectId: any;
-  globalData: any,
-  setGlobalData: (data: any) => void,
+  setProjectIdInContext: (projectId: string) => any,
+  projectId: any,
 };
 interface userDetailsInterface {
   date_joined: string;

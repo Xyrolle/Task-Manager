@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { AppContext } from 'context/AppContext';
 import { axiosConfig } from 'utils/axiosConfig';
+import { getProjects } from 'utils/getProjects';
 import Star from './Star';
 import './Projects.css';
 
@@ -16,17 +17,17 @@ const deleteProject = async (id: number) => {
   return response.data;
 };
 
-const getProjects = async (key: string, userId: string, page = 1) => {
-  const response = await axios.get(
-    `http://46.101.172.171:8008/project/project_view_by_user/${userId}/${page}/`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }
-  );
-  return response.data;
-};
+// const getProjects = async (key: string, userId: string, page = 1) => {
+//   const response = await axios.get(
+//     `http://46.101.172.171:8008/project/project_view_by_user/${userId}/${page}/`,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`,
+//       },
+//     }
+//   );
+//   return response.data;
+// };
 
 const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
@@ -35,7 +36,7 @@ const Projects: React.FC = () => {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
 
-  const { setOpenModal, setIsLayoutActive, setGlobalData } = ctx;
+  const { setOpenModal, setIsLayoutActive } = ctx;
   console.log('useEffect from Projects commented,found error with data');
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
@@ -80,12 +81,6 @@ const Projects: React.FC = () => {
       },
     }
   );
-
-  // setGlobalData(data);
-
-  useEffect(() => {
-    setGlobalData(data);
-  }, [data, setGlobalData]);
 
   const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
   return (
