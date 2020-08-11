@@ -1,109 +1,119 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
+import { AppContext } from 'context/AppContext';
 import './LayoutNavigation.css';
 
 const LayoutNavigation: React.FC = () => {
-	const [activeLink, setActive] = useState('overview');
+	const ctx = useContext(AppContext);
+
+	if (!ctx) {
+		throw new Error('You probably forgot to put <AppProvider>.');
+	}
+
+	const { activeLink, setActive } = ctx;
+
+	const projectID = 115;
+
 	return (
 		<div className='layoutNavigation'>
 			<ul>
 				<li
 					className={
 
-						activeLink === 'overview' ? 'active-link' :
+							activeLink === 'Overview' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/overview' onClick={() => setActive('overview')}>
+					<Link to='/overview' onClick={() => setActive('Overview')}>
 						Overview
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'tasks' ? 'active-link' :
+							activeLink === 'Tasks' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/tasks/1' onClick={() => setActive('tasks')}>
+					<Link to={`/tasks/${projectID}`} onClick={() => setActive('Tasks')}>
 						Tasks
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'milestones' ? 'active-link' :
+							activeLink === 'Milestones' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/milestones' onClick={() => setActive('milestones')}>
+					<Link to='/milestones' onClick={() => setActive('Milestones')}>
 						Milestones
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'messages' ? 'active-link' :
+							activeLink === 'Messages' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/messages' onClick={() => setActive('messages')}>
+					<Link to='/messages' onClick={() => setActive('Messages')}>
 						Messages
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'files' ? 'active-link' :
+							activeLink === 'Files' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/files' onClick={() => setActive('files')}>
+					<Link to='/projects/:projectId/files' onClick={() => setActive('Files')}>
 						Files
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'time' ? 'active-link' :
+							activeLink === 'Time' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='time' onClick={() => setActive('time')}>
+					<Link to='/projects/:projectId/time' onClick={() => setActive('Time')}>
 						Time
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'notebooks' ? 'active-link' :
+							activeLink === 'Notebooks' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='agenda' onClick={() => setActive('notebooks')}>
+					<Link to='/projects/:projectId/agenda/:agendaID' onClick={() => setActive('Notebooks')}>
 						Notebooks
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'people' ? 'active-link' :
+							activeLink === 'Links' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='links' onClick={() => setActive('links')}>
+					<Link to='/projects/:projectId/links' onClick={() => setActive('Links')}>
 						Links
 					</Link>
 				</li>
 				<li
 					className={
 
-						activeLink === 'settings' ? 'active-link' :
+							activeLink === 'Settings' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='/settings' onClick={() => setActive('settings')}>
+					<Link to='/settings' onClick={() => setActive('Settings')}>
 						Settings
 					</Link>
 				</li>

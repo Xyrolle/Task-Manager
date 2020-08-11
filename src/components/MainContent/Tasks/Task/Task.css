@@ -98,7 +98,7 @@
 }
 
 .subtask {
-	padding-left: 10px !important;
+	padding-left: 24px !important;
 	width: 18px;
 }
 
@@ -138,7 +138,7 @@
 
 .icon {
 	opacity: 0;
-	transition: .3s;
+	transition: 0.3s;
 	cursor: pointer;
 }
 
@@ -178,11 +178,11 @@
 	-moz-box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
 	box-shadow: -2px 5px 26px -6px rgba(0, 0, 0, 0.62);
 	opacity: 0;
-	transition: opacity .4s;
+	transition: opacity 0.4s;
 }
 
 .progress-slider::after {
-	content: "";
+	content: '';
 	position: absolute;
 	top: 100%;
 	left: 50%;
@@ -246,11 +246,11 @@
 	left: 50%;
 	margin-left: -35px;
 	opacity: 0;
-	transition: opacity .4s;
+	transition: opacity 0.4s;
 }
 
 .description-tooltip .tooltip-text::after {
-	content: "";
+	content: '';
 	position: absolute;
 	top: 100%;
 	left: 50%;
@@ -365,7 +365,7 @@
 }
 
 .task-info-tooltip .task-ifno-text::after {
-	content: "";
+	content: '';
 	position: absolute;
 	top: 100%;
 	left: 50%;
@@ -405,7 +405,7 @@
 
 .tag-oval .close-tag-btn:hover {
 	color: #df2b49;
-	transition: .1s;
+	transition: 0.1s;
 }
 
 .task-row > .task-row {

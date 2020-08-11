@@ -2,12 +2,10 @@ import React, { useRef, useState } from 'react';
 import { useQuery, useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
-
 import { useParams } from 'react-router-dom';
 
 import Task from '../Task/Task';
 import Comment from '../Comment/Comment';
-
 import './TaskDetails.css';
 
 let axiosConfig = {
@@ -18,7 +16,6 @@ let axiosConfig = {
 };
 
 interface CommentType {
-	[x: string]: CommentType[] | undefined;
 	data: [];
 	page_current: any;
 	page_total: any;
@@ -41,8 +38,7 @@ const TaskDetails: React.FC = () => {
 		any
 	>(
 		[ `comments`, task_id ],
-		async (key: any, comments_page_id: any, abc?: any) => {
-			console.log(comments_page_id, 'is page id for comments', key, 'abc', abc);
+		async (key: any, comments_page_id: any, more?: any) => {
 			const res = await axios.get(
 				`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
 				axiosConfig
@@ -51,13 +47,15 @@ const TaskDetails: React.FC = () => {
 		},
 		{
 			getFetchMore:
-				(prev: any, all: any) => {
-					return prev.page_curent + 1;
+				(prev) => {
+					if (prev.page_current + 1 > prev.page_total) {
+						return false;
+					} else {
+						return prev.page_current + 1;
+					}
 				}
 		}
 	);
-
-	console.log(taskInfo, 'is info');
 
 	const commentArea = useRef<HTMLTextAreaElement>(null);
 	const tagArea = useRef<HTMLTextAreaElement>(null);

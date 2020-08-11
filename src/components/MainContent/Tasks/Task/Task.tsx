@@ -1,4 +1,4 @@
-import React, { useState, Fragment, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -27,6 +27,12 @@ import addTaskPlus from '../../../../assets/addTaskPlus.svg';
 
 import './Task.css';
 
+interface ITasks {
+	data: ITask[];
+	page_current: number;
+	page_total: number;
+}
+
 const Task: React.FC<ITask> = ({
 	description,
 	title,
@@ -53,8 +59,7 @@ const Task: React.FC<ITask> = ({
 		setShowDescription(setTo);
 	};
 
-	const getSubtasks = async (key: any) => {
-		console.log('parent is', parent, 'title is', title);
+	const getSubtasks = async () => {
 		if (parent) {
 			let subtasks: any = [];
 			await Promise.all(
@@ -82,27 +87,32 @@ const Task: React.FC<ITask> = ({
 		axios.delete(`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${tag_id}`, axiosConfig);
 	};
 
-	const [ deleteTaskMutate ]: any = useMutation(deleteTask, {
+	const [ deleteTaskMutate ] = useMutation(deleteTask, {
 		onMutate:
 			(newData: any) => {
-				if (parent_id) {
-					queryCache.setQueryData([ 'subtasks', parent_id ], (prev: any) => {
-						if (prev) {
-							return prev.filter((task: ITask) => task.id !== newData.task_id);
-						}
-					});
-				} else {
-					queryCache.cancelQueries(task_list);
-					queryCache.setQueryData(task_list, (prev: any) => {
-						if (prev) {
-							prev['data'] = prev.data.filter((task: ITask) => {
-								return id !== task.id;
-							});
+				setTimeout(() => {
+					if (parent_id) {
+						queryCache.setQueryData([ 'subtasks', parent_id ], (prev: any) => {
+							if (prev) {
+								return prev.filter((task: ITask) => task.id !== newData.task_id);
+							}
+						});
+					} else {
+						queryCache.cancelQueries(task_list);
+						queryCache.setQueryData(task_list, (prev: any) => {
+							if (prev) {
+								prev.forEach(
+									(taskPage: ITasks) =>
+										(taskPage.data = taskPage.data.filter(
+											(task: ITask) => task.id !== newData.task_id
+										))
+								);
 
-							return prev;
-						}
-					});
-				}
+								return prev;
+							}
+						});
+					}
+				}, 300);
 			},
 		onSettled:
 			() => {
@@ -136,8 +146,12 @@ const Task: React.FC<ITask> = ({
 				} else {
 					queryCache.cancelQueries(task_list);
 					queryCache.setQueryData(task_list, (prev: any) => {
-						let task_to_change = prev.data.find((task: ITask) => task.id === newData.task_id);
-						task_to_change.tags = task_to_change.tags.filter((tag: any) => {
+						console.log(prev, 'in delete tag');
+						let task_to_change = prev.map((taskPage: ITasks) => {
+							return taskPage.data.find((task: ITask) => task.id === newData.task_id);
+						});
+						console.log(task_to_change[0], 'task to change');
+						task_to_change[0].tags = task_to_change[0].tags.filter((tag: any) => {
 							return tag.id !== newData.tag_id;
 						});
 						return prev;
@@ -170,7 +184,13 @@ const Task: React.FC<ITask> = ({
 				queryCache.cancelQueries([ 'subtasks', id ]);
 				queryCache.cancelQueries([ 'subtasks', parent_id ]);
 				queryCache.setQueryData([ 'subtasks', id ], (prev: any) => {
-					return [ ...prev, { title, description, parent_id, id: new Date().toISOString() } ];
+					if (prev) {
+						console.log(...prev, 'in add subtask', [
+							prev,
+							{ title, description, parent_id, id: new Date().toISOString() }
+						]);
+						return [ ...prev, { title, description, parent_id, id: new Date().toISOString() } ];
+					}
 				});
 				queryCache.setQueryData([ 'subtasks', parent_id ], (prev: any) => {
 					if (prev) {
@@ -181,19 +201,14 @@ const Task: React.FC<ITask> = ({
 		onSettled:
 			() => {
 				if (parent_id) {
-					// queryCache.invalidateQueries([ 'subtasks', parent_id ]);
 					queryCache.invalidateQueries([ 'subtasks', parent_id ]);
 					queryCache.invalidateQueries(`details-for-task-${parent_id}`);
 					queryCache.invalidateQueries(`details-for-task-${id}`);
 					setTimeout(() => {
 						queryCache.invalidateQueries([ 'subtasks', id ]);
-						// queryCache.invalidateQueries([ 'subtasks', id ]);
-						// queryCache.invalidateQueries([ 'subtasks', parent_id ]);
 					}, 500);
 				} else {
 					queryCache.invalidateQueries(task_list);
-					// queryCache.invalidateQueries([ 'subtasks', id ]);
-					// queryCache.invalidateQueries([ 'subtasks', parent_id ]);
 				}
 			}
 	});

@@ -1,7 +1,5 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
-import { useMutation, queryCache } from 'react-query';
-import { AppContext } from '../../../../context/AppContext';
 
 import './AddTaskListModal.css';
 
@@ -17,12 +15,11 @@ let axiosConfig = {
 		}
 };
 
-const AddTaskListModal: React.FC = () => {
-	const ctx = useContext(AppContext);
-	if (!ctx) {
-		throw new Error('You probably forgot to put <AppProvider>.');
-	}
+interface AddTaskListModalProps {
+	closeModal: () => void;
+}
 
+const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
 	const taskListTitle = useRef<HTMLInputElement>(null);
 	const taskListDescription = useRef<HTMLTextAreaElement>(null);
 
@@ -37,7 +34,6 @@ const AddTaskListModal: React.FC = () => {
 				},
 				axiosConfig
 			)
-			.then((res) => console.log(res))
 			.catch((error) => console.error(error));
 	};
 
@@ -61,7 +57,7 @@ const AddTaskListModal: React.FC = () => {
 						</div>
 					</div>
 					<div className='modal-footer'>
-						<button type='button' className='closeBtn' onClick={ctx.closeTaskListModal}>
+						<button type='button' className='closeBtn' onClick={closeModal}>
 							Close
 						</button>
 						<button
@@ -78,7 +74,7 @@ const AddTaskListModal: React.FC = () => {
 					</div>
 				</form>
 			</div>
-			<div className='bg' onClick={ctx.closeTaskListModal} />
+			<div className='bg' onClick={closeModal} />
 		</div>
 	);
 };

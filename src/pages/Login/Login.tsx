@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
-import { axiosConfig } from '../../utils/axiosConfig'
+
+import { axiosConfig } from 'utils/axiosConfig'
 import './Login.css'
 
 

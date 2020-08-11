@@ -10,7 +10,7 @@
   text-decoration: none;
   color: black;
 }
-.agendaTitleWrap p{
+.agendaTitleWrap p {
   margin-right: 10px;
 }
 .agendaInfo {
@@ -104,17 +104,17 @@
 .agendaHeaderButton:hover {
   background-color: #469e75;
 }
-.buttonsAgendaInfoWrap{
+.buttonsAgendaInfoWrap {
   margin-top: 15px;
 }
-.tagIconAgendaWrap{
+.tagIconAgendaWrap {
   opacity: 40%;
   font-size: 12px;
   font-weight: 400;
   cursor: pointer;
   margin-right: 10px;
 }
-.tagIconAgendaWrap:hover{
+.tagIconAgendaWrap:hover {
   opacity: 70%;
 }
 .editAgendaButton {
@@ -161,13 +161,12 @@
   display: flex;
 }
 
-.tagAgenda{
-    font-size: 13px;
-    font-weight: 300;
-    padding: 2px 8px 4px 8px;
-    background-color: rgb(47, 141, 228);
-    border-radius: 10px;
-    color: #fff;
-    margin-right: 5px;
+.tagAgenda {
+  font-size: 13px;
+  font-weight: 300;
+  padding: 2px 8px 4px 8px;
+  background-color: rgb(47, 141, 228);
+  border-radius: 10px;
+  color: #fff;
+  margin-right: 5px;
 }
-

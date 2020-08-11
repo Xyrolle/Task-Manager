@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import './App.css';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { ReactQueryDevtools } from 'react-query-devtools';
-import ProjectsPage from './pages/ProjectsPage/ProjectsPage';
+import { ReactQueryConfigProvider } from 'react-query';
+import './App.css';
+
 import AllPages from './pages/AllPages';
 import Login from './pages/Login/Login';
 import Registration from './pages/Registration/Registration';
 import { AppProvider } from './context/AppContext';
-import { ReactQueryConfigProvider } from 'react-query';
 
 const App: React.FC = () => {
 	const [ isAuth, setisAuth ] = useState(false);

@@ -1,15 +1,16 @@
 import React, { useContext, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
+import { AppContext } from 'context/AppContext';
 import './Header.css';
-import Vector from '../../assets/Vector.svg';
-import SearchIcon from '../../assets/SearchIcon.svg';
-import CancelSearch from '../../assets/CancelSearch.svg';
-import Bell from '../../assets/Bell.svg';
-import Logo from '../../assets/Logo.png';
+import Vector from 'assets/Vector.svg';
+import SearchIcon from 'assets/SearchIcon.svg';
+import CancelSearch from 'assets/CancelSearch.svg';
+import Bell from 'assets/Bell.svg';
+import Logo from 'assets/Logo.png';
 import PlusDropdown from './PlusDropdown/PlusDropdown';
 import FolderDropdown from './FolderDropdown/FolderDropdown';
 import BellDropdown from './BellDropdown/BellDropdown';
-import { AppContext } from '../../context/AppContext';
 
 const Header: React.FC = () => {
   const [openDropdown, setOpenDropdown] = useState<string>('');
@@ -26,101 +27,156 @@ const Header: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+  const { setOpenModal, setIsLayoutActive } = ctx;
+
   return (
-    <header className='mainHeader' data-testid='mainHeader'>
-      <nav className='nav'>
-        <div className='mainHeadList'>
-          <div className='logo'>
-            <img src={Logo} alt='logo' />
-          </div>
-          <div className='burgerMenuWrap'>
-            <input type='checkbox' className='burgerToggler' />
-            <div className='hamburger'>
-              <div></div>
+    <header className="mainHeader" data-testid="mainHeader">
+      <nav className="nav">
+        <div className="mainHeadList">
+          <Link to="/">
+            <div className="logo">
+              <img src={Logo} alt="logo" />
             </div>
-            <div className='burgerMenu'>
+          </Link>
+          <div className="burgerMenuWrap">
+            <input type="checkbox" className="burgerToggler" />
+            <div className="hamburger">
+              <div />
+            </div>
+            <div className="burgerMenu">
               <div>
                 <div>
                   <ul>
-                    <li>Home</li>
-                    <li>Projects</li>
-                    <li>Planning</li>
-                    <li>Everything</li>
-                    <li>Calendar</li>
-                    <li>People</li>
+                    <li>
+                      <Link to="/" onClick={() => setIsLayoutActive(false)}>
+                        Home
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/projects"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Projects
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/planning"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Planning
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/everything"
+                        onClick={() => setIsLayoutActive(true)}
+                      >
+                        Everything
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/calendar"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        Calendar
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        to="/people"
+                        onClick={() => setIsLayoutActive(false)}
+                      >
+                        People
+                      </Link>
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='mainHeadBtns'>
+        <div className="mainHeadBtns">
           {!searchInputIsOpen ? (
             <Fragment>
               <button
-                type='button'
-                className='addTeamBtn'
-                onClick={ctx.openModal}
+                type="button"
+                className="addTeamBtn"
+                onClick={() => setOpenModal('addTeamModal')}
               >
                 <img
-                  src='//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg'
-                  alt='add team'
+                  src="//cdn-pjs.teamwork.com/tko/public/assets/svg/inlinehelp/inviteusers.svg"
+                  alt="add team"
                 />
                 <span>Add Your Team</span>
               </button>
               <button
-                type='button'
-                className='upgradeBtn'
-                onClick={ctx.openUpgradeModal}
+                type="button"
+                className="upgradeBtn"
+                onClick={() => setOpenModal('upgradeModal')}
               >
                 Upgrade Now
               </button>
               <span
-                className='searchCircle'
+                role="button"
+                tabIndex={0}
+                className="searchCircle"
                 onClick={() => setSearchInputIsOpen(true)}
               >
-                <img src={SearchIcon} alt='search' className='search' />
+                <img src={SearchIcon} alt="search" className="search" />
               </span>
             </Fragment>
           ) : (
-              <div className='searchInputContainer'>
-                <img src={SearchIcon} alt='search' className='searchInInput' />
-                <input
-                  id='search'
-                  className='searchInput'
-                  type='search'
-                  autoComplete='off'
-                  placeholder='Search'
-                />
-                <img
-                  src={CancelSearch}
-                  alt='cancel search'
-                  className='cancelSearchInInput'
-                  onClick={() => setSearchInputIsOpen(false)}
-                />
-              </div>
-            )}
-          <div className='plusContainer'>
+            <div className="searchInputContainer">
+              <img src={SearchIcon} alt="search" className="searchInInput" />
+              <input
+                id="search"
+                className="searchInput"
+                type="search"
+                autoComplete="off"
+                placeholder="Search"
+              />
+              <img
+                role="presentation"
+                src={CancelSearch}
+                alt="cancel search"
+                className="cancelSearchInInput"
+                onClick={() => setSearchInputIsOpen(false)}
+              />
+            </div>
+          )}
+          <div className="plusContainer">
             <div
+              role="button"
+              tabIndex={0}
+              aria-label="Show dropdown"
               className={openDropdown !== 'plusDropdown' ? 'plus' : 'whitePlus'}
               onClick={() => handleDropdown('plusDropdown')}
             />
             {openDropdown === 'plusDropdown' && <PlusDropdown />}
           </div>
           <div
-            className='folder'
+            role="button"
+            tabIndex={0}
+            aria-label="Show dropdown"
+            className="folder"
             onClick={() => handleDropdown('folderDropdown')}
           />
           {openDropdown === 'folderDropdown' && <FolderDropdown />}
           <span
-            className='bellContainer'
+            role="button"
+            tabIndex={0}
+            aria-label="Show dropdown"
+            className="bellContainer"
             onClick={() => handleDropdown('bellDropdown')}
           >
-            <img src={Bell} alt='bell' className='bell' />
+            <img src={Bell} alt="bell" className="bell" />
           </span>
           {openDropdown === 'bellDropdown' && <BellDropdown />}
-          <span className='profileCircle'>EO</span>
-          <img src={Vector} alt='vector' className='vector' />
+          <span className="profileCircle">EO</span>
+          <img src={Vector} alt="vector" className="vector" />
         </div>
       </nav>
     </header>

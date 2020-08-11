@@ -3,43 +3,48 @@ import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../../utils/axiosConfig';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import { AppContext } from '../../../../context/AppContext';
 import { useParams } from 'react-router';
 
-interface foo {
+interface uploadFileInterface {
     projectId: string;
-    userId: string;
     title: string;
-    content: string;
+    upload: any;
 }
-const createTimePoints = async ({
-    projectId,
-    userId,
-    title,
-    content }: foo) => {
+
+var config = {
+    headers:
+    {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization:
+            `Bearer ${localStorage.getItem('token')}`
+    },
+}
+
+const uploadFile = async ({ projectId, title, upload, }: uploadFileInterface) => {
+    const fd = new FormData();
+    fd.append('upload', upload)
+    fd.append('project', projectId)
+    fd.append('title', title)
     try {
-        const response = await axios.post(`http://46.101.172.171:8008/link/`, {
-            project: projectId,
-            user: userId,
-            title,
-            content,
-            tags: []
-        },
-            await axiosConfig
+        const response = await axios.post(`http://46.101.172.171:8008/files/`,
+            fd,
+            config,
         );
+
         if (response.status === 200) {
-            queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
-                prev.data.push({
-                    id: response.data.id,
-                    title,
-                    content,
-                    user: userId,
-                    tags: []
-                });
-                return prev
-            });
+            console.log(response.data)
+            // queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
+            //     prev.data.push({
+            //         id: response.data.id,
+            //         title,
+            //         content,
+            //         user: userId,
+            //         tags: []
+            //     });
+            //     return prev
+            // });
         }
         return response.data;
     } catch (err) {
@@ -47,25 +52,30 @@ const createTimePoints = async ({
     }
 }
 
-const AddLinkModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
+const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
+    const [fileInput, setFileInput] = useState(null)
     const ctx = useContext(AppContext);
     const titleInput = useRef<HTMLInputElement>(null);
-    const contentInput = useRef<HTMLTextAreaElement>(null);
+
     const { projectId } = useParams();
     if (!ctx) {
         throw new Error('You probably forgot to put <AppProvider>.');
     }
 
-    const [mutate] = useMutation(createTimePoints, {
+    const [mutate] = useMutation(uploadFile, {
 
         onMutate: (newData: any) => {
-            queryCache.cancelQueries(['getLinks', projectId]);
-            const snapshot = queryCache.getQueryData(['getLinks', projectId]);
+            queryCache.cancelQueries('getFiles', projectId);
+            const snapshot = queryCache.getQueryData(['getFiles', projectId]);
 
-            return () => queryCache.setQueryData('getLinks', snapshot);
+            queryCache.setQueryData(['getFiles', projectId], (prev: any) => {
+                prev[0].push(newData)
+                return prev;
+            });
+            return () => queryCache.setQueryData(['getFiles', projectId], snapshot);
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),
-        // onSettled: () => queryCache.prefetchQuery('getTimeGroups')
+        onSettled: () => queryCache.invalidateQueries(['getFiles', projectId])
     })
 
     return (
@@ -73,18 +83,21 @@ const AddLinkModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
             <div className='modalContainer sectionFormLightbox'>
                 <form className='addTaskListForm'>
                     <div className='addTaskListHeader'>
-                        <h2 className='modal-title'>Add Link</h2>
+                        <h2 className='modal-title'>Add File</h2>
                     </div>
                     <div className='modal-body'>
                         <div className='form-group'>
-                            <label>Give link a path *</label>
+                            <label>Give file a title</label>
                             <input ref={titleInput} type='text' className='form-control' />
                         </div>
                         <div className='task-list-description'>
                             <label>
-                                Give content
+                                Select file
                             </label>
-                            <textarea ref={contentInput} rows={30} cols={20} className='description-input' />
+                            <input type="file" onChange={(e: any) => {
+                                // console.log()
+                                setFileInput(e.target.files[0])
+                            }} />
                         </div>
 
                     </div>
@@ -96,18 +109,19 @@ const AddLinkModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
                             Close
 						</button>
                         <button
+                            disabled={!fileInput}
                             onClick={async () => {
                                 mutate({
                                     projectId,
-                                    userId: ctx.userDetails.id,
                                     title: titleInput.current!.value,
-                                    content: contentInput.current!.value,
+                                    upload: fileInput
                                 })
+                                // console.log(fileInput)
                                 await handleShowModal()
                             }}
                             type='button'
                             className='addList-btn btn'>
-                            Add Link
+                            Add File
 						</button>
                     </div>
                 </form>
@@ -116,4 +130,4 @@ const AddLinkModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
         </div>
     );
 };
-export default AddLinkModal;
+export default AddFileModal;

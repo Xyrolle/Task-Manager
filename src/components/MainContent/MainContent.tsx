@@ -1,32 +1,50 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import ContentHeader from './ContentHeader/ContentHeader';
-import TaskLists from '../../components/MainContent/Tasks/TaskLists/TaskLists';
+
+import TaskLists from 'components/MainContent/Tasks/TaskLists/TaskLists';
+import UnderConstruction from 'pages/UnderConstruction/UnderConstruction';
+import AgendaCreate from 'components/MainContent/Agenda/AgendaCreate/AgendaCreate';
+import Projects from 'pages/Projects/Projects';
 import AgendaContent from './Agenda/AgendaContent';
-import AgendaCreate from '../../components/MainContent/Agenda/AgendaCreate/AgendaCreate';
+import ContentHeader from './ContentHeader/ContentHeader';
 import AgendaDetails from './Agenda/AgendaDetails/AgendaDetails';
 import TaskDetails from './Tasks/TaskDetails/TaskDetails';
 import Task from './Tasks/Task/Task';
 import Time from './Time/Time';
 import LinkContent from './Links/LinkContent';
 import LinkDetails from './Links/LinkDetails/LinkDetails';
-
+import FilesContent from './Files/FilesContent';
+import FileDetails from './Files/FileDetails/FileDetails';
+import Messages from './Messages/Messages';
 import './MainContent.css';
 
-const MainContent: React.FC = () => {
+interface MainContentProps {
+	isLayoutActive: boolean;
+}
+
+const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
 	return (
 		<div>
-			<ContentHeader />
+			{isLayoutActive && <ContentHeader />}
 			<div className='contentContainer'>
+				<Route exact path='/' component={Projects} />
+				<Route exact path='/projects' component={Projects} />
 				<Route exact path='/tasks/task_info/:task_id' component={TaskDetails} />
 				<Route exact path='/projects/:projectId/agenda' component={AgendaContent} />
 				<Route exact path='/projects/:projectId/agenda/create' component={AgendaCreate} />
 				<Route exact path='/projects/:projectId/time' component={Time} />
 				<Route exact path='/projects/:projectId/links' component={LinkContent} />
 				<Route exact path='/projects/:projectId/links/:linkId' component={LinkDetails} />
+				<Route exact path='/projects/:projectId/files' component={FilesContent} />
+				<Route exact path='/projects/:projectId/files/:fileId' component={FileDetails} />
 				<Route path='/projects/:projectId/agenda/:agendaID' component={AgendaDetails} />
 				<Route exact path='/tasks/:projectID' component={TaskLists} />
+				<Route exact path='/planning' component={UnderConstruction} />
+				<Route exact path='/calendar' component={UnderConstruction} />
+				<Route exact path='/people' component={UnderConstruction} />
+				<Route exact path='/messages' component={Messages} />
 			</div>
+			<footer style={{ height: '10rem' }} />
 		</div>
 	);
 };

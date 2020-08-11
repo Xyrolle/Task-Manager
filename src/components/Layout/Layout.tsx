@@ -7,12 +7,12 @@ import LayoutHeader from './LayoutHeader/LayoutHeader';
 import LayoutNavigation from './LayoutNavigation/LayoutNavigation';
 
 const Layout: React.FC = () => {
-	return (
-		<div>
-			<LayoutHeader />
-			<LayoutNavigation />
-		</div>
-	);
+  return (
+    <div>
+      <LayoutHeader />
+      <LayoutNavigation />
+    </div>
+  );
 };
 
 export default Layout;

@@ -1,0 +1,171 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "react-app",
+    "plugin:flowtype/recommended",
+    "prettier",
+    "prettier/flowtype",
+    "prettier/react",
+    "plugin:testing-library/recommended",
+    "plugin:testing-library/react"
+  ],
+  "plugins": [
+    "react",
+    "flowtype",
+    "prettier",
+    "react-hooks",
+    "testing-library",
+    "@typescript-eslint"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "ecmaVersion": 2016,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "env": {
+    "es6": true,
+    "jest": true,
+    "browser": true,
+    "node": true,
+    "worker": true
+  },
+  "globals": {
+    "globals": true,
+    "shallow": true,
+    "render": true,
+    "mount": true
+  },
+  "rules": {
+    "flowtype/no-types-missing-file-annotation": "off",
+    "flowtype/no-weak-types": [
+      "error",
+      {
+        "Function": false,
+        "Object": false,
+        "any": true
+      }
+    ],
+    "global-require": "off",
+    "react/jsx-key": "error",
+    "import/prefer-default-export": "off",
+    "import/no-cycle": "off",
+    "import/no-extraneous-dependencies": [
+      "warn",
+      {
+        "devDependencies": [
+          "**/*.test.js",
+          "**/*.test.jsx",
+          "**/*.test.ts",
+          "**/*.test.tsx",
+          "src/tests/**/*"
+        ]
+      }
+    ],
+    "import/no-unresolved": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          ["builtin", "external", "internal"],
+          ["parent", "index", "sibling"]
+        ]
+      }
+    ],
+    "jsx-a11y/click-events-have-key-events": "off",
+    "no-nested-ternary": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": false
+      }
+    ],
+    "object-curly-spacing": ["warn", "always"],
+    "no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "none"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "vars": "all",
+        "args": "none"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": [
+      "error",
+      {
+        "ignoreRestArgs": true
+      }
+    ],
+    "max-len": [
+      "warn",
+      {
+        "code": 80,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreComments": true
+      }
+    ],
+    "no-plusplus": [
+      "error",
+      {
+        "allowForLoopAfterthoughts": true
+      }
+    ],
+    "no-shadow": ["error", { "allow": ["data", "contextValue", "value"] }],
+    "no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTaggedTemplates": true,
+        "allowTernary": true
+      }
+    ],
+    "quotes": [
+      "error",
+      "single",
+      {
+        "allowTemplateLiterals": true,
+        "avoidEscape": true
+      }
+    ],
+    "react/default-props-match-prop-types": [
+      "error",
+      { "allowRequiredDefaults": true }
+    ],
+    "react/require-default-props": ["off"],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    "react/jsx-props-no-spreading": "off",
+    "react/jsx-fragments": ["error", "element"],
+    "react/jsx-boolean-value": "off",
+    "react/prop-types": "off",
+    "react/no-unescaped-entities": "off",
+    "react/state-in-constructor": ["error", "never"],
+    "react/jsx-one-expression-per-line": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/destructuring-assignment": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "semi": ["error", "always"],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": ["nesting", "id"]
+        }
+      }
+    ]
+  }
+}

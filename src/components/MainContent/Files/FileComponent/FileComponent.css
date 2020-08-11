@@ -1,0 +1,28 @@
+.fileIcon{
+    width: 36px;
+}
+.fileIconWrap{
+    display: flex;
+}
+.fileTitleFirstChar{
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+.fileTitle{
+    font-size: 16px;
+    font-weight: 500;
+}
+.fileUploadedDate{
+    margin-top: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #999999;
+}
+.fileDetailsWrap{
+    margin-left: 10px;
+}
+.fileComponentContainer{
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(226, 226, 226);
+    margin-bottom: 20px;
+}

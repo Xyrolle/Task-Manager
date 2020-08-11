@@ -95,7 +95,7 @@
 
 .add-task-plus {
 	position: relative;
-	top: 17px;
+	top: 14px;
 	left: 4px;
 	width: 0.95rem;
 	opacity: 0.6;
@@ -142,7 +142,8 @@
 	box-sizing: border-box;
 }
 
-.task-container label {
+.task-description label {
+	font-weight: 300;
 	display: block;
 	font-size: 13px;
 	margin: 10px 0 8px 3rem;
@@ -175,7 +176,7 @@
 
 .dots:hover {
 	opacity: 0.8;
-	transition: .1s;
+	transition: 0.1s;
 	transform: scale(1.1) !important;
 }
 
@@ -192,7 +193,7 @@
 	bottom: -100%;
 	left: 100%;
 	opacity: 0;
-	transition: opacity .4s;
+	transition: opacity 0.4s;
 	border: 1px solid #eee;
 	-webkit-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
 	-moz-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
@@ -221,7 +222,7 @@
 
 .task-list-row:hover .task-count {
 	opacity: 0.8;
-	transition: .1s;
+	transition: 0.1s;
 }
 
 .list-description {
@@ -238,4 +239,9 @@
 .edit-input {
 	height: 1.4rem;
 	padding: 2px 4px;
+}
+
+.load-more {
+	margin-left: 3rem;
+	margin-top: 0.2rem;
 }

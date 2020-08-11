@@ -1,20 +1,22 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
 
-import { useQuery, useMutation, queryCache } from 'react-query';
 import { useInfiniteQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
 
 import TaskList from '../TaskList/TaskList';
 
 import './TaskLists.css';
 
-const TaskLists = () => {
-	let axiosConfig = {
-		headers:
-			{
-				Authorization: `Basic YWRtaW46cXdlMTIz`
-			}
-	};
+let axiosConfig = {
+	headers:
+		{
+			Authorization: `Basic YWRtaW46cXdlMTIz`
+		}
+};
+
+const TaskLists: React.FC = () => {
+	const { projectID } = useParams();
 
 	interface IList {
 		id: number;
@@ -32,28 +34,27 @@ const TaskLists = () => {
 
 	const fetchTaskLists = async (key: string, page_id: number = 1) => {
 		const res = await axios.get(
-			`http://46.101.172.171:8008/project/task_list_view_by_project/115/${page_id}/`,
+			`http://46.101.172.171:8008/project/task_list_view_by_project/${projectID}/${page_id}/`,
 			axiosConfig
 		);
 		return res.data;
 	};
 
-	const { data: lists, isFetching, isFetchingMore, fetchMore } = useInfiniteQuery<
+	const { data: lists, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
 		ILists,
 		string,
 		number
 	>('task-lists', fetchTaskLists, {
 		getFetchMore:
 			(prev) => {
+				if (prev.page_current + 1 > prev.page_total) {
+					return false;
+				}
 				return prev.page_current + 1;
 			}
 	});
 
 	const loadMoreButtonRef = useRef<HTMLButtonElement | null>(null);
-
-	console.log('task lists', lists);
-
-	let canFetch = lists && lists[lists.length - 1].page_current < lists[lists.length - 1].page_total;
 
 	if (!lists) return <h5>loading</h5>;
 
@@ -61,7 +62,6 @@ const TaskLists = () => {
 		<div>
 			{lists &&
 				lists.map((lists_page: ILists) => {
-					console.log(lists_page, 'page');
 					return (
 						lists_page &&
 						lists_page.data.map((taskList: IList) => (
@@ -81,17 +81,17 @@ const TaskLists = () => {
 					onClick={() => {
 						fetchMore();
 					}}
-					disabled={!canFetch || isFetching}
+					disabled={!canFetchMore || isFetching}
 					className={
 						'btn load-more-lists ' +
 						(
-							!canFetch || isFetching ? 'disabledBtn' :
+							!canFetchMore || isFetching ? 'disabledBtn' :
 							'')
 					}
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						lists && canFetch ? 'Load More' :
+						lists && canFetchMore ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>
