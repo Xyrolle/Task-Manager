@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-
 import TaskLists from 'components/MainContent/Tasks/TaskLists/TaskLists';
 import UnderConstruction from 'pages/UnderConstruction/UnderConstruction';
 import AgendaCreate from 'components/MainContent/Agenda/AgendaCreate/AgendaCreate';
@@ -14,7 +13,7 @@ import Time from './Time/Time';
 import LinkContent from './Links/LinkContent';
 import LinkDetails from './Links/LinkDetails/LinkDetails';
 import FilesContent from './Files/FilesContent';
-import FileDetails from './Files/FileDetails/FileDetails';
+import Layout from 'components/Layout/Layout';
 import Messages from './Messages/Messages';
 import './MainContent.css';
 
@@ -25,8 +24,9 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
   return (
     <div>
-      {isLayoutActive && <ContentHeader />}
+      <Route path="/projects/:projectId/" component={Layout} />
       <div className="contentContainer">
+        <ContentHeader />
         <Route exact path="/" component={Projects} />
         <Route exact path="/projects" component={Projects} />
         <Route exact path="/tasks/task_info/:task_id" component={TaskDetails} />
@@ -57,11 +57,6 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           component={FilesContent}
         />
         <Route
-          exact
-          path="/projects/:projectId/files/:fileId"
-          component={FileDetails}
-        />
-        <Route
           path="/projects/:projectId/agenda/:agendaID"
           component={AgendaDetails}
         />
@@ -70,6 +65,11 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           exact
           path="/planning"
           component={() => <UnderConstruction title="Planning" />}
+        />
+        <Route
+          exact
+          path="/everything"
+          component={() => <UnderConstruction title="Everything" />}
         />
         <Route
           exact
@@ -82,7 +82,11 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           component={() => <UnderConstruction title="People" />}
         />
 
-        <Route exact path="/messages" component={Messages} />
+        <Route
+          exact
+          path="/projects/:projectId/messages"
+          component={Messages}
+        />
       </div>
       <footer style={{ height: '10rem' }} />
     </div>

@@ -1,5 +1,4 @@
 .agendaContainer {
-  margin-left: 20%;
   border-left: 1px solid #eeeeee;
   padding-left: 30px;
   margin-left: 20%;
@@ -169,4 +168,24 @@
   border-radius: 10px;
   color: #fff;
   margin-right: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .agendaContainer {
+    margin-left: 10%;
+  }
+}
+@media screen and (max-width: 576px) {
+  .agendaContainer {
+    margin-left: 0;
+  }
+  .agendaInfo {
+    font-size: 10px;
+  }
+  .agendaTitleWrap {
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    color: black;
+  }
 }

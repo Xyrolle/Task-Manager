@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import { useParams, Router } from 'react-router-dom';
-
+import { useParams } from 'react-router-dom';
 import { axiosConfig } from 'utils/axiosConfig';
 
 interface foo {
   projectId: string;
-  userId: string;
+  userId: number;
   title: string;
   content: string;
 }
@@ -45,7 +44,7 @@ interface AddLinkModalProps {
   closeModal: () => void;
 }
 
-const AddLinkModal: React.FC<AddLinkModalProps> = ({userDetails, closeModal}) => {
+const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) => {
   const titleInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
   const { projectId } = useParams();

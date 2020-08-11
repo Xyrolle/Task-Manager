@@ -10,7 +10,6 @@ import { AppContext } from '../../../../context/AppContext';
 const getLink = async (key: string, projectId: string, linkId: string) => {
     const response = await axios.get(`http://46.101.172.171:8008/link/${projectId}/item/${linkId}`, axiosConfig)
     return response.data
-    console.log(response.data)
 }
 interface foo {
     comment: string;

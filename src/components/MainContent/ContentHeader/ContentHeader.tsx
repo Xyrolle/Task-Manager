@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import './ContentHeader.css';
 import { AppContext } from 'context/AppContext';
-
+import Layout from 'components/Layout/Layout';
 const ContentHeader: React.FC = () => {
   const ctx = useContext(AppContext);
 

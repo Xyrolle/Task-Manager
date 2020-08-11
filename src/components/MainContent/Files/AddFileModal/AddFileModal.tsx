@@ -12,16 +12,6 @@ interface uploadFileInterface {
     upload: any;
 }
 
-var config = {
-    headers:
-    {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        Authorization:
-            `Bearer ${localStorage.getItem('token')}`
-    },
-}
-
 const uploadFile = async ({ projectId, title, upload, }: uploadFileInterface) => {
     const fd = new FormData();
     fd.append('upload', upload)
@@ -30,7 +20,7 @@ const uploadFile = async ({ projectId, title, upload, }: uploadFileInterface) =>
     try {
         const response = await axios.post(`http://46.101.172.171:8008/files/`,
             fd,
-            config,
+            axiosConfig,
         );
 
         if (response.status === 200) {

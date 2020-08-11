@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import axios from 'axios';
 import './Registration.css';
 import { Link, useHistory } from 'react-router-dom';
-import { registerType } from './types';
+import { RegisterType } from './types';
 
 const getToken = async (username: string, password: string) => {
     axios.post('http://46.101.172.171:8008/users/token/', {
@@ -17,7 +17,7 @@ const getToken = async (username: string, password: string) => {
             console.log('token', error);
         })
 }
-const register: registerType = async (first_name, last_name, email, username, password) => {
+const register: RegisterType = async (first_name, last_name, email, username, password) => {
     axios.post('http://46.101.172.171:8008/users/register/', {
         first_name,
         last_name,
@@ -62,7 +62,7 @@ const Registration: React.FC = () => {
                 className="loginButton"
             >
                 Sign Up
-        </button>
+</button>
         </div>
     )
 }

@@ -3,9 +3,9 @@ import axios from 'axios';
 import { axiosConfig } from 'utils/axiosConfig';
 import { IupdateAgendaContent } from './interfaces';
 
-export const getAgendasByProjectId = async (key: string, projectId: string) => {
+export const getAgendasByProjectId = async (key: string, projectId: string, page = 1) => {
   const response = await axios.get(
-    `http://46.101.172.171:8008/agenda/${projectId}/page=1`,
+    `http://46.101.172.171:8008/agenda/${projectId}/page=${page}`,
     await axiosConfig
   );
   return response.data;
@@ -15,7 +15,7 @@ export const addAgenda = (
   title: string,
   content: string,
   project: string,
-  user: string
+  user: number
 ) => {
   axios
     .post(

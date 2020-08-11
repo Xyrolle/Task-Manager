@@ -1,6 +1,7 @@
 import React, { useState, createContext } from 'react';
 import { getUserInfo } from './queries';
 
+
 type Props = {
   children: React.ReactNode,
 };
@@ -14,6 +15,7 @@ export const AppProvider = ({ children }: Props) => {
   const [userDetails, setUserDetails] = useState();
   const [activeLink, setActive] = useState('Overview');
   const [isLayoutActive, setIsLayoutActive] = useState(false);
+  const [projectId, setProjectId] = useState<string>('')
 
   const closeModal = (): void => {
     setOpenModal('');
@@ -22,6 +24,9 @@ export const AppProvider = ({ children }: Props) => {
   const setUserInfo = async () => {
     await setUserDetails(await getUserInfo());
   };
+  const setProjectIdInContext = (projectId: string) => {
+    setProjectId(projectId)
+  }
 
   return (
     <AppContext.Provider
@@ -35,6 +40,8 @@ export const AppProvider = ({ children }: Props) => {
         setActive,
         isLayoutActive,
         setIsLayoutActive,
+        setProjectIdInContext,
+        projectId,
         globalData,
         setGlobalData,
       }}

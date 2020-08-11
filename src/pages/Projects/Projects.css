@@ -4,10 +4,15 @@
   border: 1px solid #e1e1e1;
   margin: 15px;
 }
+
+
 .projectsContainer {
   display: flex;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
+  /* justify-content: center; */
 }
+
+
 .addProjectButton {
   padding: 7px;
   background-color: #59c894;
@@ -41,14 +46,23 @@
   height: auto;
   cursor: pointer;
 }
+
 .projectNameWrap {
   display: flex;
 }
 
+@media screen and (max-width: 992px) {
+  .projectsContainer{
+    justify-content: center;
+  }
+}
+
 @media only screen and (max-width: 600px) {
   .project {
-    width: 25rem;
+    width: 45%;
     height: 12rem;
     font-size: 0.9rem;
+    margin-left: 5px;
+    margin-right: 5px;
   }
 }
