@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { Link } from 'react-router-dom';
@@ -28,15 +28,16 @@ const getProjects = async (key: string, userId: string, page = 1) => {
 
 const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
-  // const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
-  // const handleShowModal = () => setIsAddProjectModalOpen(false);
 
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
 
-  const { setOpenModal, setIsLayoutActive } = ctx;
-
+  const { setOpenModal, setIsLayoutActive } = ctx
+  console.log('useEffect from Projects commented,found error with data')
+  // useEffect(() => {
+  //   ctx.setGlobalData(data);
+  // }, [data]);
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
     onMutate: (newData: any) => {
@@ -80,7 +81,12 @@ const Projects: React.FC = () => {
   return (
     <div className="test">
       <button
-        onClick={() => ctx.setOpenModal('addProjectModal')}
+        onClick={() => [
+          ctx.setOpenModal('addProjectModal'),
+          console.log('Projects:React.FC -> globalData', ctx.globalData),
+          console.log('Projects:React.FC -> data', data),
+        ]}
+        // setIsAddProjectModalOpen(!isAddProjectModalOpen)
         className="addProjectButton"
       >
         + Add project

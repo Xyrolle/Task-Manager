@@ -72,8 +72,10 @@ const createTimePoints = async ({
   // });
   return response.data;
 };
-
-const AddTimeModal: React.FC = () => {
+interface AddTimeModalInterface {
+  closeModal(): void;
+}
+const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
   const [startTimeValue, setStartTimeValue] = useState(moment().format());
   const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
   const descriptionInput = useRef<HTMLTextAreaElement>(null);

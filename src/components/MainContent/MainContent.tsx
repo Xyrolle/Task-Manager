@@ -14,6 +14,7 @@ import LinkContent from './Links/LinkContent';
 import LinkDetails from './Links/LinkDetails/LinkDetails';
 import FilesContent from './Files/FilesContent';
 import Layout from 'components/Layout/Layout';
+import Messages from './Messages/Messages';
 import './MainContent.css';
 
 interface MainContentProps {
