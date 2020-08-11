@@ -4,7 +4,7 @@ import moment from 'moment';
 import { useMutation, queryCache } from 'react-query';
 import TextField from '@material-ui/core/TextField';
 import { axiosConfig } from 'utils/axiosConfig';
-import { AppContext } from 'context/AppContext';
+import { AppContext } from '../../../context/AppContext'
 
 const createTimeGroup = async (projectId: number) => {
 

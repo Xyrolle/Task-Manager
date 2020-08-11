@@ -30,9 +30,12 @@ const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
   // const [isAddProjectModalOpen, setIsAddProjectModalOpen] = useState(false);
   // const handleShowModal = () => setIsAddProjectModalOpen(false);
+
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+
+  const { setOpenModal, setIsLayoutActive } = ctx;
 
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
@@ -101,7 +104,10 @@ const Projects: React.FC = () => {
                           <div className="projectNameWrap">
                             <Star userId={5} projectId={project.id} />
                             <Link to={`/projects/${project.id}/`}>
-                              <p className="projectName">{project.name}</p>
+                              <p
+                                className="projectName"
+                                onClick={() => { setIsLayoutActive(true) }}
+                              >{project.name}</p>
                             </Link>
                           </div>
                           <p className="projectCompany">{project.company}</p>

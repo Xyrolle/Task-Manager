@@ -1,9 +1,13 @@
 type ContextProps = {
-  openModal: string;
-  setOpenModal: (modalName: string) => void;
-  userDetails: any;
-  closeModal: () => void;
-  setUserInfo: () => void;
+  openModal: string,
+  setOpenModal: (modalName: string) => void,
+  userDetails: any,
+  closeModal: () => void,
+  setUserInfo: () => void,
+  activeLink: string,
+  setActive: (link: string) => void,
+  isLayoutActive: boolean,
+  setIsLayoutActive: (layout: boolean) => void,
   setProjectIdInContext: (projectId: string) => any;
   projectId: any;
 };

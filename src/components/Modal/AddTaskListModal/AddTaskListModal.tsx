@@ -1,6 +1,5 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import axios from 'axios';
-import { AppContext } from 'context/AppContext';
 import './AddTaskListModal.css';
 
 type taskListParams = {
@@ -14,12 +13,11 @@ let axiosConfig = {
   },
 };
 
-const AddTaskListModal: React.FC = () => {
-  const ctx = useContext(AppContext);
-  if (!ctx) {
-    throw new Error('You probably forgot to put <AppProvider>.');
-  }
+interface AddTaskListModalProps {
+  closeModal: () => void;
+}
 
+const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
   const taskListTitle = useRef<HTMLInputElement>(null);
   const taskListDescription = useRef<HTMLTextAreaElement>(null);
 
@@ -64,7 +62,7 @@ const AddTaskListModal: React.FC = () => {
             </div>
           </div>
           <div className='modal-footer'>
-            <button type='button' className='closeBtn' onClick={ctx.closeModal}>
+            <button type='button' className='closeBtn' onClick={closeModal}>
               Close
             </button>
             <button
@@ -84,7 +82,7 @@ const AddTaskListModal: React.FC = () => {
           </div>
         </form>
       </div>
-      <div className='bg' onClick={ctx.closeModal} />
+      <div className='bg' onClick={closeModal} />
     </div>
   );
 };

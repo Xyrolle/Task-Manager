@@ -46,6 +46,7 @@
   align-items: flex-end;
   justify-content: center;
   margin: 0 0.8rem;
+  cursor: pointer;
 }
 
 .logo img {
