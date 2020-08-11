@@ -8,7 +8,6 @@ import './MessageModal.css';
 
 interface MessageModalProps {
   closeModal: () => void;
-  data: [];
 }
 
 // interface Foo {
@@ -18,7 +17,7 @@ interface MessageModalProps {
 //   userId: string;
 // }
 
-const MessageModal: React.FC<MessageModalProps> = ({ closeModal, data }) => {
+const MessageModal: React.FC<MessageModalProps> = ({ closeModal }) => {
   const [messageTitle, setMessageTitle] = useState('');
   console.log('messageTitle', messageTitle);
   const [messageContent, setMessageContent] = useState('');
@@ -46,8 +45,12 @@ const MessageModal: React.FC<MessageModalProps> = ({ closeModal, data }) => {
 
   return (
     <div>
-      <div className="modalContainer">
-        <form className="modalForm" id="modalForm" aria-label="some-form-name">
+      <div className="messageModalContainer">
+        <form
+          className="messageModalForm"
+          id="messageModalForm"
+          aria-label="some-form-name"
+        >
           <label htmlFor="title">Add title</label>
           <div className="modalInputContainer">
             <input
@@ -63,20 +66,21 @@ const MessageModal: React.FC<MessageModalProps> = ({ closeModal, data }) => {
               onChange={e => setMessageContent(e.target.value)}
             />
 
-            <label htmlFor="priorityList" className="secondModalLabel">
+            {/* <label htmlFor="priorityList" className="secondModalLabel">
               Choose project
             </label>
+            
             <select id="priorityList" name="priorityList" required>
               {data &&
                 data.map(({ project }: any, key: number) => (
                   <option key={project.id}>{project.name}</option>
                 ))}
-            </select>
+            </select> */}
           </div>
-          <div className="modalBtns">
+          <div className="messageModalBtns">
             <button
               type="button"
-              className="cancelModalButton"
+              className="messageCancelButton"
               onClick={closeModal}
             >
               Cancel
