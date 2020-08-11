@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useRef, useMemo } from 'react';
-import { useQuery, useMutation, queryCache } from 'react-query';
+import { useQuery, useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -10,7 +10,11 @@ import addTaskPlus from 'assets/addTaskPlus.svg';
 import { Icon, InlineIcon } from '@iconify/react';
 import ellipsisDotsH from '@iconify/icons-vaadin/ellipsis-dots-h';
 
+import { axiosConfig } from '../../../../utils/axiosConfig';
+
 import Task from '../Task/Task';
+
+import { ITask } from '../Task/ITask';
 
 import './TaksList.css';
 
@@ -19,26 +23,49 @@ type AddTaskParams = {
 	description: string;
 };
 
+interface ITasks {
+	data: ITask[];
+	page_current: number;
+	page_total: number;
+}
+
 const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const [ isAddingTask, setIsAddingTask ] = useState(false);
-	const { error, data: tasks = {} } = useQuery(id, fetchTasks, {
-		enabled: isOpen
-	});
-	const [ isEditing, setIsEditing ] = useState(false);
-	let { projectID } = useParams();
-	const taskInput = useRef<HTMLInputElement>(null);
-	const [ listEditingName, setListEditingName ] = useState(name);
-	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
-	let axiosConfig = {
-		headers:
-			{
-				Authorization: `Basic YWRtaW46cXdlMTIz`
-			}
+	const fetchTasks = async (id: any, page_id: number = 1) => {
+		try {
+			const res = await axios.get(`http://46.101.172.171:8008/tasks/task_list/${id}/${page_id}`, {
+				headers:
+					{
+						Authorization: `Basic YWRtaW46cXdlMTIz`
+					}
+			});
+			return res.data;
+		} catch (err) {
+			console.error('error while fetching task lists', err);
+		}
 	};
 
-	const addTask: any = async ({ title, description }: AddTaskParams) => {
+	const { data: tasks, isFetching, fetchMore, canFetchMore } = useInfiniteQuery<ITasks, any, number>(id, fetchTasks, {
+		getFetchMore:
+			(prev) => {
+				if (prev.page_current + 1 > prev.page_total) {
+					return false;
+				}
+				return prev.page_current + 1;
+			},
+		enabled: isOpen
+	});
+
+	const { projectID } = useParams();
+
+	const [ isEditing, setIsEditing ] = useState(false);
+	const [ listEditingName, setListEditingName ] = useState(name);
+	const taskInput = useRef<HTMLInputElement>(null);
+	const taskDescription = useRef<HTMLTextAreaElement>(null);
+
+	const addTask = async ({ title, description }: AddTaskParams) => {
 		taskInput.current!.value = '';
 		taskDescription.current!.value = '';
 		const res = await axios
@@ -79,15 +106,13 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			}
 	});
 
-	const [ mutate ]: any = useMutation(addTask, {
+	const [ mutate ] = useMutation(addTask, {
 		onMutate:
 			(newData: any) => {
-				console.log(newData, 'isdg new data');
 				queryCache.cancelQueries(id);
 				if (newData.title.length > 1) {
 					queryCache.setQueryData(id, (prev: any) => {
-						console.log(prev, 'is prev', [ ...prev.data, { ...newData, id: new Date().toISOString() } ]);
-						prev['data'] = [ ...prev.data, { ...newData, id: new Date().toISOString() } ];
+						prev[0].data = [ ...prev[0].data, { ...newData, id: new Date().toISOString() } ];
 						return prev;
 					});
 				}
@@ -101,7 +126,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			`http://46.101.172.171:8008/project/tasklist_update/${id}/`,
 			{
 				name: listEditingName,
-				project: 115
+				project: projectID
 			},
 			axiosConfig
 		);
@@ -157,7 +182,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 				</div>
 				<span className='task-count'>{task_count}</span>
 			</div>
-			{tasks.data && (
+			{tasks && (
 				<div className='task-container'>
 					{description &&
 					isOpen && (
@@ -165,20 +190,23 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 							<p>{description}</p>
 						</div>
 					)}
-					{isOpen && !tasks.data.length && <div className='no-tasks'>No tasks in this list yet.</div>}
-					{isOpen &&
-						tasks.data.length > 0 &&
-						tasks.data.map((task: any) => (
-							<Task
-								title={task.title}
-								description={task.description}
-								creationDate={task.creation_date}
-								tags={task.tags}
-								id={task.id}
-								task_list={id}
-								key={uuidv4()}
-							/>
-						))}
+					{
+						isOpen ? !tasks[0].data.length ? <div className='no-tasks'>No tasks in this list yet.</div> :
+						tasks.map((taskPage) =>
+							taskPage.data.map((task: ITask) => (
+								<Task
+									title={task.title}
+									description={task.description}
+									creationDate={task.creationDate}
+									tags={task.tags}
+									id={task.id}
+									task_list={id}
+									parent={task.parent}
+									key={uuidv4()}
+								/>
+							))
+						) :
+						''}
 					{isOpen &&
 					!isAddingTask && (
 						<button className='btn add-task' onClick={() => setIsAddingTask(true)}>
@@ -219,24 +247,26 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 							</span>
 						</Fragment>
 					)}
+					{isOpen && (
+						<div className='btn-container'>
+							<button
+								className={
+									'btn load-more' +
+									(
+										!canFetchMore || isFetching ? ' disabledBtn' :
+										'')
+								}
+								disabled={!canFetchMore || isFetching}
+								onClick={() => fetchMore()}
+							>
+								Load More
+							</button>
+						</div>
+					)}
 				</div>
 			)}
 		</Fragment>
 	);
-};
-
-const fetchTasks = async (id: any) => {
-	try {
-		const res = await axios.get(`http://46.101.172.171:8008/tasks/task_list/${id}/1`, {
-			headers:
-				{
-					Authorization: `Basic YWRtaW46cXdlMTIz`
-				}
-		});
-		return res.data;
-	} catch (err) {
-		console.error('error while fetching task lists', err);
-	}
 };
 
 export default TaskList;
