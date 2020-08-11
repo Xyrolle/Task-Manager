@@ -1,4 +1,4 @@
-export type registerType = (
+export type RegisterType = (
   first_name: string,
   last_name: string,
   email: string,

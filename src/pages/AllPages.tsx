@@ -1,13 +1,11 @@
 import React, { useContext, useEffect } from 'react';
-
 import { AppContext } from 'context/AppContext';
 import Header from 'components/Header/Header';
-import Layout from 'components/Layout/Layout';
-import Modal from 'components/Modal/Modal';
+import Modal from '../components/Modal/Modal';
 import AddTaskListModal from 'components/Modal/AddTaskListModal/AddTaskListModal';
 import AddProjectModal from 'components/Modal/AddProjectModal/AddProjectModal';
 import AddLinkModal from 'components/Modal/AddLinkModal/AddLinkModal';
-import AddTimeModal from 'components/Modal/AddTimeModal/AddTimeModal';
+import AddTimeModal from '../components/Modal/AddTimeModal/AddTimeModal';
 import MainContent from 'components/MainContent/MainContent';
 import MessageModal from 'components/Modal/MessageModal/MessageModal';
 
@@ -69,7 +67,8 @@ const AllPages: React.FC = () => {
   return (
     <div>
       <Header />
-      {isLayoutActive && <Layout />}
+      {/* {isLayoutActive && <Layout />} */}
+      {/* <Layout /> */}
       {handleModal()}
       {userDetails && <MainContent isLayoutActive={isLayoutActive} />}
     </div>

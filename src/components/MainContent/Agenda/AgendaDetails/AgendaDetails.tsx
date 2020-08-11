@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation, queryCache, useQuery } from 'react-query';
-
 import './../Agenda.css';
 import Agenda from '../AgendaComponent/Agenda';
 import { getAgendaById } from '../queries';

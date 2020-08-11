@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
-import { useMutation, queryCache, useQuery } from 'react-query';
-
+import { useMutation, queryCache } from 'react-query';
+import useHook from '../useHook'
 import { axiosConfig } from 'utils/axiosConfig';
 
 interface foo {
@@ -27,17 +27,7 @@ const createProject = ({
       axiosConfig
     )
     .then(function (response) {
-      queryCache.setQueryData(['getProjects', 5], (prev: any) => {
-        prev.data.push({
-          project: {
-            id: response.data.id,
-            company,
-            description,
-            name,
-          },
-        });
-        return prev;
-      });
+
     })
     .catch(function (error) {
       console.log(error);
@@ -56,11 +46,60 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal })
 
   const [mutate] = useMutation(createProject, {
     onMutate: (newData: any) => {
-      queryCache.cancelQueries(['getProjects', userId.toString()]);
+      queryCache.cancelQueries(['getProjects', userId]);
+      console.log('newData', newData)
+      queryCache.setQueryData(['getProjects', userId.toString()], (prev: any) => {
+        prev[0].data.push({
+          project: {
+            id: new Date(),
+            company: newData.company,
+            description: newData.description,
+            name: newData.name,
+          },
+        });
+        return prev;
+      });
     },
     onError: (error: any, newData: any, rollback: any) => rollback(),
-    // onSettled: () => queryCache.prefetchQuery('getProjects)
+    onSettled: () => queryCache.invalidateQueries(['getProjects', userId.toString()])
   });
+
+  let newData: any = { company: 'ebs', description: 'foo', name: 'dima' };
+  let prev: any = [{ data: [] }];
+
+  prev[0].data.push({ //return data
+    project: {
+      id: new Date(),
+      company: newData.company,
+      description: newData.description,
+      name: newData.name,
+    },
+  })
+  const { mutateCustom }: any = useHook();
+  const handleMutate = () => {
+    mutateCustom(
+      ['getProjects', userId], //key
+      {
+        name: nameInput.current!.value, //newData
+        description: descriptionInput.current!.value,
+        company: companyInput.current!.value,
+        userId: userId.toString(),
+      },
+      prev
+    )
+  }
+  //custom hook WIP
+  // useHook(
+  //   ['getProjects', userId],
+  //   {
+  //     name: nameInput.current!.value,
+  //     description: descriptionInput.current!.value,
+  //     company: companyInput.current!.value,
+  //     userId: userId.toString(),
+  //   },
+  //   prev
+  // )
+
 
   return (
     <div>

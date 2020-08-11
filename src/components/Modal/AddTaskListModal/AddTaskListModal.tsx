@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
-
 import './AddTaskListModal.css';
 
 type taskListParams = {
@@ -18,7 +17,7 @@ interface AddTaskListModalProps {
   closeModal: () => void;
 }
 
-const AddTaskListModal: React.FC<AddTaskListModalProps> = ({closeModal}) => {
+const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
   const taskListTitle = useRef<HTMLInputElement>(null);
   const taskListDescription = useRef<HTMLTextAreaElement>(null);
 
