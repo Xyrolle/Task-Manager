@@ -21,7 +21,7 @@ export const AppProvider = ({ children }: Props) => {
 	};
 
 	const setUserInfo = async () => {
-		await setUserDetails(await getUserInfo());
+		setUserDetails(await getUserInfo());
 	};
 	const setProjectIdInContext = (projectId: string) => {
 		setProjectId(projectId);

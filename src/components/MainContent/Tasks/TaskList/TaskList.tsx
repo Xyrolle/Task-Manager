@@ -204,6 +204,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 									id={task.id}
 									task_list={id}
 									parent={task.parent}
+									projectID={projectID}
 									key={uuidv4()}
 								/>
 							))
