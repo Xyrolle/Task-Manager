@@ -85,13 +85,15 @@ const Projects: React.FC = () => {
   const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
   return (
     <div className="test">
-      <button
-        onClick={() => ctx.setOpenModal('addProjectModal')}
-        // setIsAddProjectModalOpen(!isAddProjectModalOpen)
-        className="addProjectButton"
-      >
-        + Add project
+      <div className="projectsHeader">
+        <h3>Active Projects</h3>
+        <button
+          onClick={() => ctx.setOpenModal('addProjectModal')}
+          className="addProjectButton"
+        >
+          + Add project
       </button>
+      </div>
       <div className="projectsContainer">
         {status === 'loading' ? (
           <p>Loading...</p>
@@ -101,40 +103,40 @@ const Projects: React.FC = () => {
             {error.message.includes('500') ? (
               <div>Times are empty.</div>
             ) : (
-              <span>{error.message}</span>
-            )}{' '}
+                <span>{error.message}</span>
+              )}{' '}
           </span>
         ) : (
-          <>
-            {data &&
-              data[0].data.map(({ project }: any, key: number) => {
-                return (
-                  <div className="project" key={key}>
-                    <div className="projectHeader">
-                      <div className="projectNameWrap">
-                        <Star userId={5} projectId={project.id} />
-                        <Link to={`/projects/${project.id}/`}>
-                          <p
-                            className="projectName"
-                            onClick={() => {
-                              setIsLayoutActive(true);
-                            }}
-                          >
-                            {project.name}
-                          </p>
-                        </Link>
-                      </div>
-                      <p className="projectCompany">{project.company}</p>
-                    </div>
-                    <p>{project.description}</p>
-                    <button onClick={() => mutateDeleteProject(project.id)}>
-                      Delete
+              <>
+                {data &&
+                  data[0].data.map(({ project }: any, key: number) => {
+                    return (
+                      <div className="project" key={key}>
+                        <div className="projectHeader">
+                          <div className="projectNameWrap">
+                            <Star userId={5} projectId={project.id} />
+                            <Link to={`/projects/${project.id}/`}>
+                              <p
+                                className="projectName"
+                                onClick={() => {
+                                  setIsLayoutActive(true);
+                                }}
+                              >
+                                {project.name}
+                              </p>
+                            </Link>
+                          </div>
+                          <p className="projectCompany">{project.company}</p>
+                        </div>
+                        <p className="projectDescription">{project.description}</p>
+                        <button onClick={() => mutateDeleteProject(project.id)}>
+                          Delete
                     </button>
-                  </div>
-                );
-              })}
-          </>
-        )}
+                      </div>
+                    );
+                  })}
+              </>
+            )}
       </div>
       <div>
         <button
@@ -145,8 +147,8 @@ const Projects: React.FC = () => {
           {isFetchingMore
             ? 'Loading more...'
             : canFetchMore
-            ? 'Load More'
-            : 'Nothing more to load'}
+              ? 'Load More'
+              : 'Nothing more to load'}
         </button>
       </div>
       <div>

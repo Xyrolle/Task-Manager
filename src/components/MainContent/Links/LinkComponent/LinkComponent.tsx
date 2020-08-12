@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
+import axios from 'axios';
+import { axiosConfig } from 'utils/axiosConfig'
 import moment from 'moment';
 import './LinkComponent.css';
 import link from 'assets/link.png';
@@ -19,20 +22,62 @@ interface LinkComponentInterface {
     user: number,
   };
 }
+
 interface tagInterface {
   id: number;
   title: string;
 }
 
+interface deleteTagInterface {
+  linkId: number;
+  projectId: string;
+  tagId: number;
+}
+
+const deleteTag = async ({ linkId, projectId }: deleteTagInterface) => {
+  console.log(linkId, projectId)
+  const response = await axios.delete('http://46.101.172.171:8008/tags/link_tag/set/{link_id}/{tag_id}',
+    axiosConfig
+  )
+  return response;
+}
+
 const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
   const [isEditLinkModalOpen, setIsEditLinkModalOpen] = useState(false);
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
-  const { linkId } = useParams();
+  const { linkId, projectId } = useParams();
   const handleShowModal = () => setIsEditLinkModalOpen(false);
+
+  const [mutateDeleteTag] = useMutation(deleteTag, {
+    onMutate: (newData: any) => {
+      queryCache.cancelQueries(['getLinks', `${projectId}`]);
+      queryCache.setQueryData(['getLinks', `${projectId}`],
+        (prev: any) => {
+          console.log('prev', prev[0].data[1])
+          // prev[0].data.tag = prev[0].data.filter(
+          //   // ({ tag }: any) => project.id !== newData
+          // );
+
+          prev[0].data.map(({ tags }: any) => {
+            tags.filter(
+              (tag: any) => tag.id !== newData.tagId
+            );
+          })
+          // console.log('foo', foo)
+          // filter(
+          //   ({ tags }: any) => console.log
+          // );
+
+          // return prev;
+        }
+      );
+    },
+    onError: (error: any, newData: any, rollback: any) => rollback(),
+  });
 
   return (
     <div>
-      <p>{data.title.charAt(0).toUpperCase()}.</p>
+      <p className="linkFirstChar">{data.title.charAt(0).toUpperCase()}.</p>
       <div className="linkContentWrap">
         <div>
           <img src={link} alt="link icon" />
@@ -52,11 +97,15 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
             data.tags.map((tag: any, key: number) => {
               return (
                 <span className="tagLink" key={key}>
-                  {tag.title} <span>x</span>
+                  {tag.title}
+                  <span
+                    className="deleteLinkTag"
+                    onClick={() => mutateDeleteTag({ linkId: data.id, projectId, tagId: tag.id })}>
+                    x
+                  </span>
                 </span>
               );
             })}
-
           <div>
             <p className="linkContent">{data.content}</p>
           </div>

@@ -8,12 +8,22 @@
   color: white;
   cursor: pointer;
 }
+.linkContentHeader{
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10%;
+  margin-top: 20px;
+}
+.linkContentHeader{
+  margin-bottom: 20px;
+}
 .addLinkButton:hover {
   background-color: #469e75;
 }
 .linkComponentContainer {
   margin-left: 20%;
 }
+
 @media screen and (max-width: 768px) {
   .linkComponentContainer {
     margin-left: 5%;

@@ -49,12 +49,15 @@ const Time: React.FC = () => {
   const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
   return (
     <div>
-      <button
-        onClick={() => ctx.setOpenModal('timeModal')}
-        className='addProjectButton'
-      >
-        + Add Time
+      <div className="timeContentHeader">
+        <h3>Time</h3>
+        <button
+          onClick={() => ctx.setOpenModal('timeModal')}
+          className='addProjectButton'
+        >
+          + Add Time
       </button>
+      </div>
       {status === 'loading' ? (
         <p>Loading...</p>
       ) : status === 'error' ? (

@@ -45,15 +45,19 @@ const FilesContent: React.FC = () => {
 
     return (
         <div>
-            <button
-                onClick={() =>
-                    setIsAddFileOpen(!isAddFileOpen)}
-                className="addFileButton"
-            >
-                + Add File
-            </button>
+
             {isAddFileOpen && <AddFileModal handleShowModal={handleShowModal} />}
             <div className="fileComponentWrap">
+                <div className="fileContentHeader">
+                    <h3 role="heading">Links</h3>
+                    <button
+                        onClick={() =>
+                            setIsAddFileOpen(!isAddFileOpen)}
+                        className="addFileButton"
+                    >
+                        + Add File
+                </button>
+                </div>
                 {status === 'loading' ? (
                     <p>Loading...</p>
                 ) : status === 'error' ? (
