@@ -169,10 +169,18 @@
   color: #fff;
   margin-right: 5px;
 }
+@media screen and (max-width: 992px) {
+  .agendaCreateContainer {
 
+    margin-left: 5%;
+  }
+}
 @media screen and (max-width: 768px) {
   .agendaContainer {
     margin-left: 10%;
+  }
+  .createContentTextArea{
+    width: 90%;
   }
 }
 @media screen and (max-width: 576px) {
@@ -188,4 +196,5 @@
     text-decoration: none;
     color: black;
   }
+  
 }

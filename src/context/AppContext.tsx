@@ -8,7 +8,6 @@ type Props = {
 export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppProvider = ({ children }: Props) => {
-	const [ globalData, setGlobalData ] = useState({});
 	const [ openModal, setOpenModal ] = useState<string>('');
 
 	const [ userDetails, setUserDetails ] = useState();
@@ -23,6 +22,7 @@ export const AppProvider = ({ children }: Props) => {
 	const setUserInfo = async () => {
 		setUserDetails(await getUserInfo());
 	};
+
 	const setProjectIdInContext = (projectId: string) => {
 		setProjectId(projectId);
 	};
@@ -39,10 +39,8 @@ export const AppProvider = ({ children }: Props) => {
 				setActive,
 				isLayoutActive,
 				setIsLayoutActive,
-				setProjectIdInContext,
-				projectId,
-				globalData,
-				setGlobalData
+				setProjectId,
+				projectId
 			}}
 		>
 			{children}

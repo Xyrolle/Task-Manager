@@ -30,7 +30,6 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
             <Link to={`agenda/${agenda.id}`}>
               <p >{agenda.title}</p>
             </Link>
-            {console.log('agenda tags', agenda.tags)}
             {agenda.tags.map((tag: any, key: number) =>
               <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
             }

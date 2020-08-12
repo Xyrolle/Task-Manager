@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import { AppContext } from 'context/AppContext';
 import { axiosConfig } from 'utils/axiosConfig';
+import { getProjects } from 'utils/getProjects';
 import Star from './Star';
 import './Projects.css';
 
@@ -16,17 +17,17 @@ const deleteProject = async (id: number) => {
   return response.data;
 };
 
-const getProjects = async (key: string, userId: string, page = 1) => {
-  const response = await axios.get(
-    `http://46.101.172.171:8008/project/project_view_by_user/${userId}/${page}/`,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    }
-  );
-  return response.data;
-};
+// const getProjects = async (key: string, userId: string, page = 1) => {
+//   const response = await axios.get(
+//     `http://46.101.172.171:8008/project/project_view_by_user/${userId}/${page}/`,
+//     {
+//       headers: {
+//         Authorization: `Bearer ${localStorage.getItem('token')}`,
+//       },
+//     }
+//   );
+//   return response.data;
+// };
 
 const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
@@ -35,7 +36,7 @@ const Projects: React.FC = () => {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
 
-  const { setOpenModal, setIsLayoutActive, setGlobalData } = ctx;
+  const { setOpenModal, setIsLayoutActive } = ctx;
   console.log('useEffect from Projects commented,found error with data');
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
@@ -81,22 +82,18 @@ const Projects: React.FC = () => {
     }
   );
 
-  // setGlobalData(data);
-
-  useEffect(() => {
-    setGlobalData(data);
-  }, [data, setGlobalData]);
-
   const loadMoreButtonRef = React.useRef<HTMLButtonElement | null>(null);
   return (
     <div className="test">
-      <button
-        onClick={() => ctx.setOpenModal('addProjectModal')}
-        // setIsAddProjectModalOpen(!isAddProjectModalOpen)
-        className="addProjectButton"
-      >
-        + Add project
+      <div className="projectsHeader">
+        <h3>Active Projects</h3>
+        <button
+          onClick={() => ctx.setOpenModal('addProjectModal')}
+          className="addProjectButton"
+        >
+          + Add project
       </button>
+      </div>
       <div className="projectsContainer">
         {status === 'loading' ? (
           <p>Loading...</p>
@@ -106,40 +103,40 @@ const Projects: React.FC = () => {
             {error.message.includes('500') ? (
               <div>Times are empty.</div>
             ) : (
-              <span>{error.message}</span>
-            )}{' '}
+                <span>{error.message}</span>
+              )}{' '}
           </span>
         ) : (
-          <>
-            {data &&
-              data[0].data.map(({ project }: any, key: number) => {
-                return (
-                  <div className="project" key={key}>
-                    <div className="projectHeader">
-                      <div className="projectNameWrap">
-                        <Star userId={5} projectId={project.id} />
-                        <Link to={`/projects/${project.id}/`}>
-                          <p
-                            className="projectName"
-                            onClick={() => {
-                              setIsLayoutActive(true);
-                            }}
-                          >
-                            {project.name}
-                          </p>
-                        </Link>
-                      </div>
-                      <p className="projectCompany">{project.company}</p>
-                    </div>
-                    <p>{project.description}</p>
-                    <button onClick={() => mutateDeleteProject(project.id)}>
-                      Delete
+              <>
+                {data &&
+                  data[0].data.map(({ project }: any, key: number) => {
+                    return (
+                      <div className="project" key={key}>
+                        <div className="projectHeader">
+                          <div className="projectNameWrap">
+                            <Star userId={5} projectId={project.id} />
+                            <Link to={`/projects/${project.id}/`}>
+                              <p
+                                className="projectName"
+                                onClick={() => {
+                                  setIsLayoutActive(true);
+                                }}
+                              >
+                                {project.name}
+                              </p>
+                            </Link>
+                          </div>
+                          <p className="projectCompany">{project.company}</p>
+                        </div>
+                        <p className="projectDescription">{project.description}</p>
+                        <button onClick={() => mutateDeleteProject(project.id)}>
+                          Delete
                     </button>
-                  </div>
-                );
-              })}
-          </>
-        )}
+                      </div>
+                    );
+                  })}
+              </>
+            )}
       </div>
       <div>
         <button
@@ -150,8 +147,8 @@ const Projects: React.FC = () => {
           {isFetchingMore
             ? 'Loading more...'
             : canFetchMore
-            ? 'Load More'
-            : 'Nothing more to load'}
+              ? 'Load More'
+              : 'Nothing more to load'}
         </button>
       </div>
       <div>

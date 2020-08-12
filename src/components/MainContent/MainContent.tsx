@@ -24,8 +24,9 @@ interface MainContentProps {
 const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
 	return (
 		<div>
-			{isLayoutActive && <ContentHeader />}
+			<Route path='/projects/:projectId/' component={Layout} />
 			<div className='contentContainer'>
+				<ContentHeader />
 				<Route exact path='/' component={Projects} />
 				<Route exact path='/projects' component={Projects} />
 				<Route exact path='/tasks/task_info/:task_id/:projectId' component={TaskDetails} />
@@ -36,12 +37,14 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
 				<Route exact path='/projects/:projectId/links/:linkId' component={LinkDetails} />
 				<Route exact path='/projects/:projectId/files' component={FilesContent} />
 				{/* <Route exact path='/projects/:projectId/files/:fileId' component={FileDetails} /> */}
-				<Route path='/projects/:projectId/agenda/:agendaID' component={AgendaDetails} />
+				<Route exact path='/projects/:projectId/agenda/:agendaID' component={AgendaDetails} />
 				<Route exact path='/tasks/:projectID' component={TaskLists} />
-				<Route exact path='/planning' component={UnderConstruction} />
-				<Route exact path='/calendar' component={UnderConstruction} />
-				<Route exact path='/people' component={UnderConstruction} />
-				<Route exact path='/messages' component={Messages} />
+				<Route exact path='/planning' component={() => <UnderConstruction title='Planning' />} />
+				<Route exact path='/everything' component={() => <UnderConstruction title='Everything' />} />
+				<Route exact path='/calendar' component={() => <UnderConstruction title='Calendar' />} />
+				<Route exact path='/people' component={() => <UnderConstruction title='People' />} />
+
+				<Route exact path='/projects/:projectId/messages' component={Messages} />
 			</div>
 			<footer style={{ height: '10rem' }} />
 		</div>
