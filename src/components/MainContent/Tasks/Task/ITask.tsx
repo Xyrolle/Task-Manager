@@ -11,6 +11,7 @@ export interface ITask {
 	task_list: string;
 	tags: ITag[];
 	parent?: [];
-	parent_id?: string;
 	contributors?: [];
+	parent_id?: string;
+	projectID?: string;
 }
