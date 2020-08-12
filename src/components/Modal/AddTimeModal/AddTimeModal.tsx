@@ -40,39 +40,14 @@ const createTimePoints = async ({
 		},
 		await axiosConfig
 	);
-	// queryCache.setQueryData(['getTimeGroups', projectId], (prev: any) => {
-	//   const index = prev[0].page_total;
-
-	//   prev[index - 1] &&
-	//     prev[index - 1].data.push({
-	//       id: groupId,
-	//       project: projectId,
-	//       date: new Date(),
-	//       times_points: [response.data.id],
-	//     });
-
-	//   return prev;
-	// });
-	// queryCache.setQueryData(groupId.toString(), (prev: any) => {
-	//   return [
-	//     {
-	//       id: response.data.id,
-	//       description: response.data.description,
-	//       time_start: response.data.time_start,
-	//       time_end: response.data.time_end,
-	//       user: response.data.user,
-	//       task_list: response.data.task_list,
-	//     },
-	//   ];
-	// });
 	return response.data;
 };
 interface AddTimeModalInterface {
 	closeModal(): void;
 }
 const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
-	const [ startTimeValue, setStartTimeValue ] = useState(moment().format());
-	const [ endTimeValue, setEndTimeValue ] = useState(moment().toISOString());
+	const [startTimeValue, setStartTimeValue] = useState(moment().format());
+	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
 	const ctx = useContext(AppContext);
 
@@ -80,11 +55,11 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
-	const [ mutate ] = useMutation(createTimePoints, {
+	const [mutate] = useMutation(createTimePoints, {
 		onMutate:
 			(newData: any) => {
-				queryCache.cancelQueries([ 'getTimeGroups', ctx.projectId ]);
-				queryCache.setQueryData([ 'getTimeGroups', ctx.projectId ], (prev: any) => {
+				queryCache.cancelQueries(['getTimeGroups', ctx.projectId]);
+				queryCache.setQueryData(['getTimeGroups', ctx.projectId], (prev: any) => {
 					const index = prev[0].page_total;
 
 					prev[index - 1] &&
@@ -98,7 +73,7 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 				});
 			},
 		onError: (error: any, newData: any, rollback: any) => rollback(),
-		onSettled: () => queryCache.invalidateQueries([ 'getTimeGroups', ctx.projectId ])
+		onSettled: () => queryCache.invalidateQueries(['getTimeGroups', ctx.projectId])
 	});
 
 	return (

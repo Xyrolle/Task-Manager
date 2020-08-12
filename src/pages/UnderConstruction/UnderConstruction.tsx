@@ -11,7 +11,7 @@ const UnderConstruction: React.FC<UnderConstructionProps> = ({ title }) => {
   return (
     <div className="underConstruction">
       <h2>{`${title} Page is Under Construction...`}</h2>
-      <img src={underConstruction} alt="underConstruction" />
+      <img src={underConstruction} alt="Under Construction" />
     </div>
   );
 };

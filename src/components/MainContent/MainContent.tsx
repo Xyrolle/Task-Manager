@@ -13,6 +13,7 @@ import Time from './Time/Time';
 import LinkContent from './Links/LinkContent';
 import LinkDetails from './Links/LinkDetails/LinkDetails';
 import FilesContent from './Files/FilesContent';
+import Overview from './Overview/Overview';
 import Layout from 'components/Layout/Layout';
 import Messages from './Messages/Messages';
 import Milestones from './Milestones/Milestones';
@@ -46,7 +47,6 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
 				<Route exact path='/everything' component={() => <UnderConstruction title='Everything' />} />
 				<Route exact path='/calendar' component={() => <UnderConstruction title='Calendar' />} />
 				<Route exact path='/people' component={() => <UnderConstruction title='People' />} />
-
 				<Route exact path='/projects/:projectId/messages' component={Messages} />
 			</div>
 			<footer style={{ height: '10rem' }} />
