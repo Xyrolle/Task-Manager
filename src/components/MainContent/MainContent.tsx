@@ -30,7 +30,11 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
         <ContentHeader />
         <Route exact path="/" component={Projects} />
         <Route exact path="/projects" component={Projects} />
-        <Route exact path="/tasks/task_info/:task_id" component={TaskDetails} />
+        <Route
+          exact
+          path="/tasks/task_info/:task_id/:projectId"
+          component={TaskDetails}
+        />
         <Route
           exact
           path="/projects/:projectId/overview"
@@ -68,8 +72,7 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           path="/projects/:projectId/agenda/:agendaID"
           component={AgendaDetails}
         />
-        <Route exact path="/projects/tasks/:projectID" component={TaskLists} />
-        {/* <Route exact path="/projects/115/tasks/115" component={TaskLists} /> */}
+        <Route exact path="/tasks/:projectID" component={TaskLists} />
         <Route
           exact
           path="/planning"

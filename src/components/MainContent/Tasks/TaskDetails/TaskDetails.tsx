@@ -6,6 +6,8 @@ import { useParams } from 'react-router-dom';
 
 import Task from '../Task/Task';
 import Comment from '../Comment/Comment';
+import Time from '../../Time/Time';
+
 import './TaskDetails.css';
 
 let axiosConfig = {
@@ -155,18 +157,13 @@ const TaskDetails: React.FC = () => {
 					className={
 						'btn load-more-lists comments-load ' +
 						(
-							isFetching ||
-							(comments &&
-								comments[comments.length - 1].page_current >=
-									comments[comments.length - 1].page_total) ? 'disabledBtn' :
+							isFetching || !canFetchMore ? 'disabledBtn' :
 							'')
 					}
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						comments &&
-						comments[comments.length - 1].page_current <
-							comments[comments.length - 1].page_total ? 'Load More' :
+						canFetchMore ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>
@@ -176,6 +173,10 @@ const TaskDetails: React.FC = () => {
 				<button className='btn' onClick={() => addCommentMutate({ task_id, text: commentArea.current!.value })}>
 					Add Comment
 				</button>
+			</div>
+			<div>
+				time
+				<Time />
 			</div>
 			<div className='add-section tags-add'>
 				<label>Add Tag</label>
