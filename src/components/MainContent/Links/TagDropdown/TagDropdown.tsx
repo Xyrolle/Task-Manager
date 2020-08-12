@@ -4,7 +4,7 @@ import { useMutation, queryCache, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom'
 import './TagDropdown.css';
 import { axiosConfig } from '../../../../utils/axiosConfig'
-import { link } from 'fs';
+
 interface createTagInterface {
   title: string;
   linkId: number;
@@ -16,7 +16,7 @@ const setTagToLink = async (linkId: number, id: string) => {
   return response.data
 }
 
-const createTag = async ({ title, linkId, projectId }: createTagInterface): Promise<void> => {
+const createTag = async ({ title, linkId }: createTagInterface): Promise<void> => {
   const response = await axios.post('http://46.101.172.171:8008/tags/create', {
     title
   },

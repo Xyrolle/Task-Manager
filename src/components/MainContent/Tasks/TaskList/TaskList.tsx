@@ -32,6 +32,12 @@ interface ITasks {
 const TaskList = ({ name, id, task_count, description }: any) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const [ isAddingTask, setIsAddingTask ] = useState(false);
+	const [ isEditing, setIsEditing ] = useState(false);
+	const [ listEditingName, setListEditingName ] = useState(name);
+	const taskInput = useRef<HTMLInputElement>(null);
+	const taskDescription = useRef<HTMLTextAreaElement>(null);
+
+	const { projectID } = useParams();
 
 	const fetchTasks = async (id: any, page_id: number = 1) => {
 		try {
@@ -57,13 +63,6 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			},
 		enabled: isOpen
 	});
-
-	const { projectID } = useParams();
-
-	const [ isEditing, setIsEditing ] = useState(false);
-	const [ listEditingName, setListEditingName ] = useState(name);
-	const taskInput = useRef<HTMLInputElement>(null);
-	const taskDescription = useRef<HTMLTextAreaElement>(null);
 
 	const addTask = async ({ title, description }: AddTaskParams) => {
 		taskInput.current!.value = '';
@@ -112,7 +111,10 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 				queryCache.cancelQueries(id);
 				if (newData.title.length > 1) {
 					queryCache.setQueryData(id, (prev: any) => {
-						prev[0].data = [ ...prev[0].data, { ...newData, id: new Date().toISOString() } ];
+						prev[prev.length - 1].data = [
+							...prev[prev.length - 1].data,
+							{ ...newData, id: new Date().toISOString() }
+						];
 						return prev;
 					});
 				}
@@ -202,6 +204,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 									id={task.id}
 									task_list={id}
 									parent={task.parent}
+									projectID={projectID}
 									key={uuidv4()}
 								/>
 							))

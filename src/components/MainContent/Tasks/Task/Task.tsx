@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { useQuery, useMutation, queryCache, useInfiniteQuery } from 'react-query';
+import { useQuery, useMutation, queryCache } from 'react-query';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
 import subtask from '../../../../assets/subtask.svg';
@@ -42,7 +42,8 @@ const Task: React.FC<ITask> = ({
 	task_list,
 	parent,
 	contributors,
-	parent_id
+	parent_id,
+	projectID
 }: ITask) => {
 	const [ isCompleted, setIsCompleted ] = useState(false);
 	const [ showDescription, setShowDescription ] = useState(false);
@@ -163,7 +164,7 @@ const Task: React.FC<ITask> = ({
 	const addSubtask = async ({ parent, title, description }: any) => {
 		addSubtaskTitle.current!.value = '';
 		addSubtaskDescription.current!.value = '';
-		const res = await axios.post(
+		axios.post(
 			'http://46.101.172.171:8008/tasks/add_subtask_to',
 			{
 				child:
@@ -237,7 +238,7 @@ const Task: React.FC<ITask> = ({
 			</span>
 			<div className='task-info-tooltip'>
 				<Link
-					to={`task_info/${id}`}
+					to={`task_info/${id}?projectID=${projectID}`}
 					onClick={(evt) =>
 
 							task_list === '0' ? evt.preventDefault() :
