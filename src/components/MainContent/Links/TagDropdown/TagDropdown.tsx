@@ -33,19 +33,19 @@ const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
   const { projectId } = useParams();
   const [mutate] = useMutation(createTag, {
     onMutate: (newData: any) => {
-      queryCache.cancelQueries(['getLinks', linkId]);
+      queryCache.cancelQueries(['getLinks', projectId]);
       queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
         console.log('prev ', prev)
         const index = prev[0].data.findIndex((e: any) => e.id === newData.linkId)
         prev[0].data[index].tags.push({
-          id: newData.id,
+          id: new Date(),
           title: newData.title
         })
         return prev;
       });
     },
     onError: (error: any, newData: any, rollback: any) => rollback(),
-    onSettled: () => queryCache.invalidateQueries(['getLinks', linkId])
+    onSettled: () => queryCache.invalidateQueries(['getLinks', projectId])
   })
 
   return (
