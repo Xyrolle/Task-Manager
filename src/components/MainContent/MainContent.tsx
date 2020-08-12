@@ -13,6 +13,7 @@ import Time from './Time/Time';
 import LinkContent from './Links/LinkContent';
 import LinkDetails from './Links/LinkDetails/LinkDetails';
 import FilesContent from './Files/FilesContent';
+import Overview from './Overview/Overview';
 import Layout from 'components/Layout/Layout';
 import Messages from './Messages/Messages';
 import './MainContent.css';
@@ -30,6 +31,11 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
         <Route exact path="/" component={Projects} />
         <Route exact path="/projects" component={Projects} />
         <Route exact path="/tasks/task_info/:task_id" component={TaskDetails} />
+        <Route
+          exact
+          path="/projects/:projectId/overview"
+          component={Overview}
+        />
         <Route
           exact
           path="/projects/:projectId/agenda"
@@ -61,7 +67,8 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
           path="/projects/:projectId/agenda/:agendaID"
           component={AgendaDetails}
         />
-        <Route exact path="/tasks/:projectID" component={TaskLists} />
+        <Route exact path="/projects/tasks/:projectID" component={TaskLists} />
+        {/* <Route exact path="/projects/115/tasks/115" component={TaskLists} /> */}
         <Route
           exact
           path="/planning"

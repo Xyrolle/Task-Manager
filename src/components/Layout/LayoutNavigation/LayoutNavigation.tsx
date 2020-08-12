@@ -19,17 +19,26 @@ const LayoutNavigation: React.FC = () => {
     <div className="layoutNavigation">
       <ul>
         <li className={activeLink === 'Overview' ? 'active-link' : ''}>
-          <Link to="/overview" onClick={() => setActive('Overview')}>
+          <Link
+            to="/projects/:projectId/overview"
+            onClick={() => setActive('Overview')}
+          >
             Overview
           </Link>
         </li>
         <li className={activeLink === 'Tasks' ? 'active-link' : ''}>
-          <Link to={`/tasks/${projectID}`} onClick={() => setActive('Tasks')}>
+          <Link
+            to={`/projects/tasks/${projectID}`}
+            onClick={() => setActive('Tasks')}
+          >
             Tasks
           </Link>
         </li>
         <li className={activeLink === 'Milestones' ? 'active-link' : ''}>
-          <Link to="milestones" onClick={() => setActive('Milestones')}>
+          <Link
+            to="/projects/:projectId/overview"
+            onClick={() => setActive('Milestones')}
+          >
             Milestones
           </Link>
         </li>
@@ -74,7 +83,10 @@ const LayoutNavigation: React.FC = () => {
           </Link>
         </li>
         <li className={activeLink === 'Settings' ? 'active-link' : ''}>
-          <Link to="settings" onClick={() => setActive('Settings')}>
+          <Link
+            to="/projects/:projectId/overview"
+            onClick={() => setActive('Settings')}
+          >
             Settings
           </Link>
         </li>
