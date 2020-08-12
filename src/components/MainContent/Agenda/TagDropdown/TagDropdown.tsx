@@ -45,7 +45,6 @@ const TagDropdown: React.FC<{ agendaId: number }> = ({ agendaId }) => {
     onMutate: (newData: any) => {
       queryCache.cancelQueries(['getAllAgendas', projectId]);
       queryCache.setQueryData(['getAllAgendas', projectId], (prev: any) => {
-        console.log('prev', prev)
         const index = prev[0].data.findIndex((e: any) => e.id === agendaId);
         prev[0].data[index].tags.push({
           id: new Date(),
