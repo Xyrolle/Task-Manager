@@ -1,15 +1,28 @@
 import React, { useState, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useMutation, queryCache } from 'react-query';
 import { AgendaInterface } from '../interfaces';
+import { axiosConfig } from 'utils/axiosConfig'
 import './../Agenda.css';
 import '../TagDropdown/TagDropdown.css';
 import Notebook from '../../../../assets/Notebook.png';
 import tag from '../../../../assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
 
-const deleteTag = () => {
-
+interface deleteTagInterface {
+  agendaId: number;
+  tagId: number;
 }
+
+const deleteTag = async ({ agendaId, tagId }: deleteTagInterface) => {
+
+  const response = await axios.delete(`http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${tagId}`,
+    axiosConfig
+  )
+  return response;
+}
+
 interface tagInterface {
   title: string;
   id: number;
@@ -18,7 +31,28 @@ interface tagInterface {
 const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda, style }) => {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
   const agendaContentTextArea = useRef<HTMLTextAreaElement>(null)
-  const { agendaID } = useParams()
+  const { agendaID, projectId } = useParams()
+
+  const [mutateDeleteTag] = useMutation(deleteTag, {
+    onMutate: (newData: any) => {
+      queryCache.cancelQueries(['getAllAgendas', `${projectId}`]);
+      queryCache.setQueryData(['getAllAgendas', `${projectId}`],
+        (prev: any) => {
+          let index;
+          prev[0].data.map(({ tags }: any) => {
+            index = tags.findIndex((tag: any) => {
+              return tag.id === newData.tagId
+            })
+            if (index > 0) {
+              tags.splice(index, 1)
+            }
+          })
+          return prev;
+        }
+      );
+    },
+    onError: (error: any, newData: any, rollback: any) => rollback(),
+  });
 
   return (
     <div className='agendaContainer' data-testid='agenda-testid'>
@@ -31,7 +65,15 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
               <p >{agenda.title}</p>
             </Link>
             {agenda.tags.map((tag: any, key: number) =>
-              <span className="tagAgenda" key={key}>{tag.title} <span>x</span></span>)
+              <span className="tagAgenda" key={key}>{tag.title}
+                <span
+                  onClick={() => mutateDeleteTag({
+                    agendaId: agenda.id,
+                    tagId: tag.id,
+                  })}
+                  className="deleteAgendaTag"
+                > x</span>
+              </span>)
             }
           </div>
           {!agendaID &&
@@ -42,7 +84,7 @@ const Agenda: React.FC<{ agenda: AgendaInterface; style?: string }> = ({ agenda,
               >
                 <img src={tag} alt="tag icon" className="tagIcon" />
                 Add tag
-                        </div>
+              </div>
               {isTagDropdownOpen && <TagDropdown agendaId={agenda.id} />}
             </div>
           }

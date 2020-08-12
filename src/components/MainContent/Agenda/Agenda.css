@@ -72,6 +72,9 @@
 .editContentWrap {
   margin-left: 20%;
 }
+.deleteAgendaTag{
+  cursor: pointer;
+}
 .createAgendaButton {
   width: 135px;
   background-color: #59c894;

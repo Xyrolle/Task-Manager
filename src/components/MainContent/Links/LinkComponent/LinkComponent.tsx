@@ -30,15 +30,15 @@ interface tagInterface {
 
 interface deleteTagInterface {
   linkId: number;
-  projectId: string;
   tagId: number;
 }
 
-const deleteTag = async ({ linkId, projectId }: deleteTagInterface) => {
-  console.log(linkId, projectId)
-  const response = await axios.delete('http://46.101.172.171:8008/tags/link_tag/set/{link_id}/{tag_id}',
+const deleteTag = async ({ linkId, tagId }: deleteTagInterface) => {
+  console.log('tag', tagId)
+  const response = await axios.delete(`http://46.101.172.171:8008/tags/link_tag/set/${linkId}/${tagId}`,
     axiosConfig
   )
+  console.log(response)
   return response;
 }
 
@@ -53,22 +53,16 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
       queryCache.cancelQueries(['getLinks', `${projectId}`]);
       queryCache.setQueryData(['getLinks', `${projectId}`],
         (prev: any) => {
-          console.log('prev', prev[0].data[1])
-          // prev[0].data.tag = prev[0].data.filter(
-          //   // ({ tag }: any) => project.id !== newData
-          // );
-
+          let index;
           prev[0].data.map(({ tags }: any) => {
-            tags.filter(
-              (tag: any) => tag.id !== newData.tagId
-            );
+            index = tags.findIndex((tag: any) => {
+              return tag.id === newData.tagId
+            })
+            if (index > 0) {
+              tags.splice(index, 1)
+            }
           })
-          // console.log('foo', foo)
-          // filter(
-          //   ({ tags }: any) => console.log
-          // );
-
-          // return prev;
+          return prev;
         }
       );
     },
@@ -98,9 +92,10 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
               return (
                 <span className="tagLink" key={key}>
                   {tag.title}
+
                   <span
                     className="deleteLinkTag"
-                    onClick={() => mutateDeleteTag({ linkId: data.id, projectId, tagId: tag.id })}>
+                    onClick={() => mutateDeleteTag({ linkId: data.id, tagId: tag.id })}>
                     x
                   </span>
                 </span>
