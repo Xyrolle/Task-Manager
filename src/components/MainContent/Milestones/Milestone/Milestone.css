@@ -1,0 +1,61 @@
+.milestone-row {
+	display: flex;
+	justify-content: center;
+	width: 60%;
+	margin: 0 auto;
+	height: 20vh;
+	color: #eeeeee;
+	border-radius: 30px;
+}
+
+.milestone-check {
+	opacity: 0.4;
+	cursor: pointer;
+	margin-left: 0.4rem;
+	font-size: 1.6rem;
+}
+
+.milestone-check:hover {
+	opacity: 0.6;
+}
+
+.milestone-title-row {
+}
+
+.milestone-title {
+	position: relative;
+	top: -0.3rem;
+	margin-left: 0.4rem;
+	font-size: 1.5rem;
+	font-weight: 400;
+}
+
+.milestone-author {
+	margin-left: 2.5rem;
+}
+
+.milestone-date-line {
+	height: 1.6rem;
+	background-color: red;
+	border-radius: 8px;
+}
+
+.milestone-date {
+	display: flex;
+	height: 78%;
+	text-align: center;
+	place-items: center;
+}
+
+.milestone-date-container {
+	background-color: blue;
+	width: 20%;
+	put-items: center;
+	border-radius: 8px;
+}
+
+.milestone-main {
+	width: 76%;
+	padding: 2px;
+	color: #333333;
+}

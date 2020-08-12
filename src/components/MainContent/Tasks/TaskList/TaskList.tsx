@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useRef, useMemo } from 'react';
-import { useQuery, useMutation, queryCache, useInfiniteQuery } from 'react-query';
+import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
