@@ -15,6 +15,8 @@ import LinkDetails from './Links/LinkDetails/LinkDetails';
 import FilesContent from './Files/FilesContent';
 import Layout from 'components/Layout/Layout';
 import Messages from './Messages/Messages';
+import Milestones from './Milestones/Milestones';
+
 import './MainContent.css';
 
 interface MainContentProps {
@@ -36,6 +38,7 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
 				<Route exact path='/projects/:projectId/links' component={LinkContent} />
 				<Route exact path='/projects/:projectId/links/:linkId' component={LinkDetails} />
 				<Route exact path='/projects/:projectId/files' component={FilesContent} />
+				<Route exact path='/projects/:projectId/milestones' component={Milestones} />
 				{/* <Route exact path='/projects/:projectId/files/:fileId' component={FileDetails} /> */}
 				<Route exact path='/projects/:projectId/agenda/:agendaID' component={AgendaDetails} />
 				<Route exact path='/tasks/:projectID' component={TaskLists} />

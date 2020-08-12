@@ -1,5 +1,4 @@
 import React, { useState, useRef, useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache } from 'react-query';
@@ -8,13 +7,7 @@ import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from '../../../context/AppContext';
 
 const createTimeGroup = async (projectId: number) => {
-	console.log(projectId);
-
-	const response = await axios.post(
-		`http://46.101.172.171:8008/times/new_time_group/${projectId}`,
-		{},
-		await axiosConfig
-	);
+	const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, axiosConfig);
 	return response.data.id;
 };
 
@@ -82,10 +75,6 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 	const [ endTimeValue, setEndTimeValue ] = useState(moment().toISOString());
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
 	const ctx = useContext(AppContext);
-
-	const { projectId } = useParams();
-
-	console.log(projectId, 'is');
 
 	if (!ctx) {
 		throw new Error('You probably forgot to put <AppProvider>.');
