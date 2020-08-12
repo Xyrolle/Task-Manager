@@ -1,0 +1,54 @@
+.construction {
+  text-align: center;
+}
+.construction h4 {
+  margin: 0.7rem;
+}
+.construction img {
+  width: 20rem;
+}
+
+@media screen and (max-width: 992px) {
+  .construction h2 {
+    font-size: 1rem;
+  }
+  .construction img {
+    width: 17rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .construction h2 {
+    font-size: 0.8rem;
+  }
+  .construction img {
+    width: 15rem;
+  }
+}
+@media screen and (max-width: 576px) {
+  .construction h2 {
+    font-size: 0.7rem;
+  }
+  .construction img {
+    width: 13rem;
+  }
+}
+@media screen and (max-width: 480px) {
+  .construction h2 {
+    margin: 0.5rem;
+    font-size: 0.6rem;
+  }
+  .construction img {
+    width: 11.5rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .construction h2 {
+    font-size: 0.5rem;
+    font-weight: 400;
+  }
+  .construction img {
+    width: 10rem;
+  }
+}
