@@ -10,7 +10,10 @@ const LayoutNavigation: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
+
   const { activeLink, setActive } = ctx;
+
+  const projectID = 115;
 
   return (
     <div className="layoutNavigation">
@@ -21,17 +24,20 @@ const LayoutNavigation: React.FC = () => {
           </Link>
         </li>
         <li className={activeLink === 'Tasks' ? 'active-link' : ''}>
-          <Link to="/tasks/1" onClick={() => setActive('Tasks')}>
+          <Link to={`/tasks/${projectID}`} onClick={() => setActive('Tasks')}>
             Tasks
           </Link>
         </li>
         <li className={activeLink === 'Milestones' ? 'active-link' : ''}>
-          <Link to="/milestones" onClick={() => setActive('Milestones')}>
+          <Link to="milestones" onClick={() => setActive('Milestones')}>
             Milestones
           </Link>
         </li>
         <li className={activeLink === 'Messages' ? 'active-link' : ''}>
-          <Link to="messages" onClick={() => setActive('Messages')}>
+          <Link
+            to="messages"
+            onClick={() => setActive('Messages')}
+          >
             Messages
           </Link>
         </li>
@@ -68,7 +74,7 @@ const LayoutNavigation: React.FC = () => {
           </Link>
         </li>
         <li className={activeLink === 'Settings' ? 'active-link' : ''}>
-          <Link to="/settings" onClick={() => setActive('Settings')}>
+          <Link to="settings" onClick={() => setActive('Settings')}>
             Settings
           </Link>
         </li>

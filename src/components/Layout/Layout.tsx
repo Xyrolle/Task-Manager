@@ -15,7 +15,7 @@ const Layout: React.FC = () => {
   }
 
   useEffect(() => {
-    ctx.setProjectIdInContext(projectId);
+    ctx.setProjectId(projectId);
   }, []);
 
   return (

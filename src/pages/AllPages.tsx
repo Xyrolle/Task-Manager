@@ -1,5 +1,7 @@
 import React, { useContext, useEffect } from 'react';
+import { useQuery } from 'react-query';
 
+import { getProjects } from 'utils/getProjects';
 import { AppContext } from 'context/AppContext';
 import Header from 'components/Header/Header';
 import AddTaskListModal from 'components/Modal/AddTaskListModal/AddTaskListModal';
@@ -22,11 +24,15 @@ const AllPages: React.FC = () => {
     userDetails,
     closeModal,
     isLayoutActive,
-    globalData,
   } = ctx;
   useEffect(() => {
     setUserInfo();
   }, []);
+
+  const { data } = useQuery(
+    ['getProjects', userDetails && userDetails.id],
+    getProjects
+  );
 
   const handleModal = () => {
     switch (openModal) {
@@ -37,7 +43,7 @@ const AllPages: React.FC = () => {
           <Modal
             isUpgradeModalOpen={false}
             closeModal={closeModal}
-            data={globalData.data}
+            data={data.data}
           />
         );
       case 'upgradeModal':
@@ -45,7 +51,7 @@ const AllPages: React.FC = () => {
           <Modal
             isUpgradeModalOpen={true}
             closeModal={closeModal}
-            data={globalData.data}
+            data={data.data}
           />
         );
       case 'addProjectModal':
@@ -59,9 +65,9 @@ const AllPages: React.FC = () => {
       case 'timeModal':
         return <AddTimeModal closeModal={closeModal} />;
       case 'messageModal':
-        return <MessageModal closeModal={closeModal} data={globalData.data} />;
+        return <MessageModal closeModal={closeModal} />;
       default:
-        break;
+        return;
     }
   };
 
