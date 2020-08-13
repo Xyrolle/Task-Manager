@@ -38,7 +38,7 @@ const createTimePoints = async ({
 			user,
 			task_list: taskList
 		},
-		await axiosConfig
+		axiosConfig
 	);
 	return response.data;
 };
@@ -46,8 +46,8 @@ interface AddTimeModalInterface {
 	closeModal(): void;
 }
 const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
-	const [startTimeValue, setStartTimeValue] = useState(moment().format());
-	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
+	const [ startTimeValue, setStartTimeValue ] = useState(moment().format());
+	const [ endTimeValue, setEndTimeValue ] = useState(moment().toISOString());
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
 	const ctx = useContext(AppContext);
 
@@ -55,11 +55,11 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
-	const [mutate] = useMutation(createTimePoints, {
+	const [ mutate ] = useMutation(createTimePoints, {
 		onMutate:
 			(newData: any) => {
-				queryCache.cancelQueries(['getTimeGroups', ctx.projectId]);
-				queryCache.setQueryData(['getTimeGroups', ctx.projectId], (prev: any) => {
+				queryCache.cancelQueries([ 'getTimeGroups', ctx.projectId ]);
+				queryCache.setQueryData([ 'getTimeGroups', ctx.projectId ], (prev: any) => {
 					const index = prev[0].page_total;
 
 					prev[index - 1] &&
@@ -73,7 +73,7 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 				});
 			},
 		onError: (error: any, newData: any, rollback: any) => rollback(),
-		onSettled: () => queryCache.invalidateQueries(['getTimeGroups', ctx.projectId])
+		onSettled: () => queryCache.invalidateQueries([ 'getTimeGroups', ctx.projectId ])
 	});
 
 	return (

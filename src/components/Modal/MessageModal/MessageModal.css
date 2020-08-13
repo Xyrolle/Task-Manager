@@ -1,312 +1,300 @@
 .messageModalContainer {
-  display: flex;
-  z-index: 9999;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border-radius: 4px;
-}
-
-.bg {
-  z-index: 9998;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
+	display: flex;
+	z-index: 9999;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background: #fff;
+	border-radius: 4px;
 }
 
 .messageModalForm {
-  display: flex;
-  flex-direction: column;
-  width: 30rem;
-  margin: 2rem;
+	display: flex;
+	flex-direction: column;
+	width: 30rem;
+	margin: 2rem;
 }
 .modalInputContainer {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 .messageModalForm input,
 .messageModalForm textarea {
-  border: 1px solid #dad0d0;
-  border-radius: 4px;
-  background: #fff;
-  line-height: 1.6rem;
-  margin: 1rem 0;
-  padding: 0.5rem 1.5rem;
-  font-size: 1.1rem;
-  color: #4d3c59;
-  font-weight: 400;
+	border: 1px solid #dad0d0;
+	border-radius: 4px;
+	background: #fff;
+	line-height: 1.6rem;
+	margin: 1rem 0;
+	padding: 0.5rem 1.5rem;
+	font-size: 1.1rem;
+	color: #4d3c59;
+	font-weight: 400;
 }
 .messageModalForm textarea {
-  height: 7rem;
-  width: calc(100%-2rem);
-  resize: none;
-  margin: 0.5rem 0 1rem 0;
+	height: 7rem;
+	width: calc(100%-2rem);
+	resize: none;
+	margin: 0.5rem 0 1rem 0;
 }
 
 .messageModalForm select {
-  border: 1px solid #dad0d0;
-  border-radius: 4px;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png)
-    no-repeat 95% #fff;
-  -webkit-appearance: none;
-  line-height: 1.6rem;
-  margin: 0.2rem 0 1rem 0;
-  padding: 0.5rem 1.5rem;
-  color: #4d3c59;
-  font-size: 1.1rem;
-  -ms-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
-  box-sizing: content-box;
-  font-weight: 400;
-  cursor: pointer;
+	border: 1px solid #dad0d0;
+	border-radius: 4px;
+	background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat 95% #fff;
+	-webkit-appearance: none;
+	line-height: 1.6rem;
+	margin: 0.2rem 0 1rem 0;
+	padding: 0.5rem 1.5rem;
+	color: #4d3c59;
+	font-size: 1.1rem;
+	-ms-box-sizing: content-box;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+	font-weight: 400;
+	cursor: pointer;
 }
 
 .messageModalForm select option {
-  font-weight: 400;
-  color: #4d3c59;
+	font-weight: 400;
+	color: #4d3c59;
 }
 
 .messageModalForm label {
-  font-size: 1rem;
-  color: #00000091;
-  padding-bottom: 0.4rem;
+	font-size: 1rem;
+	color: #00000091;
+	padding-bottom: 0.4rem;
 }
 .messageModalBtns {
-  justify-content: space-between;
-  display: flex;
-  padding: 1.5rem 0;
+	justify-content: space-between;
+	display: flex;
+	padding: 1.5rem 0;
 }
 
 .messageCancelButton,
 .addModalButton {
-  width: 10rem;
-  border: 1px solid #ebe3d8;
-  border-radius: 4px;
-  color: #fff;
-  padding: 0.4rem 1.2rem 0.7rem;
-  font-weight: 500;
-  cursor: pointer;
-  font-size: 1.1rem;
+	width: 10rem;
+	border: 1px solid #ebe3d8;
+	border-radius: 4px;
+	color: #fff;
+	padding: 0.4rem 1.2rem 0.7rem;
+	font-weight: 500;
+	cursor: pointer;
+	font-size: 1.1rem;
 }
 
 .messageCancelButton {
-  background: #e85a5a;
+	background: #e85a5a;
 }
 
 .addModalButton {
-  background: #6a84ed;
+	background: #6a84ed;
 }
 
 .messageModalForm h3 {
-  padding: 0.5rem 0;
+	padding: 0.5rem 0;
 }
 
 @media screen and (max-width: 992px) {
-  .messageModalForm {
-    width: 25rem;
-    margin: 1.7rem;
-  }
+	.messageModalForm {
+		width: 25rem;
+		margin: 1.7rem;
+	}
 
-  .messageModalForm input {
-    margin: 0.8rem 0;
-    padding: 0.4rem 1.2rem;
-    font-size: 1rem;
-  }
+	.messageModalForm input {
+		margin: 0.8rem 0;
+		padding: 0.4rem 1.2rem;
+		font-size: 1rem;
+	}
 
-  .messageModalForm select {
-    margin: 0.2rem 0 0.8rem 0;
-    padding: 0.4rem 1.2rem;
-    font-size: 1rem;
-  }
+	.messageModalForm select {
+		margin: 0.2rem 0 0.8rem 0;
+		padding: 0.4rem 1.2rem;
+		font-size: 1rem;
+	}
 
-  .messageModalForm label {
-    font-size: 0.8rem;
-    padding-bottom: 0.3rem;
-  }
+	.messageModalForm label {
+		font-size: 0.8rem;
+		padding-bottom: 0.3rem;
+	}
 
-  .messageModalBtns {
-    padding: 1.2rem 0;
-  }
+	.messageModalBtns {
+		padding: 1.2rem 0;
+	}
 
-  .messageCancelButton,
-  .addModalButton {
-    width: 7rem;
-    padding: 0.3rem 1rem 0.5rem;
-    font-size: 1rem;
-  }
+	.messageCancelButton,
+	.addModalButton {
+		width: 7rem;
+		padding: 0.3rem 1rem 0.5rem;
+		font-size: 1rem;
+	}
 
-  .messageModalForm h3 {
-    padding: 0.4rem 0;
-    font-size: 1.1rem;
-  }
+	.messageModalForm h3 {
+		padding: 0.4rem 0;
+		font-size: 1.1rem;
+	}
 }
 
 @media screen and (max-width: 768px) {
-  .messageModalForm {
-    width: 21rem;
-    margin: 1.5rem;
-  }
+	.messageModalForm {
+		width: 21rem;
+		margin: 1.5rem;
+	}
 
-  .messageModalForm input {
-    margin: 0.6rem 0;
-    padding: 0.3rem 0.9rem;
-    font-size: 0.8rem;
-  }
+	.messageModalForm input {
+		margin: 0.6rem 0;
+		padding: 0.3rem 0.9rem;
+		font-size: 0.8rem;
+	}
 
-  .messageModalForm select {
-    margin: 0.1rem 0 0.6rem 0;
-    padding: 0.3rem 0.9rem;
-    font-size: 0.8rem;
-    background: #fff;
-    -webkit-appearance: auto;
-    height: 1.6rem;
-  }
+	.messageModalForm select {
+		margin: 0.1rem 0 0.6rem 0;
+		padding: 0.3rem 0.9rem;
+		font-size: 0.8rem;
+		background: #fff;
+		-webkit-appearance: auto;
+		height: 1.6rem;
+	}
 
-  .messageModalForm label {
-    font-size: 0.6rem;
-    padding-bottom: 0.2rem;
-  }
+	.messageModalForm label {
+		font-size: 0.6rem;
+		padding-bottom: 0.2rem;
+	}
 
-  .messageModalBtns {
-    padding: 0.9rem 0;
-  }
+	.messageModalBtns {
+		padding: 0.9rem 0;
+	}
 
-  .messageCancelButton,
-  .addModalButton {
-    width: 5.5rem;
-    font-size: 0.8rem;
-  }
+	.messageCancelButton,
+	.addModalButton {
+		width: 5.5rem;
+		font-size: 0.8rem;
+	}
 
-  .messageModalForm h3 {
-    padding: 0.4rem 0;
-    font-size: 0.9rem;
-  }
+	.messageModalForm h3 {
+		padding: 0.4rem 0;
+		font-size: 0.9rem;
+	}
 }
 
 @media screen and (max-width: 576px) {
-  .messageModalForm {
-    width: 18rem;
-    margin: 1.2rem;
-  }
+	.messageModalForm {
+		width: 18rem;
+		margin: 1.2rem;
+	}
 
-  .messageModalForm input {
-    margin: 0.5rem 0;
-    padding: 0.2rem 0.7rem;
-    font-size: 0.7rem;
-    height: 1.4rem;
-  }
+	.messageModalForm input {
+		margin: 0.5rem 0;
+		padding: 0.2rem 0.7rem;
+		font-size: 0.7rem;
+		height: 1.4rem;
+	}
 
-  .messageModalForm select {
-    margin: 0.1rem 0 0.5rem 0;
-    padding: 0.2rem 0.7rem;
-    font-size: 0.7rem;
-    height: 1.4rem;
-  }
+	.messageModalForm select {
+		margin: 0.1rem 0 0.5rem 0;
+		padding: 0.2rem 0.7rem;
+		font-size: 0.7rem;
+		height: 1.4rem;
+	}
 
-  .messageModalForm label {
-    font-size: 0.5rem;
-    padding-bottom: 0.1rem;
-  }
+	.messageModalForm label {
+		font-size: 0.5rem;
+		padding-bottom: 0.1rem;
+	}
 
-  .messageModalBtns {
-    padding: 0.7rem 0;
-  }
+	.messageModalBtns {
+		padding: 0.7rem 0;
+	}
 
-  .messageCancelButton,
-  .addModalButton {
-    width: 4.5rem;
-    font-size: 0.7rem;
-  }
+	.messageCancelButton,
+	.addModalButton {
+		width: 4.5rem;
+		font-size: 0.7rem;
+	}
 
-  .messageModalForm h3 {
-    padding: 0.3rem 0;
-    font-size: 0.8rem;
-  }
+	.messageModalForm h3 {
+		padding: 0.3rem 0;
+		font-size: 0.8rem;
+	}
 }
 @media screen and (max-width: 480px) {
-  .messageModalForm {
-    width: 15rem;
-    margin: 1rem;
-  }
+	.messageModalForm {
+		width: 15rem;
+		margin: 1rem;
+	}
 
-  .messageModalForm input {
-    margin: 0.4rem 0;
-    padding: 0.1rem 0.6rem;
-    font-size: 0.6rem;
-    height: 1.2rem;
-  }
+	.messageModalForm input {
+		margin: 0.4rem 0;
+		padding: 0.1rem 0.6rem;
+		font-size: 0.6rem;
+		height: 1.2rem;
+	}
 
-  .messageModalForm select {
-    margin: 0.1rem 0 0.4rem 0;
-    padding: 0.1rem 0.6rem;
-    font-size: 0.6rem;
-    height: 1.2rem;
-  }
+	.messageModalForm select {
+		margin: 0.1rem 0 0.4rem 0;
+		padding: 0.1rem 0.6rem;
+		font-size: 0.6rem;
+		height: 1.2rem;
+	}
 
-  .messageModalForm label {
-    font-size: 0.4rem;
-  }
+	.messageModalForm label {
+		font-size: 0.4rem;
+	}
 
-  .messageModalBtns {
-    padding: 0.6rem 0;
-  }
+	.messageModalBtns {
+		padding: 0.6rem 0;
+	}
 
-  .messageCancelButton,
-  .addModalButton {
-    width: 4rem;
-    font-size: 0.6rem;
-  }
+	.messageCancelButton,
+	.addModalButton {
+		width: 4rem;
+		font-size: 0.6rem;
+	}
 
-  .messageModalForm h3 {
-    padding: 0.2rem 0;
-    font-size: 0.7rem;
-  }
+	.messageModalForm h3 {
+		padding: 0.2rem 0;
+		font-size: 0.7rem;
+	}
 }
 
 @media screen and (max-width: 320px) {
-  .messageModalForm {
-    width: 10rem;
-    margin: 0.9rem;
-  }
+	.messageModalForm {
+		width: 10rem;
+		margin: 0.9rem;
+	}
 
-  .messageModalForm input {
-    margin: 0.3rem 0;
-    padding: 0.1rem 0.5rem;
-    font-size: 0.5rem;
-    height: 1rem;
-  }
+	.messageModalForm input {
+		margin: 0.3rem 0;
+		padding: 0.1rem 0.5rem;
+		font-size: 0.5rem;
+		height: 1rem;
+	}
 
-  .messageModalForm select {
-    margin: 0.1rem 0 0.3rem 0;
-    padding: 0.1rem 0.5rem;
-    font-size: 0.5rem;
-    height: 1rem;
-  }
+	.messageModalForm select {
+		margin: 0.1rem 0 0.3rem 0;
+		padding: 0.1rem 0.5rem;
+		font-size: 0.5rem;
+		height: 1rem;
+	}
 
-  .messageModalForm label {
-    font-size: 0.35rem;
-  }
+	.messageModalForm label {
+		font-size: 0.35rem;
+	}
 
-  .messageModalBtns {
-    padding: 0.5rem 0;
-  }
+	.messageModalBtns {
+		padding: 0.5rem 0;
+	}
 
-  .messageCancelButton,
-  .addModalButton {
-    width: 3rem;
-    font-size: 0.5rem;
-    padding: 0.2rem 0 0.3rem;
-  }
+	.messageCancelButton,
+	.addModalButton {
+		width: 3rem;
+		font-size: 0.5rem;
+		padding: 0.2rem 0 0.3rem;
+	}
 
-  .messageModalForm h3 {
-    padding: 0.15rem 0;
-    font-size: 0.6rem;
-  }
+	.messageModalForm h3 {
+		padding: 0.15rem 0;
+		font-size: 0.6rem;
+	}
 }
