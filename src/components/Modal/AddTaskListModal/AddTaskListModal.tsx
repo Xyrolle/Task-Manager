@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import axios from 'axios';
 import './AddTaskListModal.css';
 
@@ -22,7 +22,7 @@ const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
 	const taskListTitle = useRef<HTMLInputElement>(null);
 	const taskListDescription = useRef<HTMLTextAreaElement>(null);
 
-	const addTaskList: any = (name: string, description: string) => {
+	const addTaskList = (name: string, description: string) => {
 		axios
 			.post(
 				'http://46.101.172.171:8008/project/tasklist_create/',
@@ -37,7 +37,7 @@ const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
 	};
 
 	return (
-		<div>
+		<Fragment>
 			<div className='modalContainer sectionFormLightbox'>
 				<form className='addTaskListForm'>
 					<div className='addTaskListHeader'>
@@ -74,7 +74,7 @@ const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
 				</form>
 			</div>
 			<div className='bg' onClick={closeModal} />
-		</div>
+		</Fragment>
 	);
 };
 
