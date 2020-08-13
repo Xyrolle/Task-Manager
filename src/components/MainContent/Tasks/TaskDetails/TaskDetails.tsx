@@ -114,6 +114,8 @@ const TaskDetails: React.FC = () => {
 			}
 	});
 
+	console.log(taskInfo);
+
 	return (
 		<div className='details-container'>
 			details

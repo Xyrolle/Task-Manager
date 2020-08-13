@@ -42,7 +42,7 @@ const Milestones: React.FC = () => {
 			<div className='milestones-container'>
 				{milestones &&
 					milestones.map((milestonesPage) =>
-						milestonesPage.map((milestone: any) => (
+						milestonesPage.data.map((milestone: any) => (
 							<Milestone
 								title={milestone.title}
 								description={milestone.description}
