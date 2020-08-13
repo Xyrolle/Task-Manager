@@ -6,7 +6,6 @@ import { useQuery, useMutation, queryCache } from 'react-query';
 
 import assignPencil from '../../../../assets/assignPencil.svg';
 import subtask from '../../../../assets/subtask.svg';
-import clock from '../../../../assets/clock.svg';
 import calendar from '../../../../assets/calendar.svg';
 import eye from '../../../../assets/eye.svg';
 import comments from '../../../../assets/comments.svg';
@@ -238,7 +237,7 @@ const Task: React.FC<ITask> = ({
 			</span>
 			<div className='task-info-tooltip'>
 				<Link
-					to={`task_info/${id}?projectID=${projectID}`}
+					to={`task_info/${id}`}
 					onClick={(evt) =>
 
 							task_list === '0' ? evt.preventDefault() :

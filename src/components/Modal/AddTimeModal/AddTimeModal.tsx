@@ -1,5 +1,4 @@
 import React, { useState, useRef, useContext } from 'react';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache } from 'react-query';
@@ -9,13 +8,7 @@ import { AppContext } from '../../../context/AppContext';
 import { createTimePointsInterface } from 'components/MainContent/Time/interfaces'
 
 const createTimeGroup = async (projectId: number) => {
-	console.log(projectId);
-
-	const response = await axios.post(
-		`http://46.101.172.171:8008/times/new_time_group/${projectId}`,
-		{},
-		await axiosConfig
-	);
+	const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, axiosConfig);
 	return response.data.id;
 };
 
@@ -28,6 +21,7 @@ const createTimePoints = async ({
 	user,
 	taskList
 }: createTimePointsInterface): Promise<void> => {
+	console.log('time')
 	const response = await axios.post(
 		`http://46.101.172.171:8008/times/time_point/add/${groupId}`,
 		{
@@ -37,7 +31,7 @@ const createTimePoints = async ({
 			user,
 			task_list: taskList
 		},
-		await axiosConfig
+		axiosConfig
 	);
 	return response.data;
 };
@@ -48,9 +42,8 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 	const [startTimeValue, setStartTimeValue] = useState(moment().format());
 	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
+	console.log('this works')
 	const ctx = useContext(AppContext);
-
-	const { projectId } = useParams();
 
 	if (!ctx) {
 		throw new Error('You probably forgot to put <AppProvider>.');
@@ -126,7 +119,8 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 									user: 5,
 									taskList: 185
 								});
-								await ctx.closeModal();
+								await ctx.closeModal()
+
 							}}
 							type='button'
 							className='addList-btn btn'

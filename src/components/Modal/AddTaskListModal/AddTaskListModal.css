@@ -62,12 +62,12 @@
 	-webkit-box-direction: normal;
 	-ms-flex-direction: column;
 	flex-direction: column;
-	margin-bottom: 20px;
 }
 
 .form-control {
 	display: block;
-	width: 100%;
+	width: 98%;
+	margin-bottom: 1rem;
 	height: 32px;
 	padding: 5px 5px;
 	font-size: 13px;

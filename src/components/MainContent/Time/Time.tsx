@@ -8,20 +8,14 @@ import { useParams } from 'react-router';
 import { AppContext } from '../../../context/AppContext';
 import { TimesInterface, TimeGroupInterface } from './interfaces'
 
+import TimeTable from './TimeTable/TimeTable';
+
+import { getTimeGroups } from './utils';
+
 const Time: React.FC = () => {
   const [pageId, setPageId] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { projectId } = useParams();
-
-  const getTimeGroups = async (key: string, projectId: string, next = 1) => {
-    console.log('next', next);
-    const response = await axios.get(
-      `http://46.101.172.171:8008/times/time_groups/${projectId}/${next}`,
-      await axiosConfig
-    );
-    console.log(response)
-    return response.data;
-  };
 
   const {
     status,
@@ -70,27 +64,9 @@ const Time: React.FC = () => {
       ) : (
             <>
               {data &&
-                data.map((page: TimesInterface, ) =>
-                  page.data.map((timeGroup: TimeGroupInterface, key: number) => (
-                    <div key={key}>
-                      <div className='tableHeaderWrap'>
-                        <div className='tableHeader'>
-                          <div className='timeDescription'>
-                            <p>Description</p>
-                          </div>
-                          <div className='timeTaskList'>
-                            <p>Task list</p>
-                          </div>
-                          <div className='timeStartDate'>
-                            <p>Start</p>
-                          </div>
-                          <div className='timeEndDate'>
-                            <p>End</p>
-                          </div>
-                        </div>
-                      </div>
-                      <TimePoints id={timeGroup.id} />
-                    </div>
+                data.map((page: any, key: any) =>
+                  page.data.map((timeGroup: any, key: any) => (
+                    <TimeTable timeGroup={timeGroup} />
                   ))
                 )}
               <div>
