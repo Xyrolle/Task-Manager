@@ -5,21 +5,13 @@ import { useMutation, queryCache } from 'react-query';
 import TextField from '@material-ui/core/TextField';
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from '../../../context/AppContext';
+import { createTimePointsInterface } from 'components/MainContent/Time/interfaces'
 
 const createTimeGroup = async (projectId: number) => {
 	const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, axiosConfig);
 	return response.data.id;
 };
 
-interface foo {
-	projectId: string;
-	groupId: number;
-	description: string;
-	startTimeValue: string;
-	endTimeValue: string;
-	user: number;
-	taskList: number;
-}
 const createTimePoints = async ({
 	projectId,
 	groupId,
@@ -28,7 +20,8 @@ const createTimePoints = async ({
 	endTimeValue,
 	user,
 	taskList
-}: foo): Promise<void> => {
+}: createTimePointsInterface): Promise<void> => {
+	console.log('time')
 	const response = await axios.post(
 		`http://46.101.172.171:8008/times/time_point/add/${groupId}`,
 		{
@@ -46,20 +39,21 @@ interface AddTimeModalInterface {
 	closeModal(): void;
 }
 const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
-	const [ startTimeValue, setStartTimeValue ] = useState(moment().format());
-	const [ endTimeValue, setEndTimeValue ] = useState(moment().toISOString());
+	const [startTimeValue, setStartTimeValue] = useState(moment().format());
+	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
+	console.log('this works')
 	const ctx = useContext(AppContext);
 
 	if (!ctx) {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
-	const [ mutate ] = useMutation(createTimePoints, {
+	const [mutate] = useMutation(createTimePoints, {
 		onMutate:
 			(newData: any) => {
-				queryCache.cancelQueries([ 'getTimeGroups', ctx.projectId ]);
-				queryCache.setQueryData([ 'getTimeGroups', ctx.projectId ], (prev: any) => {
+				queryCache.cancelQueries(['getTimeGroups', ctx.projectId]);
+				queryCache.setQueryData(['getTimeGroups', ctx.projectId], (prev: any) => {
 					const index = prev[0].page_total;
 
 					prev[index - 1] &&
@@ -73,7 +67,7 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 				});
 			},
 		onError: (error: any, newData: any, rollback: any) => rollback(),
-		onSettled: () => queryCache.invalidateQueries([ 'getTimeGroups', ctx.projectId ])
+		onSettled: () => queryCache.invalidateQueries(['getTimeGroups', ctx.projectId])
 	});
 
 	return (
@@ -125,7 +119,8 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 									user: 5,
 									taskList: 185
 								});
-								await ctx.closeModal();
+								await ctx.closeModal()
+
 							}}
 							type='button'
 							className='addList-btn btn'

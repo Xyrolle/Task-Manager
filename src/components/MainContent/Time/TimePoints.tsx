@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { getTimePoints } from './queries';
 import moment from 'moment';
+import { TimePointInterface } from './interfaces'
 
 const TimePoints: React.FC<{ id: number }> = ({ id }) => {
   const { status, data, error } = useQuery(
@@ -15,9 +16,10 @@ const TimePoints: React.FC<{ id: number }> = ({ id }) => {
   return (
     <>
       {data &&
-        data.map((timePoint: any, key: any) => {
+        data.map((timePoint: TimePointInterface, key: number) => {
           return (
             <div className="tableContentWrap" key={key}>
+              {console.log(timePoint)}
               <div className="tableContent">
                 <div className="timeDescription">
                   <p>{timePoint.description}</p>
@@ -28,7 +30,7 @@ const TimePoints: React.FC<{ id: number }> = ({ id }) => {
                 <div className="timeEndDate">
                   <p>
                     {moment
-                      .parseZone(timePoint.time_endmoment)
+                      .parseZone(timePoint.time_end)
                       .format('MMMM Do YYYY, h:mm a')}
                   </p>
                 </div>

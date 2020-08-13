@@ -1,20 +1,15 @@
 import React, { useState, useRef, useContext } from 'react';
 import axios from 'axios';
-import moment from 'moment';
-import { useMutation, queryCache, useQuery } from 'react-query';
+import { useMutation, queryCache } from 'react-query';
+import { useParams } from 'react-router';
 import { axiosConfig } from '../../../../utils/axiosConfig';
 import { AppContext } from '../../../../context/AppContext';
-import { useParams } from 'react-router';
+import { FileUploadInterface } from '../interfaces'
 
-interface uploadFileInterface {
-    projectId: string;
-    title: string;
-    upload: any;
-}
 
-const uploadFile = async ({ projectId, title, upload, }: uploadFileInterface) => {
+const uploadFile = async ({ projectId, title, upload }: FileUploadInterface) => {
     const fd = new FormData();
-    fd.append('upload', upload)
+    upload && fd.append('upload', upload)
     fd.append('project', projectId)
     fd.append('title', title)
     try {
@@ -22,28 +17,14 @@ const uploadFile = async ({ projectId, title, upload, }: uploadFileInterface) =>
             fd,
             axiosConfig,
         );
-
-        if (response.status === 200) {
-            console.log(response.data)
-            // queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
-            //     prev.data.push({
-            //         id: response.data.id,
-            //         title,
-            //         content,
-            //         user: userId,
-            //         tags: []
-            //     });
-            //     return prev
-            // });
-        }
         return response.data;
     } catch (err) {
-
+        console.log(err)
     }
 }
 
 const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
-    const [fileInput, setFileInput] = useState(null)
+    const [fileInput, setFileInput] = useState()
     const ctx = useContext(AppContext);
     const titleInput = useRef<HTMLInputElement>(null);
 
@@ -53,13 +34,11 @@ const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
     }
 
     const [mutate] = useMutation(uploadFile, {
-
-        onMutate: (newData: any) => {
+        onMutate: (newData: FileUploadInterface) => {
             queryCache.cancelQueries('getFiles', projectId);
             const snapshot = queryCache.getQueryData(['getFiles', projectId]);
-
-            queryCache.setQueryData(['getFiles', projectId], (prev: any) => {
-                prev[0].push(newData)
+            queryCache.setQueryData(['getFiles', projectId], (prev: FileUploadInterface[][] | undefined) => {
+                prev && prev[0].push(newData)
                 return prev;
             });
             return () => queryCache.setQueryData(['getFiles', projectId], snapshot);
