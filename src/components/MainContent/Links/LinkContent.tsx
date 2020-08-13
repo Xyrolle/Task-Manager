@@ -5,6 +5,7 @@ import { getLinks } from './queries';
 import './LinkContent.css';
 import LinkComponent from './LinkComponent/LinkComponent';
 import { AppContext } from 'context/AppContext';
+import { LinksInterface, LinkInterface } from './interfaces'
 
 
 const LinkContent: React.FC = () => {
@@ -28,8 +29,7 @@ const LinkContent: React.FC = () => {
   }: any = useInfiniteQuery(['getLinks', `${projectId}`],
     getLinks,
     {
-      getFetchMore: (lastGroup: any, allPages: any) => {
-        console.log('lastgroup', lastGroup)
+      getFetchMore: (lastGroup: LinksInterface) => {
         if (lastGroup.page_current + 1 > lastGroup.page_total) {
           return false;
         } else {
@@ -55,9 +55,11 @@ const LinkContent: React.FC = () => {
                   + Add Link
                 </button>
               </div>
-              {data && data.map((data: any, key: number) => (
-                data.data.map((link: any, key: number) => (
-                  <div key={key}>
+
+              {console.log('link', data)}
+              {data && data.map((data: LinksInterface) => (
+                data.data.map((link: LinkInterface, key: number) => (
+                  < div key={key} >
                     <LinkComponent data={link} />
                   </div>
                 ))

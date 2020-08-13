@@ -6,6 +6,7 @@ import axios from 'axios';
 import './Time.css';
 import { useParams } from 'react-router';
 import { AppContext } from '../../../context/AppContext';
+import { TimesInterface, TimeGroupInterface } from './interfaces'
 
 const Time: React.FC = () => {
   const [pageId, setPageId] = useState(1);
@@ -31,7 +32,7 @@ const Time: React.FC = () => {
     fetchMore,
     canFetchMore,
   }: any = useInfiniteQuery(['getTimeGroups', `${projectId}`], getTimeGroups, {
-    getFetchMore: (lastGroup: any, allPages: any) => {
+    getFetchMore: (lastGroup: TimesInterface) => {
       if (lastGroup.page_current + 1 > lastGroup.page_total) {
         return false;
       } else {
@@ -69,8 +70,8 @@ const Time: React.FC = () => {
       ) : (
             <>
               {data &&
-                data.map((page: any, key: any) =>
-                  page.data.map((timeGroup: any, key: any) => (
+                data.map((page: TimesInterface, ) =>
+                  page.data.map((timeGroup: TimeGroupInterface, key: number) => (
                     <div key={key}>
                       <div className='tableHeaderWrap'>
                         <div className='tableHeader'>
@@ -93,9 +94,6 @@ const Time: React.FC = () => {
                   ))
                 )}
               <div>
-                {console.log('hasmore', hasMore)}
-
-                {console.log('canfetchmore', canFetchMore)}
                 <button
                   ref={loadMoreButtonRef}
                   onClick={() => fetchMore()}

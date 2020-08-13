@@ -38,6 +38,20 @@ interface AddProjectModalProps {
   userId: number;
   closeModal: () => void;
 }
+interface PrevDataAddProject {
+  data: {
+    project: {
+      company: string;
+      description: string;
+      id: string;
+      name: string;
+    }
+  }[]
+  objects_per_page: number;
+  objects_total: number;
+  page_current: number;
+  page_total: number;
+}
 
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal }) => {
   const nameInput = useRef<HTMLInputElement>(null);
@@ -47,11 +61,11 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal })
   const [mutate] = useMutation(createProject, {
     onMutate: (newData: any) => {
       queryCache.cancelQueries(['getProjects', userId]);
-      console.log('newData', newData)
-      queryCache.setQueryData(['getProjects', userId.toString()], (prev: any) => {
-        prev[0].data.push({
+      queryCache.setQueryData(['getProjects', userId.toString()], (prev: PrevDataAddProject[] | undefined) => {
+        console.log('prev', prev)
+        prev && prev[0].data.push({
           project: {
-            id: new Date(),
+            id: new Date().toISOString(),
             company: newData.company,
             description: newData.description,
             name: newData.name,

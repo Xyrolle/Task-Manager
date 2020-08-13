@@ -6,6 +6,7 @@ import { useMutation, queryCache } from 'react-query';
 import TextField from '@material-ui/core/TextField';
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from '../../../context/AppContext';
+import { createTimePointsInterface } from 'components/MainContent/Time/interfaces'
 
 const createTimeGroup = async (projectId: number) => {
 	console.log(projectId);
@@ -18,15 +19,6 @@ const createTimeGroup = async (projectId: number) => {
 	return response.data.id;
 };
 
-interface foo {
-	projectId: string;
-	groupId: number;
-	description: string;
-	startTimeValue: string;
-	endTimeValue: string;
-	user: number;
-	taskList: number;
-}
 const createTimePoints = async ({
 	projectId,
 	groupId,
@@ -35,7 +27,7 @@ const createTimePoints = async ({
 	endTimeValue,
 	user,
 	taskList
-}: foo): Promise<void> => {
+}: createTimePointsInterface): Promise<void> => {
 	const response = await axios.post(
 		`http://46.101.172.171:8008/times/time_point/add/${groupId}`,
 		{
@@ -59,8 +51,6 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 	const ctx = useContext(AppContext);
 
 	const { projectId } = useParams();
-
-	console.log(projectId, 'is');
 
 	if (!ctx) {
 		throw new Error('You probably forgot to put <AppProvider>.');

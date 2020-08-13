@@ -9,23 +9,19 @@ import link from 'assets/link.png';
 import tag from 'assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
 import EditLinkModal from '../EditLinkModal/EditLinkModal';
+import { TagInterface, LinkInterface, LinksInterface } from '../interfaces'
 
 interface LinkComponentInterface {
   data: {
-    comments: Array<string>,
-    content: string,
-    date: string,
-    id: number,
-    project: number,
-    tags: Array<number>,
-    title: string,
-    user: number,
+    comments: number[];
+    content: string;
+    date: string;
+    id: number;
+    project: number;
+    tags: TagInterface[];
+    title: string;
+    user: number;
   };
-}
-
-interface tagInterface {
-  id: number;
-  title: string;
 }
 
 interface deleteTagInterface {
@@ -38,7 +34,6 @@ const deleteTag = async ({ linkId, tagId }: deleteTagInterface) => {
   const response = await axios.delete(`http://46.101.172.171:8008/tags/link_tag/set/${linkId}/${tagId}`,
     axiosConfig
   )
-  console.log(response)
   return response;
 }
 
@@ -49,13 +44,13 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
   const handleShowModal = () => setIsEditLinkModalOpen(false);
 
   const [mutateDeleteTag] = useMutation(deleteTag, {
-    onMutate: (newData: any) => {
+    onMutate: (newData: deleteTagInterface) => {
       queryCache.cancelQueries(['getLinks', `${projectId}`]);
       queryCache.setQueryData(['getLinks', `${projectId}`],
-        (prev: any) => {
+        (prev: LinksInterface[] | undefined) => {
           let index;
-          prev[0].data.map(({ tags }: any) => {
-            index = tags.findIndex((tag: any) => {
+          prev && prev[0].data.map(({ tags }: any) => {
+            index = tags.findIndex((tag: TagInterface) => {
               return tag.id === newData.tagId
             })
             if (index > 0) {
@@ -88,7 +83,7 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
             )}
           </div>
           {!linkId &&
-            data.tags.map((tag: any, key: number) => {
+            data.tags.map((tag: TagInterface, key: number) => {
               return (
                 <span className="tagLink" key={key}>
                   {tag.title}
