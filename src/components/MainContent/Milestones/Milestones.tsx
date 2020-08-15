@@ -1,41 +1,47 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import axios from 'axios';
 
 import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 
 import { axiosConfig } from '../../../utils/axiosConfig';
 
+import { AppContext } from '../../../context/AppContext';
+
 import Milestone from './Milestone/Milestone';
 
 import './Milestones.css';
 
 const Milestones: React.FC = () => {
-	const projectID = 115;
+	const ctx = useContext(AppContext);
 
-	const fetchMilestones = async (key: string) => {
-		const res = await axios.get('http://46.101.172.171:8008/stage/from_project/115/1', axiosConfig);
-		console.log(res, 'from milstones');
-		return res.data;
+	if (!ctx) {
+		throw new Error('You probably forgot to put <AppProvider>.');
+	}
+
+	const fetchMilestones = async (key: string, project: string, page_id: number = 1) => {
+		if (project) {
+			const res = await axios.get(
+				`http://46.101.172.171:8008/stage/from_project/${project}/${page_id}`,
+				axiosConfig
+			);
+			return res.data;
+		}
 	};
 
-	const { data: milestones, isFetching, fetchMore, canFetchMore } = useInfiniteQuery<
+	const { data: milestones, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
 		any,
 		any,
 		number
-	>(`milestones-${projectID}`, fetchMilestones, {
+	>([ 'milestones', ctx.projectId ], fetchMilestones, {
 		getFetchMore:
 			(prev) => {
-				if (prev.page_current + 1 < prev.page_total) {
+				if (prev.page_current + 1 <= prev.page_total) {
 					return prev.page_current + 1;
 				}
 
 				return false;
 			}
 	});
-
-	{
-		console.log(milestones);
-	}
 
 	return (
 		<Fragment>
@@ -49,13 +55,28 @@ const Milestones: React.FC = () => {
 								end_date={milestone.end_date}
 								author={milestone.autor}
 								id={milestone.id}
+								project={ctx.projectId}
 								key={milestone.id}
 							/>
 						))
 					)}
 			</div>
 			<div>
-				<button className='btn'>Load more</button>
+				<button
+					className={
+						'btn ' +
+						(
+							isFetching || !canFetchMore ? 'disabledBtn' :
+							'')
+					}
+					disabled={isFetching || !canFetchMore}
+					onClick={() => fetchMore()}
+				>
+					{
+						isFetchingMore ? 'Loading more...' :
+						canFetchMore ? 'Load More' :
+						'Nothing more to load'}
+				</button>
 			</div>
 		</Fragment>
 	);

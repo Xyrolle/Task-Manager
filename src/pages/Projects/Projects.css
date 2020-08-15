@@ -27,6 +27,7 @@
 	font-weight: 500;
 	color: white;
 	cursor: pointer;
+  
 }
 .logoutButton {
 	padding: 7px;
@@ -47,11 +48,25 @@
 	padding-left: 10px;
 }
 .projectName {
-	color: #555;
-	margin-left: 10px;
-	font-size: 14px;
-	font-weight: 550;
+	font-weight: 600;
+	margin-top: 0;
+	color: #333;
+	margin-left: 0;
+	font-size: 24px;
+	padding: 0 12px 0 0;
 }
+
+.companyName {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 20px;
+	color: #222;
+	opacity: .7;
+	font-weight: 300;
+	margin-right: 10px;
+}
+
 .projectName:hover {
 	text-decoration: underline;
 }

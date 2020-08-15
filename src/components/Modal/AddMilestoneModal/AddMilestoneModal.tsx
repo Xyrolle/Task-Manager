@@ -9,6 +9,8 @@ import { AppContext } from '../../../context/AppContext';
 
 import './AddMilestoneModal.css';
 
+import { IMilestone } from '../../MainContent/Milestones/Milestone/IMilestone';
+
 import { axiosConfig } from '../../../utils/axiosConfig';
 
 const AddMilestoneModal: React.FC = () => {
@@ -22,42 +24,31 @@ const AddMilestoneModal: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
-	const addMilestone = async (props: any) => {
-		console.log(props, 'in add milestone');
-		const res = await axios.post(
+	const addMilestone = async ({ title, description, end_date, project, id }: IMilestone) => {
+		axios.post(
 			'http://46.101.172.171:8008/stage/',
 			{
-				project: 115,
-				end_date: '2020-08-13T12:08:49Z',
-				title: 'dfgdfsstringfvd1',
-				description: 'gfhfd'
+				project,
+				end_date,
+				title,
+				description
 			},
 			axiosConfig
 		);
-
-		console.log(res, 'from add milestone');
 	};
 
 	const [ addMilestoneMutate ]: any = useMutation(addMilestone, {
 		onMutate:
 			(newData: any) => {
-				console.log(newData, 'in mutate add milestone');
-
-				// const page = newData[]
-				// queryCache.cancelQueries(newData.id);
-				// queryCache.setQueryData('task-lists', (prev: any) => {
-				// 	prev = prev.map((taskLists: any) => {
-				// 		taskLists.data = taskLists.data.filter((taskList: any) => {
-				// 			return taskList.id !== newData.id;
-				// 		});
-				// 		return taskLists;
-				// 	});
-				// 	return prev;
-				// });
-			}
+				queryCache.cancelQueries([ 'milestones', ctx.projectId ]);
+				queryCache.setQueryData([ 'milestones', ctx.projectId ], (prev: any) => {
+					const idx = prev.length - 1;
+					prev[idx].data.push({ ...newData, id: new Date().toISOString() });
+					return prev;
+				});
+			},
+		onSettled: () => queryCache.invalidateQueries([ 'milestones', ctx.projectId ])
 	});
-
-	console.log(ctx, ctx.projectId);
 
 	return (
 		<Fragment>

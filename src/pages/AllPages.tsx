@@ -36,7 +36,7 @@ const AllPages: React.FC = () => {
 				return <Modal isUpgradeModalOpen={false} closeModal={closeModal} data={data.data} />;
 			case 'upgradeModal':
 				return <Modal isUpgradeModalOpen={true} closeModal={closeModal} data={data.data} />;
-			case 'projects':
+			case 'addProjectModal':
 				return <AddProjectModal userId={userDetails.id} closeModal={closeModal} />;
 			case 'links':
 				return <AddLinkModal closeModal={closeModal} userDetails={userDetails} />;

@@ -1,11 +1,23 @@
-.milestone-row {
-	display: flex;
+.milestones-container {
 	justify-content: center;
-	width: 60%;
+}
+
+.milestone-row {
 	margin: 0 auto;
 	height: 20vh;
+	width: 70%;
 	color: #eeeeee;
-	border-radius: 30px;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;
+	position: relative;
+	border-bottom: 1px solid #eceff3;
+	padding: 20px 0;
+}
+
+.milestone-description {
+	margin: 1.2rem 2.6rem;
 }
 
 .milestone-check {
@@ -17,9 +29,6 @@
 
 .milestone-check:hover {
 	opacity: 0.6;
-}
-
-.milestone-title-row {
 }
 
 .milestone-title {
@@ -35,27 +44,45 @@
 }
 
 .milestone-date-line {
-	height: 1.6rem;
+	text-align: center;
+	height: 4vh;
+	display: flex;
+	justify-content: center;
+	padding: 0.1rem 0 0.2rem 0;
+	place-items: center;
 	background-color: red;
-	border-radius: 8px;
+	border-radius: 2px;
 }
 
 .milestone-date {
-	display: flex;
-	height: 78%;
 	text-align: center;
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 24%;
+	padding: 0 0.2rem;
+	justify-content: center;
 	place-items: center;
 }
 
 .milestone-date-container {
 	background-color: blue;
-	width: 20%;
+	min-width: fit-content;
+	width: 10vw;
 	put-items: center;
-	border-radius: 8px;
+	border-radius: 4px;
 }
 
 .milestone-main {
 	width: 76%;
 	padding: 2px;
 	color: #333333;
+}
+
+.milestone-date span {
+	font-weight: 700;
+	width: 100%;
+}
+
+.milestone-author {
+	color: #aaaaaa;
 }
