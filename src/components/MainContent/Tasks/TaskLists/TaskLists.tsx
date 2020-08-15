@@ -91,7 +91,7 @@ const TaskLists: React.FC = () => {
 				>
 					{
 						isFetchingMore ? 'Loading more...' :
-						lists && canFetchMore ? 'Load More' :
+						canFetchMore ? 'Load More' :
 						'Nothing more to load'}
 				</button>
 			</div>

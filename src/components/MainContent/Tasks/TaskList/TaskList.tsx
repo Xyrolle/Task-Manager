@@ -7,7 +7,7 @@ import axios from 'axios';
 import arrow from 'assets/arrow.svg';
 import addTaskPlus from 'assets/addTaskPlus.svg';
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import ellipsisDotsH from '@iconify/icons-vaadin/ellipsis-dots-h';
 
 import { axiosConfig } from '../../../../utils/axiosConfig';
@@ -39,18 +39,9 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 
 	const { projectID } = useParams();
 
-	const fetchTasks = async (id: any, page_id: number = 1) => {
-		try {
-			const res = await axios.get(`http://46.101.172.171:8008/tasks/task_list/${id}/${page_id}`, {
-				headers:
-					{
-						Authorization: `Basic YWRtaW46cXdlMTIz`
-					}
-			});
-			return res.data;
-		} catch (err) {
-			console.error('error while fetching task lists', err);
-		}
+	const fetchTasks = async (id: number, page_id: number = 1) => {
+		const res = await axios.get(`http://46.101.172.171:8008/tasks/task_list/${id}/${page_id}`, axiosConfig);
+		return res.data;
 	};
 
 	const { data: tasks, isFetching, fetchMore, canFetchMore } = useInfiniteQuery<ITasks, any, number>(id, fetchTasks, {

@@ -146,11 +146,9 @@ const Task: React.FC<ITask> = ({
 				} else {
 					queryCache.cancelQueries(task_list);
 					queryCache.setQueryData(task_list, (prev: any) => {
-						console.log(prev, 'in delete tag');
 						let task_to_change = prev.map((taskPage: ITasks) => {
 							return taskPage.data.find((task: ITask) => task.id === newData.task_id);
 						});
-						console.log(task_to_change[0], 'task to change');
 						task_to_change[0].tags = task_to_change[0].tags.filter((tag: any) => {
 							return tag.id !== newData.tag_id;
 						});
