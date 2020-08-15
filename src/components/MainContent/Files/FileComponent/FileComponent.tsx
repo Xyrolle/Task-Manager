@@ -2,16 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import './FileComponent.css';
 import fileIcon from '../../../../assets/file.png';
+import { FileInterface } from '../interfaces'
 
-interface fileInterface {
-    id: number;
-    date: string;
-    project: number;
-    title: string;
-    upload: string;
-}
-
-const FileComponent: React.FC<{ file: fileInterface }> = ({ file }) => {
+const FileComponent: React.FC<{ file: FileInterface }> = ({ file }) => {
     return (
         <div className="fileComponentContainer">
             <p className="fileTitleFirstChar">{file.title.charAt(0).toUpperCase()}</p>

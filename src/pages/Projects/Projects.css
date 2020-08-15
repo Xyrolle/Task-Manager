@@ -27,6 +27,17 @@
 	font-weight: 500;
 	color: white;
 	cursor: pointer;
+  
+}
+.logoutButton {
+	padding: 7px;
+	background-color: #ff821c;
+	border: none;
+	border-radius: 4px;
+	font-size: 13px;
+	font-weight: 500;
+	color: white;
+	cursor: pointer;
 }
 .addProjectButton:hover {
 	background-color: #469e75;

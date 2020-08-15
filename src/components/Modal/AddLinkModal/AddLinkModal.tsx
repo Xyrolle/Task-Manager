@@ -1,21 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { axiosConfig } from 'utils/axiosConfig';
+import { AppContext } from 'context/AppContext';
+import { AddLinkInterface, LinksInterface } from 'components/MainContent/Links/interfaces'
 
-interface foo {
-  projectId: string;
-  userId: number;
-  title: string;
-  content: string;
-}
-const createTimePoints = async ({ projectId, userId, title, content }: foo) => {
+const addLink = async ({ projectId, userId, title, content }: AddLinkInterface) => {
   try {
     const response = await axios.post(
       `http://46.101.172.171:8008/link/`,
       {
-        project: '137',
+        project: projectId,
         user: userId,
         title,
         content,
@@ -24,16 +20,7 @@ const createTimePoints = async ({ projectId, userId, title, content }: foo) => {
       await axiosConfig
     );
     if (response.status === 200) {
-      queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
-        prev.data.push({
-          id: response.data.id,
-          title,
-          content,
-          user: userId,
-          tags: [],
-        });
-        return prev;
-      });
+
     }
     return response.data;
   } catch (err) { }
@@ -48,16 +35,33 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) 
   const titleInput = useRef<HTMLInputElement>(null);
   const contentInput = useRef<HTMLTextAreaElement>(null);
   const { projectId } = useParams();
+  const ctx = useContext(AppContext);
 
-  const [mutate] = useMutation(createTimePoints, {
-    onMutate: (newData: any) => {
+  if (!ctx) {
+    throw new Error('You probably forgot to put <AppProvider>.');
+  }
+
+  const [mutate] = useMutation(addLink, {
+    onMutate: (newData: AddLinkInterface) => {
       queryCache.cancelQueries(['getLinks', projectId]);
-      const snapshot = queryCache.getQueryData(['getLinks', projectId]);
-
+      const snapshot = queryCache.getQueryData(['getLinks', newData.projectId]);
+      queryCache.setQueryData(['getLinks', newData.projectId], (prev: LinksInterface[] | undefined) => {
+        prev && prev[0].data.push({
+          id: new Date().getTime(),
+          title: newData.title,
+          content: newData.content,
+          user: newData.userId,
+          tags: [],
+          comments: [],
+          date: new Date().toISOString(),
+          project: +newData.projectId
+        });
+        return prev;
+      });
       return () => queryCache.setQueryData('getLinks', snapshot);
     },
     onError: (error: any, newData: any, rollback: any) => rollback(),
-    // onSettled: () => queryCache.prefetchQuery('getTimeGroups')
+    onSettled: () => queryCache.invalidateQueries(['getLinks', ctx.projectId])
   });
 
   return (
@@ -89,7 +93,7 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) 
             <button
               onClick={async () => {
                 mutate({
-                  projectId,
+                  projectId: ctx.projectId,
                   userId: userDetails.id,
                   title: titleInput.current!.value,
                   content: contentInput.current!.value,

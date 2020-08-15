@@ -4,12 +4,8 @@ import { useMutation, queryCache, useQuery } from 'react-query';
 import { useParams } from 'react-router-dom'
 import './TagDropdown.css';
 import { axiosConfig } from '../../../../utils/axiosConfig'
+import { createTagInterface, LinksInterface, LinkInterface } from '../interfaces';
 
-interface createTagInterface {
-  title: string;
-  linkId: number;
-  projectId: string;
-}
 const setTagToLink = async (linkId: number, id: string) => {
   const response = await axios.get(`http://46.101.172.171:8008/tags/link_tag/set/${linkId}/${id}`,
     axiosConfig)
@@ -32,13 +28,13 @@ const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
   const tagNameInput = useRef<HTMLInputElement>(null)
   const { projectId } = useParams();
   const [mutate] = useMutation(createTag, {
-    onMutate: (newData: any) => {
+    onMutate: (newData: createTagInterface) => {
       queryCache.cancelQueries(['getLinks', projectId]);
-      queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
-        console.log('prev ', prev)
-        const index = prev[0].data.findIndex((e: any) => e.id === newData.linkId)
-        prev[0].data[index].tags.push({
-          id: new Date(),
+      queryCache.setQueryData(['getLinks', projectId], (prev: LinksInterface[] | undefined) => {
+        console.log('prev ', prev && prev)
+        const index: number | undefined = prev && prev[0].data.findIndex((e: LinkInterface) => e.id === newData.linkId)
+        prev && index && prev[0].data[index].tags.push({
+          id: new Date().getTime(),
           title: newData.title
         })
         return prev;
@@ -62,7 +58,6 @@ const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
           Add
         </button>
       </header>
-      {/* <div className='folderDropdownContent' role='contentinfo'></div> */}
     </div>
   );
 };

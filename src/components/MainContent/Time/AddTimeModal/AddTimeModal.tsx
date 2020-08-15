@@ -44,7 +44,7 @@ const createTimePoints = async ({
 		},
 		await axiosConfig
 	);
-	queryCache.setQueryData([ 'getTimeGroups', 1 ], (prev: any) => {
+	queryCache.setQueryData(['getTimeGroups', 1], (prev: any) => {
 		const index = prev[0].page_total;
 
 		prev[index - 1] &&
@@ -52,7 +52,7 @@ const createTimePoints = async ({
 				id: groupId,
 				project: projectId,
 				date: new Date(),
-				times_points: [ response.data.id ]
+				times_points: [response.data.id]
 			});
 		return prev;
 	});
@@ -72,12 +72,12 @@ const createTimePoints = async ({
 };
 
 const AddTimeModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
-	const [ startTimeValue, setStartTimeValue ] = useState(moment().toISOString());
-	const [ endTimeValue, setEndTimeValue ] = useState(moment().toISOString());
+	const [startTimeValue, setStartTimeValue] = useState(moment().toISOString());
+	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
 	const { projectId } = useParams();
 
-	const [ mutate ] = useMutation(createTimePoints, {
+	const [mutate] = useMutation(createTimePoints, {
 		onMutate:
 			(newData: any) => {
 				queryCache.cancelQueries('getTimeGroups');

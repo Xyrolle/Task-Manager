@@ -6,23 +6,19 @@ import axios from 'axios';
 import './LinkDetails.css'
 import LinkComponent from '../LinkComponent/LinkComponent'
 import { AppContext } from '../../../../context/AppContext';
+import { AddCommentInterface, LinkCommentInterface } from '../interfaces'
 
 const getLink = async (key: string, projectId: string, linkId: string) => {
-    const response = await axios.get(`http://46.101.172.171:8008/link/${projectId}/item/${linkId}`, axiosConfig)
+    const response = await axios.get(`http://46.101.172.171:8008/link/${projectId}/item/${linkId}`,
+        axiosConfig)
     return response.data
 }
-interface foo {
-    comment: string;
-    linkId: string;
-    projectId: string;
-    userId: number;
-}
-const addComment = async ({ comment, linkId, projectId, userId }: foo) => {
+
+const addComment = async ({ comment, linkId, projectId, userId }: AddCommentInterface) => {
     const response = await axios.post(`http://46.101.172.171:8008/link/item/${linkId}/comments`, {
         text: comment
     },
         axiosConfig)
-
     if (response.status === 200) {
         queryCache.setQueryData(['getLink', projectId, linkId], (prev: any) => {
             prev.comments.push({
@@ -48,14 +44,12 @@ const LinkDetails: React.FC = () => {
     }
 
     const [mutate] = useMutation(addComment, {
-
-        onMutate: (newData: any) => {
+        onMutate: (newData: AddCommentInterface) => {
             queryCache.cancelQueries(['getLink', projectId]);
             const snapshot = queryCache.getQueryData(['getLink', projectId]);
 
             return () => queryCache.setQueryData('getLink', snapshot);
         },
-
         onError: (error: any, newData: any, rollback: any) => rollback(),
         // onSettled: () => queryCache.prefetchQuery('getTimeGroups')
     })
@@ -81,16 +75,15 @@ const LinkDetails: React.FC = () => {
                 </div>
             </div>
             <div>
-                {data && data.comments.map((comment: any, key: number) => {
-                    return <>
-                        <div className="commentLinkWrap">
-                            <div className="profileImage">DS</div>
-                            <div className="commentDetailsLink">
-                                <p className="authorCommentLink">{comment.author}</p>
-                                <p className="textCommentLink">{comment.text}</p>
-                            </div>
+                {data && data.comments.map((comment: LinkCommentInterface, key: number) => {
+                    return <div className="commentLinkWrap" key={key}>
+                        <div className="profileImage">DS</div>
+                        <div className="commentDetailsLink">
+                            <p className="authorCommentLink">{comment.author}</p>
+                            <p className="textCommentLink">{comment.text}</p>
                         </div>
-                    </>
+                    </div>
+
                 })}
             </div>
         </div>
