@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-
+import { createBrowserHistory } from 'history';
 import { AppContext } from 'context/AppContext';
 import { axiosConfig } from 'utils/axiosConfig';
 import { getProjects } from 'utils/getProjects';
@@ -31,13 +31,12 @@ const deleteProject = async (id: number) => {
 
 const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
-
+  const history = createBrowserHistory({ forceRefresh: true })
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
 
   const { setOpenModal, setIsLayoutActive } = ctx;
-  console.log('useEffect from Projects commented,found error with data');
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
     onMutate: (newData: any) => {
@@ -87,12 +86,23 @@ const Projects: React.FC = () => {
     <div className="test">
       <div className="projectsHeader">
         <h3>Active Projects</h3>
-        <button
-          onClick={() => ctx.setOpenModal('addProjectModal')}
-          className="addProjectButton"
-        >
-          + Add project
+        <div>
+          <button
+            onClick={() => ctx.setOpenModal('addProjectModal')}
+            className="addProjectButton"
+          >
+            + Add project
+          </button>
+          <button
+            onClick={() => {
+              localStorage.removeItem('token');
+              history.push('/')
+            }}
+            className="logoutButton"
+          >
+            Logout
       </button>
+        </div>
       </div>
       <div className="projectsContainer">
         {status === 'loading' ? (
@@ -154,7 +164,7 @@ const Projects: React.FC = () => {
       <div>
         {isFetching && !isFetchingMore ? 'Background Updating...' : null}
       </div>
-    </div>
+    </div >
   );
 };
 export default Projects;

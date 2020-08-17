@@ -3,19 +3,10 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../../utils/axiosConfig';
-import { Link } from '../interfaces';
+import { Link, EditLinkInterface } from '../interfaces';
 import { AppContext } from '../../../../context/AppContext';
 
-
-interface foo {
-    userId: number;
-    linkId: number;
-    projectId: string;
-    title: string;
-    content: string;
-    tags: Array<{}>
-}
-const editLink = async ({ userId, linkId, projectId, title, content, tags }: foo) => {
+const editLink = async ({ userId, linkId, projectId, title, content, tags }: EditLinkInterface) => {
     try {
         const response = await axios.patch(`http://46.101.172.171:8008/link/${projectId}/item/${linkId}`, {
             project: projectId,
@@ -55,10 +46,10 @@ const EditLinkModal: React.FC<{ handleShowModal(): void, data: Link }> = ({ hand
 
     const [mutate] = useMutation(editLink, {
 
-        onMutate: (newData: any) => {
+        onMutate: (newData: EditLinkInterface) => {
+
             queryCache.cancelQueries(['getLinks', projectId]);
             const snapshot = queryCache.getQueryData(['getLinks', projectId]);
-
             return () => queryCache.setQueryData('getLinks', snapshot);
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),

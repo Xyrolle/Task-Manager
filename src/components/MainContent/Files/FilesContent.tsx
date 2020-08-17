@@ -6,6 +6,7 @@ import { useInfiniteQuery } from 'react-query';
 import AddFileModal from './AddFileModal/AddFileModal';
 import './FilesContent.css'
 import FileComponent from './FileComponent/FileComponent'
+import { FileInterface } from './interfaces'
 
 const getFiles = async (key: string, projectId: string, page = 1) => {
     const response = await axios.get(`http://46.101.172.171:8008/files/files_item_view_by_project/${projectId}/${page}`,
@@ -32,12 +33,15 @@ const FilesContent: React.FC = () => {
     }: any = useInfiniteQuery(['getFiles', `${projectId}`],
         getFiles,
         {
-            getFetchMore: (lastGroup: any, allPages: any) => {
-                if (lastGroup.page_current + 1 > lastGroup.page_total) {
-                    return false;
-                } else {
-                    return lastGroup.page_current + 1;
-                }
+            getFetchMore: (lastGroup: FileInterface) => {
+                console.log(lastGroup)
+                //unncomment when paginatio non backend will be implemented
+                // if (lastGroup.page_current + 1 > lastGroup.page_total) {
+                //     return false;
+                // } else {
+                // return lastGroup.page_current + 1;
+                // }
+                return 0;
             }
         })
 

@@ -4,6 +4,7 @@ import { useInfiniteQuery } from 'react-query';
 import { getAgendasByProjectId } from './queries';
 import './Agenda.css';
 import Agenda from './AgendaComponent/Agenda';
+import { AgendaInterface, DataAgendaInterface } from './interfaces'
 
 const AgendaContent: React.FC = ({ }) => {
   const { projectId } = useParams();
@@ -19,7 +20,7 @@ const AgendaContent: React.FC = ({ }) => {
   }: any = useInfiniteQuery(['getAllAgendas', `${projectId}`],
     getAgendasByProjectId,
     {
-      getFetchMore: (lastGroup: any, allPages: any) => {
+      getFetchMore: (lastGroup: AgendaInterface) => {
         if (lastGroup.page_current + 1 > lastGroup.page_total) {
           return false;
         } else {
@@ -45,8 +46,9 @@ const AgendaContent: React.FC = ({ }) => {
         <span>Error: {error.message}</span>
       ) : (
             <>
-              {data && data.map((data: any, key: number) => (
-                data.data.map((agenda: any, key: number) => (
+
+              {data && data.map((data: AgendaInterface, key: number) => (
+                data.data.map((agenda: DataAgendaInterface, key: number) => (
                   <div key={key}>
                     <Agenda agenda={agenda} />
                   </div>

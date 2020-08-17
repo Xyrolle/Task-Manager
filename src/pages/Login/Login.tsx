@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 import { axiosConfig } from 'utils/axiosConfig'
 import './Login.css'
 
@@ -40,7 +41,7 @@ const Login: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const username = useRef<HTMLInputElement>(null)
     const password = useRef<HTMLInputElement>(null)
-    const history = useHistory();
+    const history = createBrowserHistory({ forceRefresh: true })
     return (
         <div className="loginWrap">
             <input ref={username} type="text" className="usernameInput" placeholder="Username" />
