@@ -235,7 +235,7 @@ const Task: React.FC<ITask> = ({
 			</span>
 			<div className='task-info-tooltip'>
 				<Link
-					to={`task_info/${id}`}
+					to={`/task_info/${id}`}
 					onClick={(evt) =>
 
 							task_list === '0' ? evt.preventDefault() :
