@@ -1,4 +1,5 @@
 import React, { useState, createContext, useEffect } from 'react';
+import { BrowserRouter as Router, Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { getUserInfo } from './queries';
 
 type Props = {
@@ -10,12 +11,9 @@ export const AppContext = createContext<ContextProps | null>(null);
 export const AppProvider = ({ children }: Props) => {
 	const [ openModal, setOpenModal ] = useState<string>('');
 
+	let location = useLocation();
 	const [ userDetails, setUserDetails ] = useState();
-	const sessionLink = sessionStorage.getItem('activeLink');
-	const link =
-		sessionLink ? sessionLink :
-		'Overview';
-	const [ activeLink, setActive ] = useState(link);
+	const [ activeLink, setActive ] = useState<string>('Overview');
 	const [ isLayoutActive, setIsLayoutActive ] = useState(false);
 	const [ projectId, setProjectId ] = useState<string>('');
 
@@ -23,14 +21,12 @@ export const AppProvider = ({ children }: Props) => {
 		setOpenModal('');
 	};
 
-	console.log(activeLink, sessionLink);
-
 	useEffect(() => {
-		// put value in context
-		sessionStorage.setItem('activeLink', activeLink);
-		return () => {
-			console.log('gfdgwf', activeLink);
-		};
+		let link = location.pathname.split('/').pop();
+		if (link) {
+			link.charAt(0).toUpperCase();
+			setActive(link);
+		}
 	}, []);
 
 	const setUserInfo = async () => {

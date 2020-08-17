@@ -13,8 +13,6 @@ const LayoutNavigation: React.FC = () => {
 
 	const { activeLink, setActive } = ctx;
 
-	const projectID = 115;
-
 	return (
 		<div className='layoutNavigation'>
 			<ul>
@@ -25,7 +23,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='overview' onClick={() => setActive('Overview')}>
+					<Link to='Overview' onClick={() => setActive('Overview')}>
 						Overview
 					</Link>
 				</li>
@@ -36,7 +34,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to={`/tasks/${projectID}`} onClick={() => setActive('Tasks')}>
+					<Link to='Tasks' onClick={() => setActive('Tasks')}>
 						Tasks
 					</Link>
 				</li>
@@ -47,7 +45,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='milestones' onClick={() => setActive('Milestones')}>
+					<Link to='Milestones' onClick={() => setActive('Milestones')}>
 						Milestones
 					</Link>
 				</li>
@@ -58,7 +56,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='messages' onClick={() => setActive('Messages')}>
+					<Link to='Messages' onClick={() => setActive('Messages')}>
 						Messages
 					</Link>
 				</li>
@@ -69,7 +67,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='files' onClick={() => setActive('Files')}>
+					<Link to='Files' onClick={() => setActive('Files')}>
 						Files
 					</Link>
 				</li>
@@ -80,7 +78,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='time' onClick={() => setActive('Time')}>
+					<Link to='Time' onClick={() => setActive('Time')}>
 						Time
 					</Link>
 				</li>
@@ -91,7 +89,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='agenda' onClick={() => setActive('Notebooks')}>
+					<Link to='Agenda' onClick={() => setActive('Notebooks')}>
 						Notebooks
 					</Link>
 				</li>
@@ -102,7 +100,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='links' onClick={() => setActive('Links')}>
+					<Link to='Links' onClick={() => setActive('Links')}>
 						Links
 					</Link>
 				</li>
@@ -113,7 +111,7 @@ const LayoutNavigation: React.FC = () => {
 							''
 					}
 				>
-					<Link to='overview' onClick={() => setActive('Settings')}>
+					<Link to='Settings' onClick={() => setActive('Settings')}>
 						Settings
 					</Link>
 				</li>

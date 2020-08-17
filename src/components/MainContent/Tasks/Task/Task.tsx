@@ -127,8 +127,8 @@ const Task: React.FC<ITask> = ({
 		onMutate:
 			(newData: any) => {
 				if (contributors) {
-					queryCache.cancelQueries(`details-for-task-${newData.task_id}`);
-					queryCache.setQueryData(`details-for-task-${newData.task_id}`, (prev: any) => {
+					queryCache.cancelQueries([ 'details', newData.task_id ]);
+					queryCache.setQueryData([ 'details', newData.task_id ], (prev: any) => {
 						prev.tags = prev.tags.filter((tag: ITag) => tag.id !== newData.tag_id);
 						return prev;
 					});
@@ -200,8 +200,8 @@ const Task: React.FC<ITask> = ({
 			() => {
 				if (parent_id) {
 					queryCache.invalidateQueries([ 'subtasks', parent_id ]);
-					queryCache.invalidateQueries(`details-for-task-${parent_id}`);
-					queryCache.invalidateQueries(`details-for-task-${id}`);
+					queryCache.invalidateQueries([ 'details', parent_id ]);
+					queryCache.invalidateQueries([ 'details', id ]);
 					setTimeout(() => {
 						queryCache.invalidateQueries([ 'subtasks', id ]);
 					}, 500);
@@ -235,7 +235,7 @@ const Task: React.FC<ITask> = ({
 			</span>
 			<div className='task-info-tooltip'>
 				<Link
-					to={`task_info/${id}`}
+					to={`/task_info/${id}`}
 					onClick={(evt) =>
 
 							task_list === '0' ? evt.preventDefault() :
