@@ -29,7 +29,7 @@ const MainContent: React.FC<MainContentProps> = ({ isLayoutActive }) => {
 		<div>
 			<Route path='/projects/:projectId/' component={Layout} />
 			<div className='contentContainer'>
-				<Route exact path='/projects/:projectId' component={ContentHeader} />
+				<Route path='/projects/:projectId' component={ContentHeader} />
 				<Route exact path='/' component={Projects} />
 				<Route exact path='/projects' component={Projects} />
 				<Route exact path='/task_info/:task_id' component={TaskDetails} />

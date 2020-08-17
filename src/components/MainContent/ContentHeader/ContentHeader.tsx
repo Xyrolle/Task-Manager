@@ -14,6 +14,7 @@ const ContentHeader: React.FC = () => {
 		<div className='contentHeader'>
 			<h1 className='contentHeader-left'>{activeLink}</h1>
 			<div className='contentHeader-right'>
+				{console.log(activeLink, 'in header')}
 				{activeLink !== 'Overview' &&
 				activeLink !== 'Settings' && (
 					<button className='btn open-main-modal' onClick={() => setOpenModal(activeLink.toLowerCase())}>

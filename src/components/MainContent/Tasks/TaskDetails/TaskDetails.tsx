@@ -8,56 +8,38 @@ import Task from '../Task/Task';
 import Comment from '../Comment/Comment';
 import Time from '../../Time/Time';
 
-import './TaskDetails.css';
+import { fetchTaskDetails, fetchComments } from '../queries';
+import { axiosConfig } from '../../../../utils/axiosConfig';
 
-let axiosConfig = {
-	headers:
-		{
-			Authorization: `Basic YWRtaW46cXdlMTIz`
-		}
-};
+import './TaskDetails.css';
+import { IComment } from '../Comment/IComment';
 
 interface CommentType {
 	data: [];
-	page_current: any;
-	page_total: any;
+	page_current: number;
+	page_total: number;
 }
 
 const TaskDetails: React.FC = () => {
 	const [ tagExist, setTagExist ] = useState(false);
 	const { task_id } = useParams();
 
-	const fetchTaskDetails: any = async () => {
-		const res = await axios.get(`http://46.101.172.171:8008/tasks/item/${task_id}`, axiosConfig);
-		return res.data;
-	};
-
-	const { data: taskInfo } = useQuery<any, any>(`details-for-task-${task_id}`, fetchTaskDetails);
+	const { data: taskInfo } = useQuery([ 'details', task_id ], fetchTaskDetails);
 
 	const { data: comments, isFetching, isFetchingMore, fetchMore, canFetchMore } = useInfiniteQuery<
 		CommentType,
-		[any, any],
-		any
-	>(
-		[ `comments`, task_id ],
-		async (key: any, comments_page_id: any, more?: any) => {
-			const res = await axios.get(
-				`http://46.101.172.171:8008/comment/from_task/${task_id}/${comments_page_id}`,
-				axiosConfig
-			);
-			return res.data;
-		},
-		{
-			getFetchMore:
-				(prev) => {
-					if (prev.page_current + 1 > prev.page_total) {
-						return false;
-					} else {
-						return prev.page_current + 1;
-					}
+		any,
+		number
+	>([ 'comments', task_id ], fetchComments, {
+		getFetchMore:
+			(prev) => {
+				if (prev.page_current + 1 > prev.page_total) {
+					return false;
 				}
-		}
-	);
+
+				return prev.page_current + 1;
+			}
+	});
 
 	const commentArea = useRef<HTMLTextAreaElement>(null);
 	const tagArea = useRef<HTMLTextAreaElement>(null);
@@ -73,15 +55,17 @@ const TaskDetails: React.FC = () => {
 			(newData: any) => {
 				queryCache.cancelQueries([ `comments`, task_id ]);
 				queryCache.setQueryData([ `comments`, task_id ], (prev: any) => {
-					prev[0].data = prev[0].data.concat({ ...newData, date: '0', author: 'You' });
+					const idx = prev[0].page_total - 1;
+					if (prev[idx]) {
+						prev[idx].data.push({ ...newData, date: '0', author: 'You' });
+					}
 					return prev;
 				});
 			}
 	});
 
 	const assignTagToTask = async (id: number) => {
-		const res = await axios.get(`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${id}`, axiosConfig);
-		return id;
+		await axios.get(`http://46.101.172.171:8008/tags/task_tag/set/${task_id}/${id}`, axiosConfig);
 	};
 
 	const addTag = async (title: string) => {
@@ -100,8 +84,8 @@ const TaskDetails: React.FC = () => {
 	const [ addTagMutate ] = useMutation(addTag, {
 		onMutate:
 			(newData: any) => {
-				queryCache.cancelQueries(`details-for-task-${task_id}`);
-				queryCache.setQueryData(`details-for-task-${task_id}`, (prev: any) => {
+				queryCache.cancelQueries([ 'details', task_id ]);
+				queryCache.setQueryData([ 'details', task_id ], (prev: any) => {
 					prev['tags'] = [ ...prev['tags'], { title: newData } ];
 					return prev;
 				});
@@ -109,12 +93,10 @@ const TaskDetails: React.FC = () => {
 		onSettled:
 			() => {
 				setTimeout(() => {
-					queryCache.invalidateQueries(`details-for-task-${task_id}`);
+					queryCache.invalidateQueries([ 'details', task_id ]);
 				}, 80);
 			}
 	});
-
-	console.log(taskInfo);
 
 	return (
 		<div className='details-container'>
@@ -136,26 +118,24 @@ const TaskDetails: React.FC = () => {
 			<div className='comments-section'>
 				<h3>Comments</h3>
 				{comments &&
-					comments[0].data.map((comment: any) => (
-						<Comment
-							text={comment.text}
-							author={comment.author}
-							date={comment.date}
-							id={comment.id}
-							key={uuidv4()}
-						/>
-					))}
+					comments.map((commentPage: any) => {
+						return commentPage.data.map((comment: IComment) => (
+							<Comment
+								text={comment.text}
+								author={comment.author}
+								date={comment.date}
+								id={comment.id}
+								key={uuidv4()}
+							/>
+						));
+					})}
 			</div>
 			<div className='btn-container'>
 				<button
 					onClick={() => {
 						fetchMore();
 					}}
-					disabled={
-						isFetching ||
-						(comments &&
-							comments[comments.length - 1].page_current >= comments[comments.length - 1].page_total)
-					}
+					disabled={isFetching || !canFetchMore}
 					className={
 						'btn load-more-lists comments-load ' +
 						(
