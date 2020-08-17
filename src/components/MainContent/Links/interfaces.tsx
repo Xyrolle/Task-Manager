@@ -1,3 +1,5 @@
+import { userDetailsInterface } from 'types';
+
 export interface Link {
   comments: number[]
   content: string;
@@ -50,7 +52,7 @@ export interface LinkCommentInterface {
   id: number;
   text: string;
 }
-export interface createTagInterface {
+export interface CreateTagInterface {
   title: string;
   linkId: number;
   projectId: string;
@@ -60,4 +62,8 @@ export interface AddLinkInterface {
   userId: number;
   title: string;
   content: string;
+}
+export interface AddLinkModalProps {
+  userDetails: userDetailsInterface;
+  closeModal: () => void;
 }

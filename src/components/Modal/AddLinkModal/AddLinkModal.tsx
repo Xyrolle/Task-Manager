@@ -4,7 +4,7 @@ import { useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from 'context/AppContext';
-import { AddLinkInterface, LinksInterface } from 'components/MainContent/Links/interfaces'
+import { AddLinkInterface, LinksInterface, AddLinkModalProps } from 'components/MainContent/Links/interfaces'
 
 const addLink = async ({ projectId, userId, title, content }: AddLinkInterface) => {
   try {
@@ -19,17 +19,9 @@ const addLink = async ({ projectId, userId, title, content }: AddLinkInterface) 
       },
       await axiosConfig
     );
-    if (response.status === 200) {
-
-    }
     return response.data;
   } catch (err) { }
 };
-
-interface AddLinkModalProps {
-  userDetails: any;
-  closeModal: () => void;
-}
 
 const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) => {
   const titleInput = useRef<HTMLInputElement>(null);
@@ -44,7 +36,6 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) 
   const [mutate] = useMutation(addLink, {
     onMutate: (newData: AddLinkInterface) => {
       queryCache.cancelQueries(['getLinks', projectId]);
-      const snapshot = queryCache.getQueryData(['getLinks', newData.projectId]);
       queryCache.setQueryData(['getLinks', newData.projectId], (prev: LinksInterface[] | undefined) => {
         prev && prev[0].data.push({
           id: new Date().getTime(),
@@ -58,9 +49,8 @@ const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) 
         });
         return prev;
       });
-      return () => queryCache.setQueryData('getLinks', snapshot);
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error, newData, rollback) => console.log(error),
     onSettled: () => queryCache.invalidateQueries(['getLinks', ctx.projectId])
   });
 

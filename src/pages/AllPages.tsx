@@ -24,7 +24,7 @@ const AllPages: React.FC = () => {
 		setUserInfo();
 	}, []);
 
-	const { data } = useQuery([ 'getProjects', userDetails && userDetails.id ], getProjects);
+	const { data } = useQuery(['getProjects', userDetails && userDetails.id], getProjects);
 
 	const handleModal = () => {
 		switch (openModal) {

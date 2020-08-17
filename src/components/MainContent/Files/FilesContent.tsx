@@ -14,9 +14,6 @@ const getFiles = async (key: string, projectId: string, page = 1) => {
     );
     return response.data;
 }
-interface foo {
-    data: Array<object>;
-}
 
 const FilesContent: React.FC = () => {
     const [isAddFileOpen, setIsAddFileOpen] = useState(false);
@@ -34,8 +31,7 @@ const FilesContent: React.FC = () => {
         getFiles,
         {
             getFetchMore: (lastGroup: FileInterface) => {
-                console.log(lastGroup)
-                //unncomment when paginatio non backend will be implemented
+                //unncomment when pagination will be implemented on back end
                 // if (lastGroup.page_current + 1 > lastGroup.page_total) {
                 //     return false;
                 // } else {
@@ -68,10 +64,8 @@ const FilesContent: React.FC = () => {
                     <span>Error: {error.message}</span>
                 ) : (
                             <>
-                                {data && data[0].map((file: any, key: any) => {
-                                    return <div key={key}>
-                                        <FileComponent file={file} />
-                                    </div>
+                                {data && data[0].map((file: FileInterface, key: number) => {
+                                    return <FileComponent file={file} key={key} />
                                 })}
                             </>
                         )}

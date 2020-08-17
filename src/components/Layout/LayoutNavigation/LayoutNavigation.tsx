@@ -11,7 +11,7 @@ const LayoutNavigation: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
-	const { activeLink, setActive } = ctx;
+	const { activeLink, setActive, projectId } = ctx;
 
 	return (
 		<div className='layoutNavigation'>
@@ -19,18 +19,18 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'Overview' ? 'active-link' :
+						activeLink === 'Overview' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='Overview' onClick={() => setActive('Overview')}>
+					<Link to={`/projects/${projectId}/overview`} onClick={() => setActive('Overview')}>
 						Overview
 					</Link>
 				</li>
 				<li
 					className={
 
-							activeLink === 'Tasks' ? 'active-link' :
+						activeLink === 'Tasks' ? 'active-link' :
 							''
 					}
 				>
@@ -41,7 +41,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'Milestones' ? 'active-link' :
+						activeLink === 'Milestones' ? 'active-link' :
 							''
 					}
 				>
@@ -52,7 +52,7 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'Messages' ? 'active-link' :
+						activeLink === 'Messages' ? 'active-link' :
 							''
 					}
 				>
@@ -63,51 +63,51 @@ const LayoutNavigation: React.FC = () => {
 				<li
 					className={
 
-							activeLink === 'Files' ? 'active-link' :
+						activeLink === 'Files' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='Files' onClick={() => setActive('Files')}>
+					<Link to={`/projects/${projectId}/files`} onClick={() => setActive('Files')}>
 						Files
 					</Link>
 				</li>
 				<li
 					className={
 
-							activeLink === 'Time' ? 'active-link' :
+						activeLink === 'Time' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='Time' onClick={() => setActive('Time')}>
+					<Link to={`/projects/${projectId}/time`} onClick={() => setActive('Time')}>
 						Time
 					</Link>
 				</li>
 				<li
 					className={
 
-							activeLink === 'Notebooks' ? 'active-link' :
+						activeLink === 'Notebooks' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='Agenda' onClick={() => setActive('Notebooks')}>
+					<Link to={`/projects/${projectId}/agenda`} onClick={() => setActive('Notebooks')}>
 						Notebooks
 					</Link>
 				</li>
 				<li
 					className={
 
-							activeLink === 'Links' ? 'active-link' :
+						activeLink === 'Links' ? 'active-link' :
 							''
 					}
 				>
-					<Link to='Links' onClick={() => setActive('Links')}>
+					<Link to={`/projects/${projectId}/links`} onClick={() => setActive('Links')}>
 						Links
 					</Link>
 				</li>
 				<li
 					className={
 
-							activeLink === 'Settings' ? 'active-link' :
+						activeLink === 'Settings' ? 'active-link' :
 							''
 					}
 				>

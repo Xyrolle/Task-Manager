@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { Link } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { axiosConfig } from 'utils/axiosConfig';
 import { getProjects } from 'utils/getProjects';
 import Star from './Star';
 import './Projects.css';
+import { ProjectInterface, ProjectsInterface } from './interfaces'
 
 const deleteProject = async (id: number) => {
   const response = await axios.delete(
@@ -17,46 +18,31 @@ const deleteProject = async (id: number) => {
   return response.data;
 };
 
-// const getProjects = async (key: string, userId: string, page = 1) => {
-//   const response = await axios.get(
-//     `http://46.101.172.171:8008/project/project_view_by_user/${userId}/${page}/`,
-//     {
-//       headers: {
-//         Authorization: `Bearer ${localStorage.getItem('token')}`,
-//       },
-//     }
-//   );
-//   return response.data;
-// };
-
 const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
   const history = createBrowserHistory({ forceRefresh: true })
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-
   const { setOpenModal, setIsLayoutActive } = ctx;
 
   const [mutateDeleteProject] = useMutation(deleteProject, {
-    onMutate: (newData: any) => {
+    onMutate: (newProjectId: number) => {
       queryCache.cancelQueries(['getProjects', ctx.userDetails.id]);
-      const snapshot = queryCache.getQueryData([
-        'getProjects',
-        ctx.userDetails.id,
-      ]);
+
       queryCache.setQueryData(
         ['getProjects', ctx.userDetails.id.toString()],
-        (prev: any) => {
-          prev[0].data = prev[0].data.filter(
-            ({ project }: any) => project.id !== newData
-          );
+        (prev: ProjectsInterface[] | undefined) => {
+          if (prev) {
+            prev[0].data = prev[0].data.filter(
+              (project: ProjectInterface) => project.id !== newProjectId
+            );
+          }
           return prev;
         }
       );
-      return () => queryCache.setQueryData('getProjects', snapshot);
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error) => console.log(error),
   });
 
   const {
@@ -67,11 +53,11 @@ const Projects: React.FC = () => {
     isFetchingMore,
     fetchMore,
     canFetchMore,
-  }: any = useInfiniteQuery(
+  } = useInfiniteQuery(
     ['getProjects', `${ctx.userDetails.id}`],
     getProjects,
     {
-      getFetchMore: (lastGroup: any, allPages: any) => {
+      getFetchMore: (lastGroup: ProjectsInterface) => {
         if (lastGroup.page_current + 1 > lastGroup.page_total) {
           return false;
         } else {
@@ -110,19 +96,19 @@ const Projects: React.FC = () => {
         ) : status === 'error' ? (
           <span>
             {' '}
-            {error.message.includes('500') ? (
+            {error && error.message.includes('500') ? (
               <div>Times are empty.</div>
             ) : (
-                <span>{error.message}</span>
+                <span>{error && error.message}</span>
               )}{' '}
           </span>
         ) : (
               <>
                 {data &&
-                  data[0].data.map(({ project }: any, key: number) => {
+                  data[0].data.map((project: ProjectInterface, key: number) => {
                     return (
                       <div className="project" key={key}>
-                        <div className="projectHeader">
+                        <div className="projectHeasder">
                           <div className="projectNameWrap">
                             <Star userId={5} projectId={project.id} />
                             <Link to={`/projects/${project.id}/`}>
@@ -141,7 +127,7 @@ const Projects: React.FC = () => {
                         <p className="projectDescription">{project.description}</p>
                         <button onClick={() => mutateDeleteProject(project.id)}>
                           Delete
-                    </button>
+                        </button>
                       </div>
                     );
                   })}
@@ -149,17 +135,19 @@ const Projects: React.FC = () => {
             )}
       </div>
       <div>
-        <button
-          ref={loadMoreButtonRef}
-          onClick={() => fetchMore()}
-          disabled={!canFetchMore || isFetchingMore}
-        >
-          {isFetchingMore
-            ? 'Loading more...'
-            : canFetchMore
-              ? 'Load More'
-              : 'Nothing more to load'}
-        </button>
+        {!canFetchMore &&
+          <button
+            ref={loadMoreButtonRef}
+            onClick={() => fetchMore()}
+            disabled={!canFetchMore || isFetchingMore}
+          >
+            {isFetchingMore
+              ? 'Loading more...'
+              : canFetchMore
+                ? 'Load More'
+                : 'Nothing more to load'}
+          </button>
+        }
       </div>
       <div>
         {isFetching && !isFetchingMore ? 'Background Updating...' : null}

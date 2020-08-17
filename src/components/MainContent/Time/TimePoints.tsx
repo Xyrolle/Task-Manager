@@ -19,7 +19,6 @@ const TimePoints: React.FC<{ id: number }> = ({ id }) => {
         data.map((timePoint: TimePointInterface, key: number) => {
           return (
             <div className="tableContentWrap" key={key}>
-              {console.log(timePoint)}
               <div className="tableContent">
                 <div className="timeDescription">
                   <p>{timePoint.description}</p>

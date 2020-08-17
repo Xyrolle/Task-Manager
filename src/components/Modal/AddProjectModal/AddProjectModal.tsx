@@ -1,119 +1,51 @@
 import React, { useRef } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import useHook from '../useHook'
 import { axiosConfig } from 'utils/axiosConfig';
+import { CreateProjectInterface, ProjectsInterface } from 'pages/Projects/interfaces'
 
-interface foo {
-  name: string;
-  description: string;
-  company: string;
-  userId: string;
-}
-const createProject = ({
+const createProject = async ({
   name,
   description,
   company,
-  userId,
-}: foo): Promise<void> => {
-  return axios
-    .post(
-      'http://46.101.172.171:8008/project/project_create/',
-      {
-        name,
-        description,
-        company,
-      },
-      axiosConfig
-    )
-    .then(function (response) {
-
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+}: CreateProjectInterface): Promise<void> => {
+  const response = await axios.post(
+    'http://46.101.172.171:8008/project/',
+    {
+      name,
+      description,
+      company,
+    },
+    axiosConfig
+  )
+  return response.data
 };
 
 interface AddProjectModalProps {
   userId: number;
   closeModal: () => void;
 }
-interface PrevDataAddProject {
-  data: {
-    project: {
-      company: string;
-      description: string;
-      id: string;
-      name: string;
-    }
-  }[]
-  objects_per_page: number;
-  objects_total: number;
-  page_current: number;
-  page_total: number;
-}
-
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal }) => {
   const nameInput = useRef<HTMLInputElement>(null);
   const companyInput = useRef<HTMLInputElement>(null);
   const descriptionInput = useRef<HTMLTextAreaElement>(null);
 
   const [mutate] = useMutation(createProject, {
-    onMutate: (newData: any) => {
+    onMutate: (newData: CreateProjectInterface) => {
       queryCache.cancelQueries(['getProjects', userId]);
-      queryCache.setQueryData(['getProjects', userId.toString()], (prev: PrevDataAddProject[] | undefined) => {
-        console.log('prev', prev)
+      queryCache.setQueryData(['getProjects', userId.toString()], (prev: ProjectsInterface[] | undefined) => {
         prev && prev[0].data.push({
-          project: {
-            id: new Date().toISOString(),
-            company: newData.company,
-            description: newData.description,
-            name: newData.name,
-          },
+          id: new Date().getTime(),
+          company: newData.company,
+          description: newData.description,
+          name: newData.name,
         });
         return prev;
       });
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error) => console.log(error),
     onSettled: () => queryCache.invalidateQueries(['getProjects', userId.toString()])
   });
-
-  let newData: any = { company: 'ebs', description: 'foo', name: 'dima' };
-  let prev: any = [{ data: [] }];
-
-  prev[0].data.push({ //return data
-    project: {
-      id: new Date(),
-      company: newData.company,
-      description: newData.description,
-      name: newData.name,
-    },
-  })
-  const { mutateCustom }: any = useHook();
-  const handleMutate = () => {
-    mutateCustom(
-      ['getProjects', userId], //key
-      {
-        name: nameInput.current!.value, //newData
-        description: descriptionInput.current!.value,
-        company: companyInput.current!.value,
-        userId: userId.toString(),
-      },
-      prev
-    )
-  }
-  //custom hook WIP
-  // useHook(
-  //   ['getProjects', userId],
-  //   {
-  //     name: nameInput.current!.value,
-  //     description: descriptionInput.current!.value,
-  //     company: companyInput.current!.value,
-  //     userId: userId.toString(),
-  //   },
-  //   prev
-  // )
-
 
   return (
     <div>
@@ -151,7 +83,6 @@ const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal })
                   name: nameInput.current!.value,
                   description: descriptionInput.current!.value,
                   company: companyInput.current!.value,
-                  userId: userId.toString(),
                 });
                 await closeModal();
               }}

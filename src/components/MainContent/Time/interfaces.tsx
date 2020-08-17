@@ -1,11 +1,11 @@
-export interface createTimePointsInterface {
-  projectId: string;
+export interface CreateTimePointsInterface {
+  projectId?: string;
   groupId: number;
   description: string;
   startTimeValue: string;
   endTimeValue: string;
   user: number;
-  taskList: number;
+  taskList: number | undefined;
 }
 export interface TimesInterface {
   data: TimeGroupInterface[];
@@ -28,4 +28,11 @@ export interface TimePointInterface {
   time_end: string;
   time_start: string;
   user: number;
+}
+export interface TimeTaskListInterface {
+  description: string;
+  id: number;
+  name: string;
+  project: number;
+  task_count: number;
 }

@@ -7,11 +7,11 @@ import { axiosConfig } from 'utils/axiosConfig'
 import Notebook from '../../../../assets/Notebook.png';
 import tag from '../../../../assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
-import { deleteTagInterface, tagInterface, AgendaInterface } from '../interfaces'
+import { DeleteTagInterface, tagInterface, AgendaInterface } from '../interfaces'
 import './../Agenda.css';
 import '../TagDropdown/TagDropdown.css';
 
-const deleteTag = async ({ agendaId, tagId }: deleteTagInterface) => {
+const deleteTag = async ({ agendaId, tagId }: DeleteTagInterface) => {
   const response = await axios.delete(`http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${tagId}`,
     axiosConfig
   )
@@ -28,14 +28,13 @@ const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ age
       queryCache.cancelQueries(['getAllAgendas', `${projectId}`]);
       queryCache.setQueryData(['getAllAgendas', `${projectId}`],
         (prev: AgendaInterface[] | undefined) => {
-          console.log('prev', prev)
           let index;
           prev && prev[0].data.map(({ tags }: tagInterface[] | any) => {
             console.log('tags', tags)
             index = tags.findIndex((tag: tagInterface) => {
               return tag.id === newData.tagId
             })
-            if (index > 0) {
+            if (index >= 0) {
               tags.splice(index, 1)
             }
           })
@@ -43,7 +42,7 @@ const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ age
         }
       );
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error) => console.log(error),
   });
 
   return (
@@ -53,7 +52,7 @@ const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ age
         <div>
           <h4 className="">{agenda.title.charAt(0).toUpperCase()}.</h4>
           <div className="agendaTitleWrap" >
-            <Link to={`agenda/${agenda.id}`}>
+            <Link to={`agenda/${agenda.id}/`}>
               <p >{agenda.title}</p>
             </Link>
             {agenda.tags.map((tag: tagInterface, key: number) =>

@@ -24,12 +24,12 @@ interface LinkComponentInterface {
   };
 }
 
-interface deleteTagInterface {
+interface DeleteTagInterface {
   linkId: number;
   tagId: number;
 }
 
-const deleteTag = async ({ linkId, tagId }: deleteTagInterface) => {
+const deleteTag = async ({ linkId, tagId }: DeleteTagInterface) => {
   console.log('tag', tagId)
   const response = await axios.delete(`http://46.101.172.171:8008/tags/link_tag/set/${linkId}/${tagId}`,
     axiosConfig
@@ -44,7 +44,7 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
   const handleShowModal = () => setIsEditLinkModalOpen(false);
 
   const [mutateDeleteTag] = useMutation(deleteTag, {
-    onMutate: (newData: deleteTagInterface) => {
+    onMutate: (newData: DeleteTagInterface) => {
       queryCache.cancelQueries(['getLinks', `${projectId}`]);
       queryCache.setQueryData(['getLinks', `${projectId}`],
         (prev: LinksInterface[] | undefined) => {
@@ -53,7 +53,7 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
             index = tags.findIndex((tag: TagInterface) => {
               return tag.id === newData.tagId
             })
-            if (index > 0) {
+            if (index >= 0) {
               tags.splice(index, 1)
             }
           })
