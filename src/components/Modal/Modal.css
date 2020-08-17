@@ -70,6 +70,9 @@
 	color: #00000091;
 	padding-bottom: 0.4rem;
 }
+.selectOptionAddTimeModal {
+	width: 20%;
+}
 .modalBtns {
 	justify-content: space-between;
 	display: flex;

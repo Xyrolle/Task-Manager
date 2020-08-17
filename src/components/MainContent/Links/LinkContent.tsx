@@ -7,11 +7,8 @@ import LinkComponent from './LinkComponent/LinkComponent';
 import { AppContext } from 'context/AppContext';
 import { LinksInterface, LinkInterface } from './interfaces'
 
-
 const LinkContent: React.FC = () => {
   const { projectId } = useParams();
-  // const { status, data, error } = useQuery(['getLinks', projectId], getLinks);
-  const [isAddLinkOpen, setIsAddLinkOpen] = useState(false);
   const ctx = useContext(AppContext);
 
   if (!ctx) {
@@ -55,8 +52,6 @@ const LinkContent: React.FC = () => {
                   + Add Link
                 </button>
               </div>
-
-              {console.log('link', data)}
               {data && data.map((data: LinksInterface) => (
                 data.data.map((link: LinkInterface, key: number) => (
                   < div key={key} >

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams } from 'react-router';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../../utils/axiosConfig';
-import { Link, EditLinkInterface } from '../interfaces';
+import { Link, EditLinkInterface, LinksInterface, LinkInterface } from '../interfaces';
 import { AppContext } from '../../../../context/AppContext';
 
 const editLink = async ({ userId, linkId, projectId, title, content, tags }: EditLinkInterface) => {
@@ -17,19 +17,6 @@ const editLink = async ({ userId, linkId, projectId, title, content, tags }: Edi
         },
             await axiosConfig
         );
-        if (response.status === 200) {
-            // queryCache.setQueryData(['getLinks', projectId], (prev: any) => {
-            //     prev.data.push({
-            //         id: response.data.id,
-            //         // title,
-            //         // content,
-            //         // user: userId,
-            //         tags: []
-            //     });
-            //     return prev
-            // });)
-        }
-        console.log(response)
         return response.data;
     } catch (err) {
     }
@@ -45,20 +32,25 @@ const EditLinkModal: React.FC<{ handleShowModal(): void, data: Link }> = ({ hand
     }
 
     const [mutate] = useMutation(editLink, {
-
         onMutate: (newData: EditLinkInterface) => {
-
             queryCache.cancelQueries(['getLinks', projectId]);
-            const snapshot = queryCache.getQueryData(['getLinks', projectId]);
-            return () => queryCache.setQueryData('getLinks', snapshot);
+            queryCache.setQueryData(['getLinks', projectId], (prev: LinksInterface[] | undefined) => {
+                prev && prev[0].data.find((link: LinkInterface) => {
+                    if (link.id === newData.linkId) {
+                        link.content = newData.content
+                        link.title = newData.title
+                        link.date = new Date().toISOString();
+                    }
+                })
+                return prev
+            });
         },
-        onError: (error: any, newData: any, rollback: any) => rollback(),
-        // onSettled: () => queryCache.prefetchQuery('getTimeGroups')
+        onError: (error, newData, rollback) => console.log(error),
+        onSettled: () => queryCache.invalidateQueries(['getLinks', projectId])
     })
 
     return (
         <div>
-            {console.log(data)}
             <div className='modalContainer sectionFormLightbox'>
                 <form className='addTaskListForm'>
                     <div className='addTaskListHeader'>

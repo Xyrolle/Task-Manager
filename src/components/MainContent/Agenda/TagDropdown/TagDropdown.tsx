@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
-
 import './TagDropdown.css';
 import { axiosConfig } from 'utils/axiosConfig';
 
@@ -53,7 +52,7 @@ const TagDropdown: React.FC<{ agendaId: number }> = ({ agendaId }) => {
         return prev;
       });
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error) => console.log(error),
     onSettled: () => queryCache.invalidateQueries(['getAllAgendas', projectId])
   });
 
@@ -78,7 +77,6 @@ const TagDropdown: React.FC<{ agendaId: number }> = ({ agendaId }) => {
           Add
         </button>
       </header>
-      {/* <div className='folderDropdownContent' role='contentinfo'></div> */}
     </div>
   );
 };

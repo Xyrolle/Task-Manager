@@ -53,7 +53,7 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
             index = tags.findIndex((tag: TagInterface) => {
               return tag.id === newData.tagId
             })
-            if (index > 0) {
+            if (index >= 0) {
               tags.splice(index, 1)
             }
           })

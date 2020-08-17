@@ -29,8 +29,10 @@ export interface deleteTagInterface {
   tagId: number;
 }
 
-export interface IupdateAgendaContent {
+export interface updateAgendaContentInterface {
   id: number;
   title: string;
   content: string;
+  project: string;
+  user: number;
 }

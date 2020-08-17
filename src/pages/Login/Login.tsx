@@ -2,10 +2,7 @@ import React, { useRef, useState } from 'react'
 import axios from 'axios';
 import { Link, useHistory } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-import { axiosConfig } from 'utils/axiosConfig'
 import './Login.css'
-
-
 
 const getToken = async (username: string, password: string) => {
 
@@ -34,9 +31,8 @@ const auth = async (login: string, password: string, setErrorMessage: (message: 
         error.response.status === 400 && setErrorMessage('Insert username and password')
         error.response.status === 401 && setErrorMessage('Wrong username or password')
     }
-
-
 }
+
 const Login: React.FC = () => {
     const [errorMessage, setErrorMessage] = useState('')
     const username = useRef<HTMLInputElement>(null)

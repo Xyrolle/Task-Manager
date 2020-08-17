@@ -1,3 +1,5 @@
+import { userDetailsInterface } from 'types';
+
 export interface Link {
   comments: number[]
   content: string;
@@ -60,4 +62,8 @@ export interface AddLinkInterface {
   userId: number;
   title: string;
   content: string;
+}
+export interface AddLinkModalProps {
+  userDetails: userDetailsInterface;
+  closeModal: () => void;
 }

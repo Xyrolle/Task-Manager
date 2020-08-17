@@ -30,6 +30,7 @@ const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
   const [mutate] = useMutation(createTag, {
     onMutate: (newData: createTagInterface) => {
       queryCache.cancelQueries(['getLinks', projectId]);
+      const previousData = queryCache.getQueryData((['getLinks', projectId]));
       queryCache.setQueryData(['getLinks', projectId], (prev: LinksInterface[] | undefined) => {
         console.log('prev ', prev && prev)
         const index: number | undefined = prev && prev[0].data.findIndex((e: LinkInterface) => e.id === newData.linkId)
@@ -39,8 +40,10 @@ const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
         })
         return prev;
       });
+
+      // return () => queryCache.setQueryData('getLinks', prz)
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error, newData, rollback) => console.log(error),
     onSettled: () => queryCache.invalidateQueries(['getLinks', projectId])
   })
 

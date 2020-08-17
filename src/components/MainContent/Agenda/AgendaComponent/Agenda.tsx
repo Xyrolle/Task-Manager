@@ -28,14 +28,13 @@ const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ age
       queryCache.cancelQueries(['getAllAgendas', `${projectId}`]);
       queryCache.setQueryData(['getAllAgendas', `${projectId}`],
         (prev: AgendaInterface[] | undefined) => {
-          console.log('prev', prev)
           let index;
           prev && prev[0].data.map(({ tags }: tagInterface[] | any) => {
             console.log('tags', tags)
             index = tags.findIndex((tag: tagInterface) => {
               return tag.id === newData.tagId
             })
-            if (index > 0) {
+            if (index >= 0) {
               tags.splice(index, 1)
             }
           })
@@ -43,7 +42,7 @@ const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ age
         }
       );
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
+    onError: (error) => console.log(error),
   });
 
   return (
@@ -53,7 +52,7 @@ const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ age
         <div>
           <h4 className="">{agenda.title.charAt(0).toUpperCase()}.</h4>
           <div className="agendaTitleWrap" >
-            <Link to={`agenda/${agenda.id}`}>
+            <Link to={`agenda/${agenda.id}/`}>
               <p >{agenda.title}</p>
             </Link>
             {agenda.tags.map((tag: tagInterface, key: number) =>
