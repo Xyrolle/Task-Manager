@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { axiosConfig } from 'utils/axiosConfig';
-import { updateAgendaContentInterface } from './interfaces';
+import { UpdateAgendaContentInterface } from './interfaces';
 
 export const getAgendasByProjectId = async (key: string, projectId: string, page = 1) => {
   const response = await axios.get(
@@ -51,7 +51,7 @@ export const updateAgendaContent = ({
   content,
   project,
   user
-}: updateAgendaContentInterface): Promise<void> => {
+}: UpdateAgendaContentInterface): Promise<void> => {
   return axios
     .patch(
       `http://46.101.172.171:8008/agenda/item/${id}`,

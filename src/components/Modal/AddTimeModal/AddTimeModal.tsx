@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from '../../../context/AppContext';
 import {
-	createTimePointsInterface,
+	CreateTimePointsInterface,
 	TimesInterface,
 	TimeTaskListInterface
 } from 'components/MainContent/Time/interfaces'
@@ -25,7 +25,7 @@ const createTimePoints = async ({
 	endTimeValue,
 	user,
 	taskList
-}: createTimePointsInterface): Promise<void> => {
+}: CreateTimePointsInterface): Promise<void> => {
 	const response = await axios.post(
 		`http://46.101.172.171:8008/times/time_point/add/${groupId}`,
 		{
@@ -64,7 +64,7 @@ const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
 
 	const [mutate] = useMutation(createTimePoints, {
 		onMutate:
-			(newData: createTimePointsInterface) => {
+			(newData: CreateTimePointsInterface) => {
 				queryCache.cancelQueries(['getTimeGroups', ctx.projectId]);
 				queryCache.setQueryData(['getTimeGroups', ctx.projectId], (prev: TimesInterface[] | undefined) => {
 					const index = prev && prev[0].page_total;

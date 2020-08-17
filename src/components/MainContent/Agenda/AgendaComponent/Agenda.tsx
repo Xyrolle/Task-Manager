@@ -7,11 +7,11 @@ import { axiosConfig } from 'utils/axiosConfig'
 import Notebook from '../../../../assets/Notebook.png';
 import tag from '../../../../assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
-import { deleteTagInterface, tagInterface, AgendaInterface } from '../interfaces'
+import { DeleteTagInterface, tagInterface, AgendaInterface } from '../interfaces'
 import './../Agenda.css';
 import '../TagDropdown/TagDropdown.css';
 
-const deleteTag = async ({ agendaId, tagId }: deleteTagInterface) => {
+const deleteTag = async ({ agendaId, tagId }: DeleteTagInterface) => {
   const response = await axios.delete(`http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${tagId}`,
     axiosConfig
   )

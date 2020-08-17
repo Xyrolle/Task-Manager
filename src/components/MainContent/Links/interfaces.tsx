@@ -52,7 +52,7 @@ export interface LinkCommentInterface {
   id: number;
   text: string;
 }
-export interface createTagInterface {
+export interface CreateTagInterface {
   title: string;
   linkId: number;
   projectId: string;

@@ -43,15 +43,6 @@ const LinkContent: React.FC = () => {
         <span>Error: {error.message}</span>
       ) : (
             <div className="linkComponentContainer">
-              <div className="linkContentHeader">
-                <h3 role="heading">Links</h3>
-                <button
-                  onClick={() => ctx.setOpenModal('linkModal')}
-                  className="addLinkButton"
-                >
-                  + Add Link
-                </button>
-              </div>
               {data && data.map((data: LinksInterface) => (
                 data.data.map((link: LinkInterface, key: number) => (
                   < div key={key} >

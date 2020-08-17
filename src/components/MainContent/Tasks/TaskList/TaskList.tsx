@@ -1,16 +1,16 @@
 import React, { Fragment, useState, useRef, useMemo } from 'react';
 import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { v4 as uuidv4 } from 'uuid';
-import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import arrow from 'assets/arrow.svg';
 import addTaskPlus from 'assets/addTaskPlus.svg';
 
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon } from '@iconify/react';
 import ellipsisDotsH from '@iconify/icons-vaadin/ellipsis-dots-h';
 
 import { axiosConfig } from '../../../../utils/axiosConfig';
+import { fetchTasks } from '../queries';
 
 import Task from '../Task/Task';
 
@@ -29,29 +29,13 @@ interface ITasks {
 	page_total: number;
 }
 
-const TaskList = ({ name, id, task_count, description }: any) => {
+const TaskList = ({ name, id, task_count, description, project }: any) => {
 	const [ isOpen, setIsOpen ] = useState(false);
 	const [ isAddingTask, setIsAddingTask ] = useState(false);
 	const [ isEditing, setIsEditing ] = useState(false);
 	const [ listEditingName, setListEditingName ] = useState(name);
 	const taskInput = useRef<HTMLInputElement>(null);
 	const taskDescription = useRef<HTMLTextAreaElement>(null);
-
-	const { projectID } = useParams();
-
-	const fetchTasks = async (id: any, page_id: number = 1) => {
-		try {
-			const res = await axios.get(`http://46.101.172.171:8008/tasks/task_list/${id}/${page_id}`, {
-				headers:
-					{
-						Authorization: `Basic YWRtaW46cXdlMTIz`
-					}
-			});
-			return res.data;
-		} catch (err) {
-			console.error('error while fetching task lists', err);
-		}
-	};
 
 	const { data: tasks, isFetching, fetchMore, canFetchMore } = useInfiniteQuery<ITasks, any, number>(id, fetchTasks, {
 		getFetchMore:
@@ -93,7 +77,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 		onMutate:
 			(newData: any) => {
 				queryCache.cancelQueries(newData.id);
-				queryCache.setQueryData('task-lists', (prev: any) => {
+				queryCache.setQueryData([ 'task-lists', project ], (prev: any) => {
 					prev = prev.map((taskLists: any) => {
 						taskLists.data = taskLists.data.filter((taskList: any) => {
 							return taskList.id !== newData.id;
@@ -128,7 +112,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 			`http://46.101.172.171:8008/project/tasklist_update/${id}/`,
 			{
 				name: listEditingName,
-				project: projectID
+				project: project
 			},
 			axiosConfig
 		);
@@ -204,7 +188,7 @@ const TaskList = ({ name, id, task_count, description }: any) => {
 									id={task.id}
 									task_list={id}
 									parent={task.parent}
-									projectID={projectID}
+									projectID={project}
 									key={uuidv4()}
 								/>
 							))

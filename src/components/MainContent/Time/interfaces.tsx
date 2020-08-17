@@ -1,4 +1,4 @@
-export interface createTimePointsInterface {
+export interface CreateTimePointsInterface {
   projectId?: string;
   groupId: number;
   description: string;

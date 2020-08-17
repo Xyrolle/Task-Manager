@@ -194,7 +194,6 @@
 	left: 100%;
 	opacity: 0;
 	transition: opacity 0.4s;
-	border: 1px solid #eee;
 	-webkit-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
 	-moz-box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);
 	box-shadow: -4px 6px 25px -10px rgba(0, 0, 0, 0.66);

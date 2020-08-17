@@ -24,12 +24,12 @@ export interface tagInterface {
   title: string;
   id: number;
 }
-export interface deleteTagInterface {
+export interface DeleteTagInterface {
   agendaId: number;
   tagId: number;
 }
 
-export interface updateAgendaContentInterface {
+export interface UpdateAgendaContentInterface {
   id: number;
   title: string;
   content: string;
