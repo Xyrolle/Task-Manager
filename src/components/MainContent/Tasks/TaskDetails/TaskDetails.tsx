@@ -81,6 +81,8 @@ const TaskDetails: React.FC = () => {
 		}
 	};
 
+	console.log('hello');
+
 	const [ addTagMutate ] = useMutation(addTag, {
 		onMutate:
 			(newData: any) => {
