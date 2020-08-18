@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import {getUserInfo} from 'context/queries'
-import './Login.css'
+import {getUserInfo} from 'context/queries';
+import './Login.css';
 
 const getToken = async (username: string, password: string) => {
   try {
@@ -45,13 +45,16 @@ const Login: React.FC = () => {
   const history = createBrowserHistory({ forceRefresh: true });
 
   const proceedLogin = async () => {
+    console.log('Loggedin!!!')
     const status = await auth(
+       
         username.current!.value,
         password.current!.value,
         setErrorMessage)
     if (status === 200) {
-      getUserInfo();
+      await getUserInfo();
       history.push('/');
+      console.log('Loggedin')
     }
   };
 
@@ -73,7 +76,7 @@ const Login: React.FC = () => {
         Don't have an account?<Link to={`/register`}> Sign up </Link>
       </p>
       {errorMessage && <div className="errorMessage"> {errorMessage}</div>}
-      <button onClick={proceedLogin} className="loginButton">
+      <button onClick={ proceedLogin} className="loginButton">
         Log in
       </button>
     </div>
