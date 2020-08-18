@@ -8,19 +8,14 @@ import Notebook from '../../../../assets/Notebook.png';
 import tag from '../../../../assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
 import { DeleteTagInterface, tagInterface, AgendaInterface } from '../interfaces'
+import { deleteTag } from '../queries'
 import './../Agenda.css';
 import '../TagDropdown/TagDropdown.css';
 
-const deleteTag = async ({ agendaId, tagId }: DeleteTagInterface) => {
-  const response = await axios.delete(`http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${tagId}`,
-    axiosConfig
-  )
-  return response;
-}
+
 
 const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ agenda, style }) => {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);
-  const agendaContentTextArea = useRef<HTMLTextAreaElement>(null)
   const { agendaID, projectId } = useParams()
 
   const [mutateDeleteTag] = useMutation(deleteTag, {

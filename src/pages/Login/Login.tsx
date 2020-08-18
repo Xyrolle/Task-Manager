@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
-import {getUserInfo} from 'context/queries';
+import { getUserInfo } from 'context/queries';
 import './Login.css';
 
 const getToken = async (username: string, password: string) => {
@@ -24,17 +24,17 @@ const getToken = async (username: string, password: string) => {
 };
 
 const auth = async (login: string, password: string, setErrorMessage: (message: string) => void) => {
-    try {
-        const response = await axios.post('http://46.101.172.171:8008/users/login/', {
-            username: login,
-            password: password
-        })
-        response.status === 200 && await getToken(login, password)
-        return 200;
-    } catch (error) {
-        error.response.status === 400 && setErrorMessage('Insert username and password')
-        error.response.status === 401 && setErrorMessage('Wrong username or password')
-    }
+  try {
+    const response = await axios.post('http://46.101.172.171:8008/users/login/', {
+      username: login,
+      password: password
+    })
+    response.status === 200 && await getToken(login, password)
+    return 200;
+  } catch (error) {
+    error.response.status === 400 && setErrorMessage('Insert username and password')
+    error.response.status === 401 && setErrorMessage('Wrong username or password')
+  }
 }
 
 const Login: React.FC = () => {
@@ -47,10 +47,10 @@ const Login: React.FC = () => {
   const proceedLogin = async () => {
     console.log('Loggedin!!!')
     const status = await auth(
-       
-        username.current!.value,
-        password.current!.value,
-        setErrorMessage)
+
+      username.current!.value,
+      password.current!.value,
+      setErrorMessage)
     if (status === 200) {
       await getUserInfo();
       history.push('/');
@@ -76,7 +76,7 @@ const Login: React.FC = () => {
         Don't have an account?<Link to={`/register`}> Sign up </Link>
       </p>
       {errorMessage && <div className="errorMessage"> {errorMessage}</div>}
-      <button onClick={ proceedLogin} className="loginButton">
+      <button onClick={proceedLogin} className="loginButton">
         Log in
       </button>
     </div>

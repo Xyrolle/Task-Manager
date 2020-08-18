@@ -1,27 +1,9 @@
 import React, { useState, useRef, useContext } from 'react';
-import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import { useParams } from 'react-router';
-import { axiosConfig } from '../../../../utils/axiosConfig';
+import { useParams } from 'react-router'
 import { AppContext } from '../../../../context/AppContext';
 import { FileUploadInterface } from '../interfaces'
-
-
-const uploadFile = async ({ projectId, title, upload }: FileUploadInterface) => {
-    const fd = new FormData();
-    upload && fd.append('upload', upload)
-    fd.append('project', projectId)
-    fd.append('title', title)
-    try {
-        const response = await axios.post(`http://46.101.172.171:8008/files/`,
-            fd,
-            axiosConfig,
-        );
-        return response.data;
-    } catch (err) {
-        console.log(err)
-    }
-}
+import { uploadFile } from '../queries';
 
 const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
     const [fileInput, setFileInput] = useState()

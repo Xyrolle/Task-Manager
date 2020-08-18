@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import { getProjects } from 'utils/getProjects';
@@ -19,12 +19,12 @@ const AllPages: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-  const { openModal, userDetails, closeModal, isLayoutActive } = ctx;
+  const { setUserInfo, openModal, userDetails, closeModal, isLayoutActive } = ctx;
+  useEffect(() => {
+    setUserInfo();
+  }, []);
 
-  const { data } = useQuery(
-    ['getProjects', userDetails && userDetails.id],
-    getProjects
-  );
+  const { data } = useQuery(['getProjects', userDetails && userDetails.id], userDetails && getProjects);
 
   const handleModal = () => {
     switch (openModal) {

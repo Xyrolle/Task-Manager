@@ -1,7 +1,7 @@
 import axios from 'axios';
-
 import { axiosConfig } from 'utils/axiosConfig';
-import { UpdateAgendaContentInterface } from './interfaces';
+import { UpdateAgendaContentInterface, DeleteTagInterface, CreateTagInterface } from './interfaces';
+
 
 export const getAgendasByProjectId = async (key: string, projectId: string, page = 1) => {
   const response = await axios.get(
@@ -83,4 +83,38 @@ export const addTagInAgenda = (id: number, title: string) => {
     .catch(function () {
       // console.log(error);
     });
+};
+
+export const deleteTag = async ({ agendaId, tagId }: DeleteTagInterface) => {
+  const response = await axios.delete(`http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${tagId}`,
+    axiosConfig
+  )
+  return response;
+}
+
+export const setTagToAgenda = async (agendaId: number, id: string) => {
+  const response = await axios.get(
+    `http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${id}`,
+    axiosConfig
+  );
+  return response.data;
+};
+
+export const createTag = async ({
+  title,
+  agendaId,
+  projectId,
+}: CreateTagInterface): Promise<void> => {
+  const response = await axios.post(
+    'http://46.101.172.171:8008/tags/create',
+    {
+      title,
+    },
+    axiosConfig
+  );
+  if (response.status === 200) {
+
+    await setTagToAgenda(agendaId, response.data.id);
+  }
+  return response.data;
 };

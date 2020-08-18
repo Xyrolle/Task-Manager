@@ -36,3 +36,9 @@ export interface UpdateAgendaContentInterface {
   project: string;
   user: number;
 }
+
+export interface CreateTagInterface {
+  title: string;
+  agendaId: number;
+  projectId: string;
+}

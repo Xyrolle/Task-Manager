@@ -4,19 +4,11 @@ import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import { AppContext } from 'context/AppContext';
-import { axiosConfig } from 'utils/axiosConfig';
 import { getProjects } from 'utils/getProjects';
 import Star from './Star';
 import './Projects.css';
 import { ProjectInterface, ProjectsInterface } from './interfaces'
-
-const deleteProject = async (id: number) => {
-  const response = await axios.delete(
-    `http://46.101.172.171:8008/project/project_delete/${id}`,
-    axiosConfig
-  );
-  return response.data;
-};
+import { deleteProject } from './queries'
 
 const Projects: React.FC = () => {
   const ctx = useContext(AppContext);
@@ -110,7 +102,7 @@ const Projects: React.FC = () => {
                       <div className="project" key={key}>
                         <div className="projectHeasder">
                           <div className="projectNameWrap">
-                            <Star userId={5} projectId={project.id} />
+                            <Star userId={ctx.userDetails.id} projectId={project.id} />
                             <Link to={`/projects/${project.id}/`}>
                               <p
                                 className="projectName"

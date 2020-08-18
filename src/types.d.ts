@@ -5,7 +5,7 @@ type ContextProps = {
   setOpenModal: (modalName: string) => void,
   userDetails: any,
   closeModal: () => void,
-  setUserDetails: (user: any) => void,
+  setUserInfo: () => void,
   activeLink: string,
   setActive: (link: string) => void,
   isLayoutActive: boolean,

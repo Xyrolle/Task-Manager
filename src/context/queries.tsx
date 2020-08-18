@@ -5,13 +5,10 @@ export const getUserInfo = async () => {
   try {
     const response = await axios.get(
       `http://46.101.172.171:8008/users/by_token/`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      }
+      await axiosConfig
     );
-    localStorage.setItem('user', JSON.stringify(response.data));
+    console.log('user info', response.data);
+    return response.data;
   } catch (err) {
     console.log('Error', err);
   }

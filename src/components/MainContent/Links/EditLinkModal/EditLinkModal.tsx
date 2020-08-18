@@ -5,22 +5,8 @@ import { useMutation, queryCache, useQuery } from 'react-query';
 import { axiosConfig } from '../../../../utils/axiosConfig';
 import { Link, EditLinkInterface, LinksInterface, LinkInterface } from '../interfaces';
 import { AppContext } from '../../../../context/AppContext';
+import { editLink } from '../queries'
 
-const editLink = async ({ userId, linkId, projectId, title, content, tags }: EditLinkInterface) => {
-    try {
-        const response = await axios.patch(`http://46.101.172.171:8008/link/${projectId}/item/${linkId}`, {
-            project: projectId,
-            user: userId,
-            title,
-            content,
-            tags
-        },
-            await axiosConfig
-        );
-        return response.data;
-    } catch (err) {
-    }
-}
 
 const EditLinkModal: React.FC<{ handleShowModal(): void, data: Link }> = ({ handleShowModal, data }) => {
     const ctx = useContext(AppContext);
