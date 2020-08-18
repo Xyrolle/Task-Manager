@@ -33,13 +33,29 @@ const AllPages: React.FC = () => {
       case 'tasks':
         return <AddTaskListModal closeModal={closeModal} />;
       case 'addTeamModal':
-        return <Modal isUpgradeModalOpen={false} closeModal={closeModal} data={data.data} />;
+        return (
+          <Modal
+            isUpgradeModalOpen={false}
+            closeModal={closeModal}
+            data={data.data}
+          />
+        );
       case 'upgradeModal':
-        return <Modal isUpgradeModalOpen={true} closeModal={closeModal} data={data.data} />;
+        return (
+          <Modal
+            isUpgradeModalOpen={true}
+            closeModal={closeModal}
+            data={data.data}
+          />
+        );
       case 'addProjectModal':
-        return <AddProjectModal userId={userDetails.id} closeModal={closeModal} />;
+        return (
+          <AddProjectModal userId={userDetails.id} closeModal={closeModal} />
+        );
       case 'links':
-        return <AddLinkModal closeModal={closeModal} userDetails={userDetails} />;
+        return (
+          <AddLinkModal closeModal={closeModal} userDetails={userDetails} />
+        );
       case 'time':
         return <AddTimeModal closeModal={closeModal} />;
       case 'messages':
