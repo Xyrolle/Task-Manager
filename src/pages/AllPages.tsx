@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 
 import { getProjects } from 'utils/getProjects';
@@ -14,48 +14,70 @@ import AddMilestoneModal from 'components/Modal/AddMilestoneModal/AddMilestoneMo
 import Modal from '../components/Modal/Modal';
 
 const AllPages: React.FC = () => {
-	const ctx = useContext(AppContext);
+  const ctx = useContext(AppContext);
 
-	if (!ctx) {
-		throw new Error('You probably forgot to put <AppProvider>.');
-	}
-	const { setUserInfo, openModal, userDetails, closeModal, isLayoutActive } = ctx;
-	useEffect(() => {
-		setUserInfo();
-	}, []);
+  if (!ctx) {
+    throw new Error('You probably forgot to put <AppProvider>.');
+  }
+  const {
+    // setUserInfo,
+    openModal,
+    userDetails,
+    closeModal,
+    isLayoutActive,
+  } = ctx;
 
-	const { data } = useQuery([ 'getProjects', userDetails && userDetails.id ], getProjects);
+  const { data } = useQuery(
+    ['getProjects', userDetails && userDetails.id],
+    getProjects
+  );
 
-	const handleModal = () => {
-		switch (openModal) {
-			case 'milestones':
-				return <AddMilestoneModal />;
-			case 'tasks':
-				return <AddTaskListModal closeModal={closeModal} />;
-			case 'addTeamModal':
-				return <Modal isUpgradeModalOpen={false} closeModal={closeModal} data={data.data} />;
-			case 'upgradeModal':
-				return <Modal isUpgradeModalOpen={true} closeModal={closeModal} data={data.data} />;
-			case 'addProjectModal':
-				return <AddProjectModal userId={userDetails.id} closeModal={closeModal} />;
-			case 'links':
-				return <AddLinkModal closeModal={closeModal} userDetails={userDetails} />;
-			case 'time':
-				return <AddTimeModal closeModal={closeModal} />;
-			case 'messages':
-				return <MessageModal closeModal={closeModal} />;
-			default:
-				return;
-		}
-	};
+  const handleModal = () => {
+    switch (openModal) {
+      case 'milestones':
+        return <AddMilestoneModal />;
+      case 'tasks':
+        return <AddTaskListModal closeModal={closeModal} />;
+      case 'addTeamModal':
+        return (
+          <Modal
+            isUpgradeModalOpen={false}
+            closeModal={closeModal}
+            data={data.data}
+          />
+        );
+      case 'upgradeModal':
+        return (
+          <Modal
+            isUpgradeModalOpen={true}
+            closeModal={closeModal}
+            data={data.data}
+          />
+        );
+      case 'addProjectModal':
+        return (
+          <AddProjectModal userId={userDetails.id} closeModal={closeModal} />
+        );
+      case 'links':
+        return (
+          <AddLinkModal closeModal={closeModal} userDetails={userDetails} />
+        );
+      case 'time':
+        return <AddTimeModal closeModal={closeModal} />;
+      case 'messages':
+        return <MessageModal closeModal={closeModal} />;
+      default:
+        return;
+    }
+  };
 
-	return (
-		<div>
-			<Header />
-			{handleModal()}
-			{userDetails && <MainContent isLayoutActive={isLayoutActive} />}
-		</div>
-	);
+  return (
+    <div>
+      <Header />
+      {handleModal()}
+      {userDetails && <MainContent isLayoutActive={isLayoutActive} />}
+    </div>
+  );
 };
 
 export default AllPages;
