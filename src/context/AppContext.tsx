@@ -1,60 +1,55 @@
 import React, { useState, createContext, useEffect } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch, useLocation } from 'react-router-dom';
-import { getUserInfo } from './queries';
+import { useLocation } from 'react-router-dom';
 import { ContextProps } from 'types';
 
 type Props = {
-	children: React.ReactNode;
+  children: React.ReactNode,
 };
 
 export const AppContext = createContext<ContextProps | null>(null);
 
 export const AppProvider = ({ children }: Props) => {
-	const [openModal, setOpenModal] = useState<string>('');
+  const user = !localStorage.getItem('user')
+    ? null
+    : JSON.parse(localStorage.getItem('user') || '{}');
 
-	let location = useLocation();
-	const [userDetails, setUserDetails] = useState();
-	const [activeLink, setActive] = useState<string>('Overview');
-	const [isLayoutActive, setIsLayoutActive] = useState(false);
-	const [projectId, setProjectId] = useState<string>('');
+  const [openModal, setOpenModal] = useState<string>('');
 
-	const closeModal = () => {
-		setOpenModal('');
-	};
+  const location = useLocation();
+  const [userDetails, setUserDetails] = useState(user);
+  const [activeLink, setActive] = useState<string>('Overview');
+  const [isLayoutActive, setIsLayoutActive] = useState(false);
+  const [projectId, setProjectId] = useState<string>('');
 
-	useEffect(() => {
-		let link = location.pathname.split('/').pop();
-		if (link) {
-			link.charAt(0).toUpperCase();
-			setActive(link);
-		}
-	}, []);
+  const closeModal = () => {
+    setOpenModal('');
+  };
 
-	const setUserInfo = async () => {
-		setUserDetails(await getUserInfo());
-	};
+  useEffect(() => {
+    const link = location.pathname.split('/').pop();
+    if (link) {
+      link.charAt(0).toUpperCase();
+      setActive(link);
+    }
+  }, []);
 
-	// const setProjectIdInContext = (projectId: string) => {
-	// 	setProjectId(projectId);
-	// };
-
-	return (
-		<AppContext.Provider
-			value={{
-				openModal,
-				setOpenModal,
-				closeModal,
-				setUserInfo,
-				userDetails,
-				activeLink,
-				setActive,
-				isLayoutActive,
-				setIsLayoutActive,
-				setProjectId,
-				projectId
-			}}
-		>
-			{children}
-		</AppContext.Provider>
-	);
+  return (
+    <AppContext.Provider
+      value={{
+        openModal,
+        setOpenModal,
+        closeModal,
+        setUserDetails,
+        userDetails,
+        activeLink,
+        setActive,
+        isLayoutActive,
+        setIsLayoutActive,
+        setProjectId,
+        projectId,
+      }}
+    >
+      {children}
+    </AppContext.Provider>
+  );
 };
