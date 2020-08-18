@@ -1,23 +1,29 @@
-.fileContentHeader{
-    display: flex;
-    justify-content: space-between;
-    margin-right: 10%;
-    margin-top: 20px;
-    margin-bottom: 10px;
+.fileContentHeader {
+	display: flex;
+	justify-content: space-between;
+	margin-right: 10%;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
-.addFileButton{
-    padding: 7px;
-    background-color: #59c894;
-    border: none;
-    border-radius: 4px;
-    font-size: 13px;
-    font-weight: 500;
-    color: white;
-    cursor: pointer;
+.addFileButton {
+	padding: 7px;
+	background-color: #59c894;
+	border: none;
+	border-radius: 4px;
+	font-size: 13px;
+	font-weight: 500;
+	color: white;
+	cursor: pointer;
 }
-.addFileButton:hover{
-    background-color: #469e75;
+.addFileButton:hover {
+	background-color: #469e75;
 }
-.fileComponentWrap{
-    margin-left: 20%;
+.fileComponentWrap {
+	margin-left: 20%;
+}
+
+@media screen and (max-width: 480px) {
+	.fileComponentWrap {
+		margin-left: 5%;
+	}
 }

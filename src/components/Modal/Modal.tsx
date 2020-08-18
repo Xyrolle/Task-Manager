@@ -15,10 +15,10 @@ const Modal: React.FC<ModalProps> = ({
 }) => {
   const params = !isUpgradeModalOpen
     ? [
-        'Add your team',
-        'Start collaborating today by adding your team',
-        'Invite',
-      ]
+      'Add your team',
+      'Start collaborating today by adding your team',
+      'Invite',
+    ]
     : ['Upgrade', 'Upgrade today for free', 'Go'];
 
   return (
@@ -33,7 +33,7 @@ const Modal: React.FC<ModalProps> = ({
                 id="email"
                 type="email"
                 placeholder="Email"
-                //   onChange=
+              //   onChange=
               />
 
               <label htmlFor="priorityList" className="secondModalLabel">
@@ -43,7 +43,7 @@ const Modal: React.FC<ModalProps> = ({
                 id="priorityList"
                 name="priorityList"
                 required
-                //   onChange=
+              //   onChange=
               >
                 {data &&
                   data.map(({ project }: any, key: number) => (
@@ -64,7 +64,7 @@ const Modal: React.FC<ModalProps> = ({
             <button
               type="button"
               className="inviteModalButton"
-              //   onClick=
+            //   onClick=
             >
               {params[2]}
             </button>

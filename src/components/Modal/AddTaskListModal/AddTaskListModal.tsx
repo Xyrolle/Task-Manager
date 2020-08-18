@@ -1,17 +1,16 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useContext } from 'react';
 import axios from 'axios';
+import { useMutation, queryCache } from 'react-query';
+
 import './AddTaskListModal.css';
+
+import { axiosConfig } from '../../../utils/axiosConfig';
+
+import { AppContext } from '../.././../context/AppContext';
 
 type taskListParams = {
 	name: string;
 	description: string;
-};
-
-let axiosConfig = {
-	headers:
-		{
-			Authorization: `Basic YWRtaW46cXdlMTIz`
-		}
 };
 
 interface AddTaskListModalProps {
@@ -21,20 +20,34 @@ interface AddTaskListModalProps {
 const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
 	const taskListTitle = useRef<HTMLInputElement>(null);
 	const taskListDescription = useRef<HTMLTextAreaElement>(null);
+	const ctx = useContext(AppContext);
 
-	const addTaskList = (name: string, description: string) => {
-		axios
-			.post(
-				'http://46.101.172.171:8008/project/tasklist_create/',
-				{
-					name,
-					description,
-					project: 115
-				},
-				axiosConfig
-			)
-			.catch((error) => console.error(error));
+	if (!ctx) throw new Error('no context');
+
+	const addTaskList = async ({ name, description, project }: any) => {
+		await axios.post(
+			'http://46.101.172.171:8008/project/tasklist_create',
+			{
+				name,
+				description,
+				project
+			},
+			axiosConfig
+		);
 	};
+
+	const [ addTaskListMutate ] = useMutation(addTaskList, {
+		onMutate:
+			(newData) => {
+				queryCache.cancelQueries([ 'task-lists', ctx.projectId ]);
+				queryCache.setQueryData([ 'task-lists', ctx.projectId ], (prev: any) => {
+					const idx = prev[0].page_total;
+					prev[idx - 1].data.push({ ...newData, id: new Date().toISOString() });
+					return prev;
+				});
+			},
+		onSettled: () => queryCache.invalidateQueries([ 'task-lists', ctx.projectId ])
+	});
 
 	return (
 		<Fragment>
@@ -63,7 +76,11 @@ const AddTaskListModal: React.FC<AddTaskListModalProps> = ({ closeModal }) => {
 							type='button'
 							className='addList btn'
 							onClick={() => {
-								addTaskList(taskListTitle.current!.value, taskListDescription.current!.value);
+								addTaskListMutate({
+									name: taskListTitle.current!.value,
+									description: taskListDescription.current!.value,
+									project: ctx.projectId
+								});
 								taskListTitle.current!.value = '';
 								taskListDescription.current!.value = '';
 							}}

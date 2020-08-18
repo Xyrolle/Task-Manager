@@ -1,4 +1,6 @@
 import React, { useState, createContext, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import { ContextProps } from 'types';
 
 type Props = {
   children: React.ReactNode,
@@ -12,10 +14,10 @@ export const AppProvider = ({ children }: Props) => {
     : JSON.parse(localStorage.getItem('user') || '{}');
 
   const [openModal, setOpenModal] = useState<string>('');
+
+  const location = useLocation();
   const [userDetails, setUserDetails] = useState(user);
-  const sessionLink = sessionStorage.getItem('activeLink');
-  const link = sessionLink ? sessionLink : 'Overview';
-  const [activeLink, setActive] = useState(link);
+  const [activeLink, setActive] = useState<string>('Overview');
   const [isLayoutActive, setIsLayoutActive] = useState(false);
   const [projectId, setProjectId] = useState<string>('');
 
@@ -24,16 +26,12 @@ export const AppProvider = ({ children }: Props) => {
   };
 
   useEffect(() => {
-    // put value in context
-    sessionStorage.setItem('activeLink', activeLink);
-    return () => {
-      console.log('gfdgwf', activeLink);
-    };
+    const link = location.pathname.split('/').pop();
+    if (link) {
+      link.charAt(0).toUpperCase();
+      setActive(link);
+    }
   }, []);
-
-  const setProjectIdInContext = (projectId: string) => {
-    setProjectId(projectId);
-  };
 
   return (
     <AppContext.Provider

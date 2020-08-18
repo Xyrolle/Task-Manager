@@ -46,8 +46,7 @@ const AgendaContent: React.FC = ({ }) => {
         <span>Error: {error.message}</span>
       ) : (
             <>
-
-              {data && data.map((data: AgendaInterface, key: number) => (
+              {data && data.map((data: AgendaInterface) => (
                 data.data.map((agenda: DataAgendaInterface, key: number) => (
                   <div key={key}>
                     <Agenda agenda={agenda} />

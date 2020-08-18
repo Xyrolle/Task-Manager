@@ -19,13 +19,7 @@ const AllPages: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-  const {
-    // setUserInfo,
-    openModal,
-    userDetails,
-    closeModal,
-    isLayoutActive,
-  } = ctx;
+  const { openModal, userDetails, closeModal, isLayoutActive } = ctx;
 
   const { data } = useQuery(
     ['getProjects', userDetails && userDetails.id],

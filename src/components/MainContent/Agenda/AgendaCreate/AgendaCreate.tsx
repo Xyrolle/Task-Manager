@@ -1,13 +1,15 @@
 import React, { useRef, useContext } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import './../Agenda.css';
 import { addAgenda } from '../queries'
 import { AppContext } from 'context/AppContext';
+import { createBrowserHistory } from 'history';
 
 const AgendaCreate = () => {
 	const agendaTitleInput = useRef<HTMLInputElement>(null);
 	const agendaContentTextArea = useRef<HTMLTextAreaElement>(null);
-	const { projectId, agendaID } = useParams();
+	const { projectId } = useParams();
+	const history = createBrowserHistory({ forceRefresh: true })
 	const ctx = useContext(AppContext);
 
 	if (!ctx) {
@@ -20,21 +22,24 @@ const AgendaCreate = () => {
 			Content
 			<textarea ref={agendaContentTextArea} className='createContentTextArea' placeholder='content' />
 			<div className='textAreaButtonsWrap'>
-				<Link to={`/projects/${projectId}/agenda`}>
-					<button
-						className='createAgendaButton'
-						onClick={() => addAgenda(
+
+				<button
+					className='createAgendaButton'
+					onClick={() => {
+						addAgenda(
 							agendaTitleInput.current!.value,
 							agendaContentTextArea.current!.value,
 							projectId,
 							ctx.userDetails.id
-						)}
-					>
-						add agenda
+						)
+						history.push(`/projects/${projectId}/agenda`)
+					}}
+				>
+					add agenda
 					</button>
-				</Link>
+
 			</div>
-		</div>
+		</div >
 	);
 };
 
