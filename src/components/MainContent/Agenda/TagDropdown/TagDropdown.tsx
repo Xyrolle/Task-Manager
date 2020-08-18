@@ -4,38 +4,12 @@ import { useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
 import './TagDropdown.css';
 import { axiosConfig } from 'utils/axiosConfig';
+import { setTagToAgenda, createTag } from '../queries';
 
-interface CreateTagInterface {
-  title: string;
-  agendaId: number;
-  projectId: string;
-}
-const setTagToAgenda = async (agendaId: number, id: string) => {
-  const response = await axios.get(
-    `http://46.101.172.171:8008/tags/agenda_tag/set/${agendaId}/${id}`,
-    axiosConfig
-  );
-  return response.data;
-};
 
-const createTag = async ({
-  title,
-  agendaId,
-  projectId,
-}: CreateTagInterface): Promise<void> => {
-  const response = await axios.post(
-    'http://46.101.172.171:8008/tags/create',
-    {
-      title,
-    },
-    axiosConfig
-  );
-  if (response.status === 200) {
 
-    await setTagToAgenda(agendaId, response.data.id);
-  }
-  return response.data;
-};
+
+
 
 const TagDropdown: React.FC<{ agendaId: number }> = ({ agendaId }) => {
   const tagNameInput = useRef<HTMLInputElement>(null);

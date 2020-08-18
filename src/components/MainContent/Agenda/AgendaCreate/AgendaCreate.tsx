@@ -22,7 +22,6 @@ const AgendaCreate = () => {
 			Content
 			<textarea ref={agendaContentTextArea} className='createContentTextArea' placeholder='content' />
 			<div className='textAreaButtonsWrap'>
-
 				<button
 					className='createAgendaButton'
 					onClick={() => {

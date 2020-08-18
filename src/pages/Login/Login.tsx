@@ -5,17 +5,12 @@ import { createBrowserHistory } from 'history';
 import './Login.css'
 
 const getToken = async (username: string, password: string) => {
-
-    try {
-        const response = await axios.post('http://46.101.172.171:8008/users/token/', {
-            username,
-            password
-        })
-        if (response.status === 200) {
-            localStorage.setItem('token', response.data.access)
-        }
-    } catch (err) {
-        console.log(err)
+    const response = await axios.post('http://46.101.172.171:8008/users/token/', {
+        username,
+        password
+    })
+    if (response.status === 200) {
+        localStorage.setItem('token', response.data.access)
     }
 }
 

@@ -1,19 +1,11 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { axiosConfig } from '../../../utils/axiosConfig'
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import { useInfiniteQuery } from 'react-query';
 import AddFileModal from './AddFileModal/AddFileModal';
-import './FilesContent.css'
-import FileComponent from './FileComponent/FileComponent'
-import { FileInterface } from './interfaces'
-
-const getFiles = async (key: string, projectId: string, page = 1) => {
-    const response = await axios.get(`http://46.101.172.171:8008/files/files_item_view_by_project/${projectId}/${page}`,
-        axiosConfig
-    );
-    return response.data;
-}
+import './FilesContent.css';
+import FileComponent from './FileComponent/FileComponent';
+import { FileInterface } from './interfaces';
+import { getFiles } from './queries';
 
 const FilesContent: React.FC = () => {
     const [isAddFileOpen, setIsAddFileOpen] = useState(false);
