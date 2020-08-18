@@ -1,8 +1,7 @@
 import React, { useRef, useState, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
-
 import { getUserInfo } from 'context/queries';
 import './Login.css';
 
@@ -42,19 +41,15 @@ const Login: React.FC = () => {
   const username = useRef<HTMLInputElement>(null);
   const password = useRef<HTMLInputElement>(null);
   //need useHistory from React router dom
-  const history = createBrowserHistory({ forceRefresh: true });
+  const history = useHistory();
 
   const proceedLogin = async () => {
-    console.log('Loggedin!!!')
     const status = await auth(
-
       username.current!.value,
       password.current!.value,
       setErrorMessage)
     if (status === 200) {
-      await getUserInfo();
       history.push('/');
-      console.log('Loggedin')
     }
   };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './Modal.css';
+import { ProjectInterface } from 'pages/Projects/interfaces';
 
 interface ModalProps {
   isUpgradeModalOpen: boolean;
@@ -46,8 +47,8 @@ const Modal: React.FC<ModalProps> = ({
               //   onChange=
               >
                 {data &&
-                  data.map(({ project }: any, key: number) => (
-                    <option key={project.id}>{project.name}</option>
+                  data.map((project: ProjectInterface, key: number) => (
+                    <option key={key}>{project.name}</option>
                   ))}
               </select>
             </div>

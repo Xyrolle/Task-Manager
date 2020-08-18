@@ -55,9 +55,9 @@ const Time: React.FC = () => {
       ) : (
             <>
               {data &&
-                data.map((page: any, key: any) =>
-                  page.data.map((timeGroup: any, key: any) => (
-                    <TimeTable timeGroup={timeGroup} />
+                data.map((page: TimesInterface) =>
+                  page.data.map((timeGroup: TimeGroupInterface, key: number) => (
+                    <TimeTable timeGroup={timeGroup} key={key} />
                   ))
                 )}
               <div>
