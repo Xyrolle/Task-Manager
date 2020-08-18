@@ -15,9 +15,7 @@ const LayoutHeader: React.FC = () => {
 		throw new Error('You probably forgot to put <AppProvider>.');
 	}
 
-	const { data: projectInfo } = useQuery([ 'project', ctx.projectId ], getProjectDetails);
-
-	console.log(projectInfo, ctx.projectId);
+	const { data: projectInfo } = useQuery(['project', ctx.projectId], getProjectDetails);
 
 	return (
 		<header className='layoutHeader'>
