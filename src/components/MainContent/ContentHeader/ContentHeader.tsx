@@ -14,18 +14,17 @@ const ContentHeader: React.FC = () => {
 		<div className='contentHeader'>
 			<h1 className='contentHeader-left'>{activeLink}</h1>
 			<div className='contentHeader-right'>
-				{console.log(activeLink, 'in header')}
 				{activeLink !== 'Overview' &&
-				activeLink !== 'Settings' && (
-					<button className='btn open-main-modal' onClick={() => setOpenModal(activeLink.toLowerCase())}>
-						<span>&#43; </span>
-						{`Add ${
-							activeLink[activeLink.length - 1] === 's' ? activeLink
-								.slice(0, activeLink.length - 1)
-								.toLowerCase() :
-							activeLink.toLowerCase()}`}
-					</button>
-				)}
+					activeLink !== 'Settings' && (
+						<button className='btn open-main-modal' onClick={() => setOpenModal(activeLink.toLowerCase())}>
+							<span>&#43; </span>
+							{`Add ${
+								activeLink[activeLink.length - 1] === 's' ? activeLink
+									.slice(0, activeLink.length - 1)
+									.toLowerCase() :
+									activeLink.toLowerCase()}`}
+						</button>
+					)}
 			</div>
 		</div>
 	);

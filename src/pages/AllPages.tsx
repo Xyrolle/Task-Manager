@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
-
+import { useHistory } from 'react-router-dom';
 import { getProjects } from 'utils/getProjects';
 import { AppContext } from 'context/AppContext';
 import Header from 'components/Header/Header';
@@ -11,11 +11,12 @@ import MainContent from 'components/MainContent/MainContent';
 import MessageModal from 'components/Modal/MessageModal/MessageModal';
 import AddTimeModal from '../components/Modal/AddTimeModal/AddTimeModal';
 import AddMilestoneModal from 'components/Modal/AddMilestoneModal/AddMilestoneModal';
+import AddFileModal from 'components/Modal/AddFileModal/AddFileModal'
 import Modal from '../components/Modal/Modal';
 
 const AllPages: React.FC = () => {
   const ctx = useContext(AppContext);
-
+  const history = useHistory();
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
@@ -24,7 +25,7 @@ const AllPages: React.FC = () => {
     setUserInfo();
   }, []);
 
-  const { data } = useQuery(['getProjects', userDetails && userDetails.id], userDetails && getProjects);
+  const { data } = useQuery(['getProjects', userDetails && userDetails.id], userDetails && getProjects)
 
   const handleModal = () => {
     switch (openModal) {
@@ -60,11 +61,12 @@ const AllPages: React.FC = () => {
         return <AddTimeModal closeModal={closeModal} />;
       case 'messages':
         return <MessageModal closeModal={closeModal} />;
+      case 'files':
+        return <AddFileModal closeModal={closeModal} />
       default:
         return;
     }
-  };
-
+  }
   return (
     <div>
       <Header />

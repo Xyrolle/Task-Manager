@@ -1,37 +1,11 @@
 import React, { useRef, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useMutation, queryCache, useQuery } from 'react-query';
-import { axiosConfig } from '../../../../utils/axiosConfig'
-import axios from 'axios';
 import './LinkDetails.css'
 import LinkComponent from '../LinkComponent/LinkComponent'
 import { AppContext } from '../../../../context/AppContext';
 import { AddCommentInterface, LinkCommentInterface } from '../interfaces'
-
-const getLink = async (key: string, projectId: string, linkId: string) => {
-    const response = await axios.get(`http://46.101.172.171:8008/link/${projectId}/item/${linkId}`,
-        axiosConfig)
-    return response.data
-}
-
-const addComment = async ({ comment, linkId, projectId, userId }: AddCommentInterface) => {
-    const response = await axios.post(`http://46.101.172.171:8008/link/item/${linkId}/comments`, {
-        text: comment
-    },
-        axiosConfig)
-    if (response.status === 200) {
-        queryCache.setQueryData(['getLink', projectId, linkId], (prev: any) => {
-            prev.comments.push({
-                id: response.data.id,
-                text: comment,
-                author: userId,
-                user: userId,
-            });
-            return prev;
-        });
-    }
-    return response.data
-}
+import { getLink, addComment } from '../queries';
 
 const LinkDetails: React.FC = () => {
     const { projectId, linkId } = useParams();
@@ -46,14 +20,19 @@ const LinkDetails: React.FC = () => {
     const [mutate] = useMutation(addComment, {
         onMutate: (newData: AddCommentInterface) => {
             queryCache.cancelQueries(['getLink', projectId]);
-            const snapshot = queryCache.getQueryData(['getLink', projectId]);
-
-            return () => queryCache.setQueryData('getLink', snapshot);
+            queryCache.setQueryData(['getLink', projectId, linkId], (prev: any) => {
+                prev.comments.push({
+                    id: new Date().getTime(),
+                    text: newData.comment,
+                    author: newData.userId,
+                    user: newData.userId,
+                });
+                return prev;
+            });
         },
-        onError: (error: any, newData: any, rollback: any) => rollback(),
-        // onSettled: () => queryCache.prefetchQuery('getTimeGroups')
+        onError: (error) => console.log(error),
+        onSettled: () => queryCache.invalidateQueries(['getLink', projectId])
     })
-
     return (
         <div className="linkDetailsComponentContainer">
             {data && <LinkComponent data={data} />}

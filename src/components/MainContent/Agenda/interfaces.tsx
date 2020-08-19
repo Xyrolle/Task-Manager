@@ -42,3 +42,9 @@ export interface CreateTagInterface {
   agendaId: number;
   projectId: string;
 }
+
+export interface NewDataUpdateAgendaInterface {
+  id: number;
+  title: string;
+  content: string;
+}

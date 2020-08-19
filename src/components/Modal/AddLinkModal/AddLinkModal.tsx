@@ -1,27 +1,9 @@
 import React, { useRef, useContext } from 'react';
-import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
-import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from 'context/AppContext';
 import { AddLinkInterface, LinksInterface, AddLinkModalProps } from 'components/MainContent/Links/interfaces'
-
-const addLink = async ({ projectId, userId, title, content }: AddLinkInterface) => {
-  try {
-    const response = await axios.post(
-      `http://46.101.172.171:8008/link/`,
-      {
-        project: projectId,
-        user: userId,
-        title,
-        content,
-        tags: [],
-      },
-      await axiosConfig
-    );
-    return response.data;
-  } catch (err) { }
-};
+import { addLink } from 'components/MainContent/Links/queries';
 
 const AddLinkModal: React.FC<AddLinkModalProps> = ({ userDetails, closeModal }) => {
   const titleInput = useRef<HTMLInputElement>(null);

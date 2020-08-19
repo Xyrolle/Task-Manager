@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-
 import TimePoints from '../TimePoints';
 
 const TimeTable: React.FC<any> = ({ timeGroup }: any) => {

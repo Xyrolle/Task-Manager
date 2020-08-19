@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { axiosConfig } from 'utils/axiosConfig';
+import { CreateProjectInterface } from './interfaces';
 
 export const deleteProject = async (id: number) => {
   const response = await axios.delete(
@@ -25,4 +26,21 @@ export const addLikeToProject = async (project: number) => {
     },
     axiosConfig
   );
+};
+
+export const createProject = async ({
+  name,
+  description,
+  company,
+}: CreateProjectInterface): Promise<void> => {
+  const response = await axios.post(
+    'http://46.101.172.171:8008/project/',
+    {
+      name,
+      description,
+      company,
+    },
+    axiosConfig
+  )
+  return response.data
 };

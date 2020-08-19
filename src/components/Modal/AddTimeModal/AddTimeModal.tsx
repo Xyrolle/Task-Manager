@@ -1,56 +1,17 @@
 import React, { useState, useRef, useContext } from 'react';
-import axios from 'axios';
 import moment from 'moment';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import TextField from '@material-ui/core/TextField';
-import { axiosConfig } from 'utils/axiosConfig';
 import { AppContext } from '../../../context/AppContext';
 import {
 	CreateTimePointsInterface,
 	TimesInterface,
-	TimeTaskListInterface
+	TimeTaskListInterface,
 } from 'components/MainContent/Time/interfaces'
+import { getTaskList, createTimeGroup, createTimePoints } from 'components/MainContent/Time/queries';
 
-const createTimeGroup = async (projectId: string) => {
-	const response = await axios.post(`http://46.101.172.171:8008/times/new_time_group/${projectId}`, {},
-		axiosConfig);
-	return response.data.id;
-};
 
-const createTimePoints = async ({
-	projectId,
-	groupId,
-	description,
-	startTimeValue,
-	endTimeValue,
-	user,
-	taskList
-}: CreateTimePointsInterface): Promise<void> => {
-	const response = await axios.post(
-		`http://46.101.172.171:8008/times/time_point/add/${groupId}`,
-		{
-			description,
-			time_start: startTimeValue.toString(),
-			time_end: endTimeValue.toString(),
-			user,
-			task_list: taskList
-		},
-		axiosConfig
-	);
-	return response.data;
-};
-interface AddTimeModalInterface {
-	closeModal(): void;
-}
-
-const getTaskList = async (key: string, projectId: string) => {
-	const response = await axios.get(`http://46.101.172.171:8008/project/task_list_view_by_project/${projectId}/1/`,
-		axiosConfig
-	)
-	return response.data
-}
-
-const AddTimeModal: React.FC<AddTimeModalInterface> = ({ closeModal }) => {
+const AddTimeModal: React.FC<{ closeModal(): void }> = ({ closeModal }) => {
 	const [startTimeValue, setStartTimeValue] = useState(moment().format());
 	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
 	const [selectedOption, setSelectedOption] = useState<number>()

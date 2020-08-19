@@ -63,7 +63,26 @@ export interface AddLinkInterface {
   title: string;
   content: string;
 }
+
 export interface AddLinkModalProps {
   userDetails: userDetailsInterface;
   closeModal: () => void;
+}
+
+export interface LinkComponentInterface {
+  data: {
+    comments: number[];
+    content: string;
+    date: string;
+    id: number;
+    project: number;
+    tags: TagInterface[];
+    title: string;
+    user: number;
+  };
+}
+
+export interface DeleteTagInterface {
+  linkId: number;
+  tagId: number;
 }

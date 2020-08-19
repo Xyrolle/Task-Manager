@@ -1,22 +1,17 @@
 import React, { Fragment, useContext, useRef, useState } from 'react';
 import { useMutation, queryCache } from 'react-query';
-import axios from 'axios';
-
+import axios from 'axios'
 import moment from 'moment';
 import TextField from '@material-ui/core/TextField';
-
 import { AppContext } from '../../../context/AppContext';
-
 import './AddMilestoneModal.css';
-
 import { IMilestone } from '../../MainContent/Milestones/Milestone/IMilestone';
-
 import { axiosConfig } from '../../../utils/axiosConfig';
 
 const AddMilestoneModal: React.FC = () => {
 	const ctx = useContext(AppContext);
 
-	const [ endTimeValue, setEndTimeValue ] = useState(moment().toISOString());
+	const [endTimeValue, setEndTimeValue] = useState(moment().toISOString());
 	const titleInput = useRef<HTMLInputElement>(null);
 	const descriptionInput = useRef<HTMLTextAreaElement>(null);
 
@@ -37,17 +32,17 @@ const AddMilestoneModal: React.FC = () => {
 		);
 	};
 
-	const [ addMilestoneMutate ]: any = useMutation(addMilestone, {
+	const [addMilestoneMutate]: any = useMutation(addMilestone, {
 		onMutate:
 			(newData: any) => {
-				queryCache.cancelQueries([ 'milestones', ctx.projectId ]);
-				queryCache.setQueryData([ 'milestones', ctx.projectId ], (prev: any) => {
+				queryCache.cancelQueries(['milestones', ctx.projectId]);
+				queryCache.setQueryData(['milestones', ctx.projectId], (prev: any) => {
 					const idx = prev.length - 1;
 					prev[idx].data.push({ ...newData, id: new Date().toISOString() });
 					return prev;
 				});
 			},
-		onSettled: () => queryCache.invalidateQueries([ 'milestones', ctx.projectId ])
+		onSettled: () => queryCache.invalidateQueries(['milestones', ctx.projectId])
 	});
 
 	return (

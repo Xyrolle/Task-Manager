@@ -17,3 +17,8 @@ export interface ProjectsInterface {
   page_current: number;
   page_total: number;
 }
+
+export interface AddProjectModalProps {
+  userId: number;
+  closeModal: () => void;
+}

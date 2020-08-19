@@ -1,20 +1,13 @@
 import React, { useContext, useState } from 'react';
-import TimePoints from './TimePoints';
 import { useInfiniteQuery } from 'react-query';
-import { axiosConfig } from '../../../utils/axiosConfig';
-import axios from 'axios';
 import './Time.css';
 import { useParams } from 'react-router';
 import { AppContext } from '../../../context/AppContext';
 import { TimesInterface, TimeGroupInterface } from './interfaces'
-
 import TimeTable from './TimeTable/TimeTable';
-
 import { getTimeGroups } from './utils';
 
 const Time: React.FC = () => {
-  const [pageId, setPageId] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
   const { projectId } = useParams();
 
   const {

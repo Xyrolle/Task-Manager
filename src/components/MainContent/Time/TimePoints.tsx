@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import { getTimePoints } from './queries';
 import moment from 'moment';
@@ -9,7 +9,6 @@ const TimePoints: React.FC<{ id: number }> = ({ id }) => {
     ['time points', id.toString()],
     getTimePoints
   );
-
   if (status === 'loading') return <div data-testid="loading">loading</div>;
   if (status === 'error') return <div>error!{JSON.stringify(error)}</div>;
 
