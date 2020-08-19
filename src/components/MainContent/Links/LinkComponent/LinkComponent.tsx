@@ -1,41 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, queryCache, useInfiniteQuery } from 'react-query';
-import axios from 'axios';
-import { axiosConfig } from 'utils/axiosConfig'
 import moment from 'moment';
 import './LinkComponent.css';
 import link from 'assets/link.png';
 import tag from 'assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
 import EditLinkModal from '../EditLinkModal/EditLinkModal';
-import { TagInterface, LinkInterface, LinksInterface } from '../interfaces'
-
-interface LinkComponentInterface {
-  data: {
-    comments: number[];
-    content: string;
-    date: string;
-    id: number;
-    project: number;
-    tags: TagInterface[];
-    title: string;
-    user: number;
-  };
-}
-
-interface DeleteTagInterface {
-  linkId: number;
-  tagId: number;
-}
-
-const deleteTag = async ({ linkId, tagId }: DeleteTagInterface) => {
-  console.log('tag', tagId)
-  const response = await axios.delete(`http://46.101.172.171:8008/tags/link_tag/set/${linkId}/${tagId}`,
-    axiosConfig
-  )
-  return response;
-}
+import {
+  TagInterface,
+  LinksInterface,
+  LinkComponentInterface,
+  DeleteTagInterface
+} from '../interfaces'
+import { deleteTag } from '../queries';
 
 const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
   const [isEditLinkModalOpen, setIsEditLinkModalOpen] = useState(false);

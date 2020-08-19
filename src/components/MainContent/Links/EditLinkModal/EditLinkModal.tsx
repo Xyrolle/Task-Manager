@@ -1,12 +1,9 @@
 import React, { useRef, useContext } from 'react';
-import axios from 'axios';
 import { useParams } from 'react-router';
 import { useMutation, queryCache, useQuery } from 'react-query';
-import { axiosConfig } from '../../../../utils/axiosConfig';
 import { Link, EditLinkInterface, LinksInterface, LinkInterface } from '../interfaces';
 import { AppContext } from '../../../../context/AppContext';
 import { editLink } from '../queries'
-
 
 const EditLinkModal: React.FC<{ handleShowModal(): void, data: Link }> = ({ handleShowModal, data }) => {
     const ctx = useContext(AppContext);

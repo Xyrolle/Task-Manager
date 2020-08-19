@@ -1,11 +1,8 @@
 import React, { useContext } from 'react';
 import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
-
 import { AppContext } from '../../../context/AppContext';
-
 import { getProjectDetails } from './utils';
-
 import './LayoutHeader.css';
 
 const LayoutHeader: React.FC = () => {

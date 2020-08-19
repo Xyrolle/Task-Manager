@@ -1,30 +1,8 @@
 import React, { useRef } from 'react';
-import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
-import { axiosConfig } from 'utils/axiosConfig';
-import { CreateProjectInterface, ProjectsInterface } from 'pages/Projects/interfaces'
+import { CreateProjectInterface, ProjectsInterface, AddProjectModalProps } from 'pages/Projects/interfaces'
+import { createProject } from 'pages/Projects/queries';
 
-const createProject = async ({
-  name,
-  description,
-  company,
-}: CreateProjectInterface): Promise<void> => {
-  const response = await axios.post(
-    'http://46.101.172.171:8008/project/',
-    {
-      name,
-      description,
-      company,
-    },
-    axiosConfig
-  )
-  return response.data
-};
-
-interface AddProjectModalProps {
-  userId: number;
-  closeModal: () => void;
-}
 const AddProjectModal: React.FC<AddProjectModalProps> = ({ userId, closeModal }) => {
   const nameInput = useRef<HTMLInputElement>(null);
   const companyInput = useRef<HTMLInputElement>(null);

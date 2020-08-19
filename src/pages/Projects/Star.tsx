@@ -1,9 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
 import { Icon } from '@iconify/react';
 import starFilled from '@iconify/icons-ant-design/star-filled';
-import { axiosConfig } from 'utils/axiosConfig';
 import { getLikes, addLikeToProject } from './queries'
 
 const Star: React.FC<{ userId: number, projectId: number }> = ({
@@ -13,17 +11,15 @@ const Star: React.FC<{ userId: number, projectId: number }> = ({
   const { status, data, error } = useQuery('getLikes', getLikes);
 
   const [mutate] = useMutation(addLikeToProject, {
-    onMutate: (newData: any) => {
+    onMutate: (newData: number) => {
       queryCache.cancelQueries('getLikes');
-      const snapshot = queryCache.getQueryData('getLikes');
       queryCache.setQueryData('getLikes', (prev: any) => {
         prev.data.push({ project: newData });
         return prev;
       });
-      return () => queryCache.setQueryData('getLikes', snapshot);
     },
-    onError: (error: any, newData: any, rollback: any) => rollback(),
-    // onSettled: () => queryCache.prefetchQuery(createProject)
+    onError: (error) => console.log(error),
+    onSettled: () => queryCache.invalidateQueries('getLikes')
   });
 
   return (

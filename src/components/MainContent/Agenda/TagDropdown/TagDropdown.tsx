@@ -1,15 +1,8 @@
 import React, { useRef } from 'react';
-import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
 import { useParams } from 'react-router-dom';
 import './TagDropdown.css';
-import { axiosConfig } from 'utils/axiosConfig';
-import { setTagToAgenda, createTag } from '../queries';
-
-
-
-
-
+import { createTag } from '../queries';
 
 const TagDropdown: React.FC<{ agendaId: number }> = ({ agendaId }) => {
   const tagNameInput = useRef<HTMLInputElement>(null);

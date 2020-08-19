@@ -14,7 +14,6 @@ const LinkContent: React.FC = () => {
   if (!ctx) {
     throw new Error('You probably forgot to put <AppProvider>.');
   }
-
   const {
     status,
     data,

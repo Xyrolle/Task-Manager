@@ -8,7 +8,6 @@ import { AgendaInterface, DataAgendaInterface } from './interfaces'
 
 const AgendaContent: React.FC = ({ }) => {
   const { projectId } = useParams();
-
   const {
     status,
     data,

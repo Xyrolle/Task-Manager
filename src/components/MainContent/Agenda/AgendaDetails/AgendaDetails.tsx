@@ -6,13 +6,9 @@ import { AppContext } from 'context/AppContext'
 import Agenda from '../AgendaComponent/Agenda';
 import { getAgendaById } from '../queries';
 import { updateAgendaContent } from '../queries';
-import { DataAgendaInterface } from '../interfaces'
+import { DataAgendaInterface, NewDataUpdateAgendaInterface } from '../interfaces'
 
-interface NewDataUpdateAgendaInterface {
-  id: number;
-  title: string;
-  content: string;
-}
+
 const AgendaDetails: React.FC = () => {
   const { agendaID, projectId } = useParams();
   const [onEditContent, setonEditContent] = useState(false);

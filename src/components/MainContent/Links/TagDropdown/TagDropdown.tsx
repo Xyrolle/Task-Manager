@@ -1,32 +1,16 @@
 import React, { useRef } from 'react';
-import axios from 'axios';
 import { useMutation, queryCache, useQuery } from 'react-query';
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import './TagDropdown.css';
-import { axiosConfig } from '../../../../utils/axiosConfig'
 import { CreateTagInterface, LinksInterface, LinkInterface } from '../interfaces';
+import { createTag } from '../queries';
 
-const setTagToLink = async (linkId: number, id: string) => {
-  const response = await axios.get(`http://46.101.172.171:8008/tags/link_tag/set/${linkId}/${id}`,
-    axiosConfig)
-  return response.data
-}
 
-const createTag = async ({ title, linkId }: CreateTagInterface): Promise<void> => {
-  const response = await axios.post('http://46.101.172.171:8008/tags/create', {
-    title
-  },
-    axiosConfig
-  )
-  if (response.status === 200) {
-    await setTagToLink(linkId, response.data.id);
-  }
-  return response.data
-}
 
 const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
   const tagNameInput = useRef<HTMLInputElement>(null)
   const { projectId } = useParams();
+
   const [mutate] = useMutation(createTag, {
     onMutate: (newData: CreateTagInterface) => {
       queryCache.cancelQueries(['getLinks', projectId]);
@@ -40,7 +24,6 @@ const TagDropdown: React.FC<{ linkId: number }> = ({ linkId }) => {
         })
         return prev;
       });
-
       // return () => queryCache.setQueryData('getLinks', prz)
     },
     onError: (error, newData, rollback) => console.log(error),

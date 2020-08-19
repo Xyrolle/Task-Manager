@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useInfiniteQuery } from 'react-query';
-import AddFileModal from './AddFileModal/AddFileModal';
 import './FilesContent.css';
 import FileComponent from './FileComponent/FileComponent';
 import { FileInterface } from './interfaces';
 import { getFiles } from './queries';
 
 const FilesContent: React.FC = () => {
-    const [isAddFileOpen, setIsAddFileOpen] = useState(false);
-    const handleShowModal = () => setIsAddFileOpen(false);
     const { projectId } = useParams();
     const {
         status,
@@ -37,19 +34,7 @@ const FilesContent: React.FC = () => {
 
     return (
         <div>
-
-            {isAddFileOpen && <AddFileModal handleShowModal={handleShowModal} />}
             <div className="fileComponentWrap">
-                <div className="fileContentHeader">
-                    <h3 role="heading">Links</h3>
-                    <button
-                        onClick={() =>
-                            setIsAddFileOpen(!isAddFileOpen)}
-                        className="addFileButton"
-                    >
-                        + Add File
-                </button>
-                </div>
                 {status === 'loading' ? (
                     <p>Loading...</p>
                 ) : status === 'error' ? (

@@ -1,9 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useMutation, queryCache } from 'react-query';
 import { DataAgendaInterface } from '../interfaces';
-import { axiosConfig } from 'utils/axiosConfig'
 import Notebook from '../../../../assets/Notebook.png';
 import tag from '../../../../assets/tag.png';
 import TagDropdown from '../TagDropdown/TagDropdown';
@@ -11,8 +9,6 @@ import { DeleteTagInterface, tagInterface, AgendaInterface } from '../interfaces
 import { deleteTag } from '../queries'
 import './../Agenda.css';
 import '../TagDropdown/TagDropdown.css';
-
-
 
 const Agenda: React.FC<{ agenda: DataAgendaInterface; style?: string }> = ({ agenda, style }) => {
   const [isTagDropdownOpen, setIsTagDropdownOpen] = useState(false);

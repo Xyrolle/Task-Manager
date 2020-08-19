@@ -1,34 +1,30 @@
 import React, { useState, useRef, useContext } from 'react';
 import { useMutation, queryCache } from 'react-query';
-import { useParams } from 'react-router'
-import { AppContext } from '../../../../context/AppContext';
-import { FileUploadInterface } from '../interfaces'
-import { uploadFile } from '../queries';
+import { AppContext } from 'context/AppContext';
+import { FileUploadInterface } from '../../MainContent/Files/interfaces'
+import { uploadFile } from '../../MainContent/Files/queries';
 
-const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }) => {
+const AddFileModal: React.FC<{ closeModal(): void }> = ({ closeModal }) => {
     const [fileInput, setFileInput] = useState()
     const ctx = useContext(AppContext);
     const titleInput = useRef<HTMLInputElement>(null);
 
-    const { projectId } = useParams();
     if (!ctx) {
         throw new Error('You probably forgot to put <AppProvider>.');
     }
-
     const [mutate] = useMutation(uploadFile, {
         onMutate: (newData: FileUploadInterface) => {
-            queryCache.cancelQueries('getFiles', projectId);
-            const snapshot = queryCache.getQueryData(['getFiles', projectId]);
-            queryCache.setQueryData(['getFiles', projectId], (prev: FileUploadInterface[][] | undefined) => {
+            queryCache.cancelQueries('getFiles', ctx.projectId);
+            const snapshot = queryCache.getQueryData(['getFiles', ctx.projectId]);
+            queryCache.setQueryData(['getFiles', ctx.projectId], (prev: FileUploadInterface[][] | undefined) => {
                 prev && prev[0].push(newData)
                 return prev;
             });
-            return () => queryCache.setQueryData(['getFiles', projectId], snapshot);
+            return () => queryCache.setQueryData(['getFiles', ctx.projectId], snapshot);
         },
         onError: (error: any, newData: any, rollback: any) => rollback(),
-        onSettled: () => queryCache.invalidateQueries(['getFiles', projectId])
+        onSettled: () => queryCache.invalidateQueries(['getFiles', ctx.projectId])
     })
-
     return (
         <div>
             <div className='modalContainer sectionFormLightbox'>
@@ -46,7 +42,6 @@ const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
                                 Select file
                             </label>
                             <input type="file" onChange={(e: any) => {
-                                // console.log()
                                 setFileInput(e.target.files[0])
                             }} />
                         </div>
@@ -54,7 +49,7 @@ const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
                     </div>
                     <div className='modal-footer'>
                         <button
-                            onClick={() => handleShowModal()}
+                            onClick={() => closeModal()}
                             type='button'
                             className='closeBtn' >
                             Close
@@ -62,13 +57,12 @@ const AddFileModal: React.FC<{ handleShowModal(): void }> = ({ handleShowModal }
                         <button
                             disabled={!fileInput}
                             onClick={async () => {
-                                mutate({
-                                    projectId,
+                                await mutate({
+                                    projectId: ctx.projectId,
                                     title: titleInput.current!.value,
                                     upload: fileInput
                                 })
-                                // console.log(fileInput)
-                                await handleShowModal()
+                                closeModal()
                             }}
                             type='button'
                             className='addList-btn btn'>
