@@ -1,19 +1,14 @@
-import React, { useState, useContext } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useInfiniteQuery } from 'react-query';
 import { getLinks } from './queries';
 import './LinkContent.css';
 import LinkComponent from './LinkComponent/LinkComponent';
-import { AppContext } from 'context/AppContext';
 import { LinksInterface, LinkInterface } from './interfaces'
 
 const LinkContent: React.FC = () => {
   const { projectId } = useParams();
-  const ctx = useContext(AppContext);
 
-  if (!ctx) {
-    throw new Error('You probably forgot to put <AppProvider>.');
-  }
   const {
     status,
     data,
@@ -44,7 +39,7 @@ const LinkContent: React.FC = () => {
             <div className="linkComponentContainer">
               {data && data.map((data: LinksInterface) => (
                 data.data.map((link: LinkInterface, key: number) => (
-                  < div key={key} >
+                  <div key={key} >
                     <LinkComponent data={link} />
                   </div>
                 ))

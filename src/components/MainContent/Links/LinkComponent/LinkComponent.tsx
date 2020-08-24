@@ -55,8 +55,8 @@ const LinkComponent: React.FC<LinkComponentInterface> = ({ data }) => {
               <a href={'https:' + data.title}>{data.title}</a>
             </p>
             {!linkId && (
-              <Link to={`links/${data.id}`} className="linkDetailsLink">
-                (Details)
+              <Link to={`/projects/${projectId}/links/${data.id}`} className="linkDetailsLink">
+                ( Details )
               </Link>
             )}
           </div>
