@@ -13,7 +13,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-query": "^1.1.2",
     "@types/react-router-dom": "^5.1.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "base-64": "^0.1.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
     "moment": "^2.27.0",
